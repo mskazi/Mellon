@@ -1,0 +1,207 @@
+/* You can add global styles to this file, and also import other style files */
+:host {
+  font-family: Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  color: #333;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
+
+}
+
+html,
+body {
+  height: 100%;
+
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 8px 0;
+}
+
+n p {
+  margin: 0;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.toolbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  background-color: #78c5e7;
+  color: white;
+  font-weight: 600;
+}
+
+.toolbar img {
+  /*  margin: 0 16px; */
+  padding: 20px;
+  background-color: white;
+}
+
+.toolbar span {
+  /*  margin: 0 16px; */
+  padding-left: 10px;
+
+}
+
+.content {
+  display: flex;
+  margin: 82px auto 32px;
+  padding: 0 16px;
+  max-width: 960px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mat-card {
+  padding: 0 !important;
+  border: 1px solid #dfdfdf;
+
+  .mat-card-header {
+    background-color: #c7e8f7;
+    font-size: 22px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 6px;
+
+    .mat-card-header-text {
+      margin: 10px 0;
+      margin: 0;
+    }
+
+    &.error {
+      background-color: #e22323;
+      color: white;
+    }
+
+    &.success {
+      background-color: #39da08;
+      color: white;
+    }
+
+  }
+
+  .mat-card-content {
+    padding: 8px;
+  }
+
+  span.label {}
+
+  span.value {
+    padding-left: 4px;
+    font-weight: 500;
+
+  }
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  /*  flex-basis: 100%; */
+
+  &.label {
+    flex-basis: 14%;
+  }
+
+  &.value {
+    font-weight: 500;
+  }
+}
+
+.column2 {
+  flex-basis: 100%;
+  flex: 1;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.important {
+  /* flex-grow, flex-shrink, flex-basis */
+  background-color: #78c5e7;
+  color: white;
+  padding: 2px;
+  border-radius: 4px;
+}
+
+.table {
+  width: 100%;
+  border-spacing: 0;
+  border: 1px solid #dfdfdf;
+
+  tr th {
+    text-align: left;
+    background-color: #727272;
+    padding-left: 4px;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    color: white;
+    font-weight: 400;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  tr td {
+    text-align: left;
+    vertical-align: top;
+    padding: 4px;
+
+    ul {
+      list-style-type: none;
+      padding-left: 2px;
+      margin-top: 2px;
+
+      li {
+        padding-top: 2px;
+        padding-bottom: 2px;
+      }
+    }
+  }
+
+
+  .test {
+    background-color: #39da08;
+  }
+
+}
+
+
+/* Responsive Styles */
+@media screen and (max-width: 767px) {}
+
+@media screen and (max-width: 575px) {
+  .content {
+    display: block;
+  }
+}

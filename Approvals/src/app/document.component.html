@@ -1,0 +1,268 @@
+   <ng-container *ngIf="loading">
+     Loading....please wait
+   </ng-container>
+   <ng-container *ngIf="!loading">
+
+     <form [formGroup]="form">
+       <div *ngIf="message">
+         <mat-card>
+           <mat-card-header [ngClass]="message.type ===messageTypeEnum.Error ? 'error' : 'success'"
+             style="min-width: 500px;">
+             {{message.title}}
+           </mat-card-header>
+           <mat-card-content>
+             {{ message.message}}
+           </mat-card-content>
+         </mat-card>
+       </div>
+
+       <div *ngIf="!message">
+         <mat-card>
+           <mat-card-header>
+             <span class="label">Type:</span>
+             <span class="value">{{ approvalOrder?.documentType }}</span>
+           </mat-card-header>
+           <mat-card-content>
+             <div class='some-page-wrapper'>
+               <div class='row'>
+                 <div class='column label'>
+                   CounterParty
+                 </div>
+                 <div class='column value'>
+                   {{ approvalOrder?.sourceName }}
+                 </div>
+               </div>
+               <div class='row '>
+                 <div class='column label'>
+                   Owner
+                 </div>
+                 <div class='column value'>
+                   {{approvalOrder?.documentOwner}}
+
+                 </div>
+               </div>
+               <div class='row '>
+                 <div class='column label'>
+                   Comment
+                 </div>
+                 <div class='column value'>
+                   {{approvalOrder?.approvalProcessComment}}
+                 </div>
+               </div>
+               <div class='row '>
+                 <div class='column label'>
+                   Value
+                 </div>
+                 <div class='column value '>
+                   <div class="important">{{ approvalOrder?.totalAmount | number:'1.2-2' }}</div>
+                 </div>
+               </div>
+             </div>
+           </mat-card-content>
+         </mat-card>
+
+
+         <mat-card style="margin-top: 20px;">
+           <mat-card-header>
+             <span class="label">Document Header</span>
+           </mat-card-header>
+           <mat-card-content>
+             <div class='some-page-wrapper'>
+               <div class='row'>
+                 <div class='column label'>
+                   Company
+                 </div>
+                 <div class='column value'>
+                   {{ approvalOrder?.erpCompany}}
+                 </div>
+               </div>
+               <div class='row '>
+                 <div class='column label'>
+                   Document No
+                 </div>
+                 <div class='column value'>
+                   {{ approvalOrder?.documentNo}}
+                 </div>
+               </div>
+               <div class='row '>
+                 <div class='column label'>
+                   Doc. Date
+                 </div>
+                 <div class='column value'>
+                   {{ approvalOrder?.orderDate  | date:'dd/LLL/YYYY' : 'UTC' : 'en' }}
+                 </div>
+               </div>
+               <div class='row '>
+                 <div class='column label'>
+                   Product
+                 </div>
+                 <div class='column value'>
+                   {{ approvalOrder?.mainApprovalLine?.bu }} - {{ approvalOrder?.mainApprovalLine?.buName   }}
+                 </div>
+               </div>
+               <div class='row '>
+                 <div class='column label'>
+                   GCoA
+                 </div>
+                 <div class='column value'>
+                   {{ approvalOrder?.mainApprovalLine?.plLines }} - {{ approvalOrder?.mainApprovalLine?.plLinesName   }}
+                 </div>
+               </div>
+               <div class='row '>
+                 <div class='column label'>
+                   Project
+                 </div>
+                 <div class='column value'>
+                   {{ approvalOrder?.mainApprovalLine?.ergo }} - {{ approvalOrder?.mainApprovalLine?.ergoName   }}
+                 </div>
+               </div>
+               <div class='row '>
+                 <div class='column label'>
+                   Currency
+                 </div>
+                 <div class='column value'>
+                   LocalCurrency
+                 </div>
+               </div>
+             </div>
+           </mat-card-content>
+         </mat-card>
+         <mat-card style="margin-top: 20px;">
+           <mat-card-header>
+             <span class="label">Document Details</span>
+           </mat-card-header>
+           <mat-card-content>
+             <div class='some-page-wrapper'>
+               <div class='row table-responsive' style="overflow-x:auto;">
+                 <table class="table">
+                   <thead>
+                     <tr>
+                       <th>Description</th>
+                       <th>Quantity * Price</th>
+                       <th>Line Amount</th>
+                       <th>Line Dimensions</th>
+                     </tr>
+                   </thead>
+                   <tbody>
+                     <tr *ngFor="let item of approvalOrder?.approvalLines">
+                       <td>
+                         {{item.description}}
+                       </td>
+                       <td>
+                         {{ item?.quantity ?? 0 | number:'1.1-2' }}
+                         *
+                         {{ item?.unitPrice | number:'1.2-2' }}
+                       </td>
+                       <td>
+                         {{ item?.lineAmount | number:'1.2-2' }}
+                       </td>
+                       <td>
+                         <ul>
+                           <li>
+                             <strong>BL</strong>: {{ item?.bl }} - {{ item.blName   }}
+                           </li>
+                           <li>
+                             <strong>PRODUCT</strong>: {{ item?.bu }} - {{ item.buName   }}
+                           </li>
+                           <li>
+                             <strong>GCoA</strong>:{{ item?.plLines }} - {{ item?.plLinesName   }}
+                           </li>
+                           <li>
+                             <strong>PR</strong>:{{ item?.ergo }} - {{ item?.ergoName   }}
+                           </li>
+                         </ul>
+                       </td>
+
+                     </tr>
+                     <tr>
+                       <td></td>
+                       <td></td>
+                       <td>
+                         <span class="important"> {{ approvalOrder?.totalAmount | number:'1.2-2' }}</span></td>
+                       <td></td>
+                     </tr>
+                   </tbody>
+                 </table>
+               </div>
+             </div>
+           </mat-card-content>
+         </mat-card>
+
+         <mat-card style="margin-top: 20px;">
+           <mat-card-header>
+             <span class="label">Approval History</span>
+           </mat-card-header>
+           <mat-card-content>
+             <div class='some-page-wrapper'>
+               <div class='row table-responsive' style="overflow-x:auto;">
+                 <table class="table">
+                   <thead>
+                     <tr>
+                       <th>Approver</th>
+                       <th>Status</th>
+                       <th>Comment</th>
+                     </tr>
+                   </thead>
+                   <tbody>
+                     <tr *ngFor="let item of approvalOrder?.approvals">
+                       <td>
+                         {{item?.approvalResponsible}}
+                       </td>
+                       <td>
+                         <ng-container [ngSwitch]="item?.status">
+                           <span *ngSwitchCase="approvalStatusEnum.Requested">REQUESTED</span>
+                           <span *ngSwitchCase="approvalStatusEnum.Open">REQUESTED</span>
+                           <span *ngSwitchCase="approvalStatusEnum.Created">NEXT</span>
+                           <span *ngSwitchCase="approvalStatusEnum.Canceled">CANCELED</span>
+                           <span *ngSwitchCase="approvalStatusEnum.Rejected">REJECTED</span>
+                           <span *ngSwitchCase="approvalStatusEnum.Approved">APPROVED</span>
+                           <span *ngSwitchDefault>{{item?.status}}</span>
+                         </ng-container>
+                       </td>
+                       <td>
+                         {{item?.approvalRequestComment}}
+                       </td>
+                     </tr>
+                   </tbody>
+                 </table>
+               </div>
+             </div>
+           </mat-card-content>
+         </mat-card>
+         <mat-card style="margin-top: 20px;">
+           <mat-card-header>
+             <span class="label">Accept/Reject Comment</span>
+           </mat-card-header>
+           <mat-card-content>
+             <div class='some-page-wrapper'>
+               <div class='row'>
+                 <div class='column2'>
+                   <mat-form-field [formGroup]="form" appearance="fill">
+                     <mat-label>Comment</mat-label>
+                     <textarea matInput formControlName="comment" [rows]="3"></textarea>
+                     <mat-error *ngIf="form.get('comment')?.errors && form.get('comment')?.touched">
+                       Max field length is 115 characters
+                     </mat-error>
+                   </mat-form-field>
+                 </div>
+               </div>
+               <div class='row'>
+                 <div class="column " style="flex:1;">
+                   <button mat-raised-button color="primary" (click)="action(approvalStatusEnum.Approved)"
+                     style="width: 100px;">
+                     Approve
+                   </button>
+                 </div>
+                 <div class="column " style="justify-content:flex-end">
+                   <button mat-raised-button color="warn" (click)="action(approvalStatusEnum.Rejected)"
+                     style="width: 100px;">
+                     Reject
+                   </button>
+                 </div>
+               </div>
+             </div>
+           </mat-card-content>
+         </mat-card>
+       </div>
+     </form>
+   </ng-container>
