@@ -16,6 +16,9 @@ public partial class ApprovalNotification
     public string DocumentOwner { get; set; }
 
     public DateTime NotificationSend { get; set; }
+
+    public DateTime? NotificationCreated { get; set; }
+
     [Timestamp]
     public byte[] RowVersion { get; set; } = null!;
 }

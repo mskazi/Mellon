@@ -6,8 +6,10 @@ using Mellon.Services.Infrastracture.ModelExtensions;
 using Mellon.Services.Infrastracture.Models;
 using Mellon.Services.Infrastracture.Repositotiries;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Nager.Date;
 using Newtonsoft.Json;
+using System;
 using System.Runtime.CompilerServices;
 
 namespace Mellon.Services.Application.Approvals.ApprovalHandlers
@@ -19,13 +21,17 @@ namespace Mellon.Services.Application.Approvals.ApprovalHandlers
         private readonly IEmailService emailService;
         private readonly int daysToResend;
         private readonly string holidaysAPIUrl;
+        private readonly ILogger logger;
 
 
 
-        public AddApprovalCommandHandler(IApprovalsRepository repository, IConfiguration configuration, IEmailService emailService)
+
+
+        public AddApprovalCommandHandler(IApprovalsRepository repository, IConfiguration configuration, IEmailService emailService, ILogger<AddApprovalCommandHandler> logger)
         {
             this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
             this.emailService = emailService;
+            this.logger = logger;
 
             if (configuration == null) throw new ArgumentNullException(nameof(configuration));
             serviceUrl = configuration["Endpoints:ERP"] ?? throw new Exception("ERP Service endpoint not found in configuration.");
@@ -60,7 +66,7 @@ namespace Mellon.Services.Application.Approvals.ApprovalHandlers
             await repository.UnitOfWork.ExecuteSqlAsync(resetIdApprovalOrders);
             await repository.UnitOfWork.ExecuteSqlAsync(resetIdApprovals);
             await repository.UnitOfWork.SaveChangesAsync();
-
+            this.logger.LogInformation($"ResetContext");
             HttpClient holidayClient = new HttpClient();
             HttpResponseMessage response = await holidayClient.GetAsync(String.Format("{0}/{1}", holidaysAPIUrl, CountryCode.GR));
 
@@ -73,13 +79,13 @@ namespace Mellon.Services.Application.Approvals.ApprovalHandlers
                 {
                     newApproval.ApprovalLines.Add(createApprovalLine(responseApprovalLine));
                 }
-                repository.AddApprovalOrder(newApproval);
+                
 
                 var approvalList = responseApproverList.Where(p => p.DocumentNo == responseApproval.DocumentNo).ToList();
                 foreach (var approval in approvalList)
                 {
                     newApproval.Approvals.Add(createApproval(approval));
-                    if (approval.Status == ApprovalStatusEnum.Open || approval.Status == ApprovalStatusEnum.Requested && approval.DocumentType== "Purchace")
+                    if ((approval.Status == ApprovalStatusEnum.Open || approval.Status == ApprovalStatusEnum.Requested) && approval.DocumentType== "Purchase")
                     {
                         approvalsToSendEmail.Add(createApprovalNotification(approval));
                     }
@@ -90,16 +96,28 @@ namespace Mellon.Services.Application.Approvals.ApprovalHandlers
             await repository.UnitOfWork.SaveChangesAsync();
             foreach (var approvalToSendEmail in approvalsToSendEmail)
             {
-                 var  approvalNotification = await repository.getApprovalNotification(approvalToSendEmail.DocumentToken, cancellationToken);
+              
+                var  approvalNotification = await repository.getApprovalNotification(approvalToSendEmail.DocumentToken, cancellationToken);
                 if (approvalNotification==null)
                 {
+
                     var approval = await repository.GetApproval(approvalToSendEmail.DocumentToken, cancellationToken);
                     if (approval!=null)
                     {
+                        this.logger.LogInformation($"Sending Email to  {approvalToSendEmail.email}" +
+                        $"\n ApprovalToSendEmail DocumentToken: {approvalToSendEmail.DocumentToken}" +
+                        $"\n ApprovalToSendEmail DocumentToken: {approvalToSendEmail.DocumentNo}" +
+                        $"\n ApprovalInfo DocumentToken: {approval.DocumentToken}" +
+                        $"\n ApprovalInfo DocumentToken: {approval.DocumentNo}"+
+                        $"\n ApprovalInfo Status: {approval.Status}");
+
+
                         approvalToSendEmail.NotificationSend = DateTime.Now;
+                        approvalToSendEmail.NotificationCreated = DateTime.Now;
                         emailService.sendApprovalNotification(approvalToSendEmail, approval);
                         repository.AddApprovalNotification(approvalToSendEmail);
                         await repository.UnitOfWork.SaveChangesAsync();
+                        this.logger.LogInformation($"Save completed ApprovalToSendEmail DocumentToken {approvalToSendEmail.DocumentToken}");
                     }
                 }
             }

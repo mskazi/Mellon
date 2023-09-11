@@ -204,6 +204,9 @@ namespace Mellon.Services.Infrastracture.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("NotificationCreated")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("NotificationSend")
                         .HasColumnType("datetime2");
 

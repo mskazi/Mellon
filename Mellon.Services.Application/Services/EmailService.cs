@@ -106,7 +106,7 @@ namespace Mellon.Services.Application.Services
                 var emailData = new EmailData();
                 emailData.EmailSubject = String.Format("{0}: {1} Pending Approval", approval.ERPCompany, approvalNotification.DocumentNo);
                 emailData.EmailToId = approvalNotification.email;
-                emailData.EmailBody = String.Format("A request for approval is required by you.Please click <a HREF=\"{0}{1}\">HERE</a> to Approve or Reject. <br><br> <strong> DO NOT REPLY TO THIS MESSAGE!!!</strong>", _emailSettings.documentApprovalURL , approvalNotification.DocumentToken);
+                emailData.EmailBody = String.Format("A request for approval is required by you.Please click <a HREF=\"{0}{1}\">HERE</a> to Approve or Reject. <br><br> <strong> DO NOT REPLY TO THIS MESSAGE!!!</strong> <br><br> Token:{1} ", _emailSettings.documentApprovalURL, approvalNotification.DocumentToken);
                 return SendEmail(emailData);
             }
             public bool reSendApprovalNotification(ApprovalNotification approvalNotification, Approval approval)
