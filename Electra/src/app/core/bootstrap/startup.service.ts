@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { switchMap, tap } from 'rxjs/operators';
-import { NgxPermissionsService, NgxRolesService } from 'ngx-permissions';
 import { AuthService, User } from '@core/authentication';
+import { NgxPermissionsService, NgxRolesService } from 'ngx-permissions';
+import { switchMap, tap } from 'rxjs/operators';
 import { Menu, MenuService } from './menu.service';
 
 @Injectable({
@@ -19,7 +19,7 @@ export class StartupService {
    * Load the application only after get the menu or other essential informations
    * such as permissions and roles.
    */
-  /*   load() {
+  load() {
     return new Promise<void>((resolve, reject) => {
       this.authService
         .change()
@@ -28,12 +28,12 @@ export class StartupService {
           switchMap(() => this.authService.menu()),
           tap(menu => this.setMenu(menu))
         )
-        .subscribe(
-          () => resolve(),
-          () => resolve()
-        );
+        .subscribe({
+          next: () => resolve(),
+          error: () => resolve(),
+        });
     });
-  } */
+  }
 
   private setMenu(menu: Menu[]) {
     this.menuService.addNamespace(menu, 'menu');

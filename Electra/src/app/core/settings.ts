@@ -1,7 +1,9 @@
+export type AppTheme = 'light' | 'dark' | 'auto';
+
 export interface AppSettings {
   navPos: 'side' | 'top';
-  theme: 'light' | 'dark' | 'auto';
   dir: 'ltr' | 'rtl';
+  theme: AppTheme;
   showHeader: boolean;
   headerPos: 'fixed' | 'static' | 'above';
   showUserPanel: boolean;
@@ -11,7 +13,7 @@ export interface AppSettings {
 }
 
 export const defaults: AppSettings = {
-  navPos: 'top',
+  navPos: 'side',
   theme: 'dark',
   dir: 'ltr',
   showHeader: true,

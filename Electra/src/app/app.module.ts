@@ -15,16 +15,16 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { environment } from '@env/environment';
-import { BASE_URL, httpInterceptorProviders, appInitializerProviders, LoginService } from '@core';
+import { BASE_URL, httpInterceptorProviders, appInitializerProviders } from '@core';
 
 // Required for AOT compilation
 export function TranslateHttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MsalRedirectComponent } from '@azure/msal-angular';
+import { LoginService } from '@core/authentication/login.service';
 import { FakeLoginService } from './fake-login.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
@@ -53,6 +53,6 @@ import { FakeLoginService } from './fake-login.service';
     httpInterceptorProviders,
     appInitializerProviders,
   ],
-  bootstrap: [AppComponent, MsalRedirectComponent],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

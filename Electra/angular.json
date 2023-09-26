@@ -69,12 +69,13 @@
             },
             "development": {
               "browserTarget": "Electra:build:development"
-            },
-            "options": {
-              "proxyConfig": "proxy.config.js"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "browserTarget": "Electra:build",
+            "proxyConfig": "proxy.config.js"
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

@@ -1,130 +1,63 @@
-import { Inject, Injectable } from '@angular/core';
-import { BehaviorSubject, iif, merge, of, Subject } from 'rxjs';
-import {
-  catchError,
-  filter,
-  map,
-  mergeMap,
-  share,
-  switchMap,
-  takeUntil,
-  tap,
-} from 'rxjs/operators';
-import { LoginService } from './login.service';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, iif, merge, of } from 'rxjs';
+import { catchError, map, share, switchMap, tap } from 'rxjs/operators';
 import { filterObject, isEmptyObject } from './helpers';
 import { User } from './interface';
-import {
-  MSAL_GUARD_CONFIG,
-  MsalGuardConfiguration,
-  MsalService,
-  MsalBroadcastService,
-} from '@azure/msal-angular';
-import {
-  AuthenticationResult,
-  EventMessage,
-  EventType,
-  InteractionStatus,
-  PopupRequest,
-} from '@azure/msal-browser';
-import { Menu, MenuService } from '@core/bootstrap/menu.service';
-import { NgxPermissionsService, NgxRolesService } from 'ngx-permissions';
+import { LoginService } from './login.service';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private loginDisplay = false;
-  private readonly _destroying$ = new Subject<void>();
-
   private user$ = new BehaviorSubject<User>({});
-
-  private initMSALSubscriptions() {
-    this.msalBroadcastService.msalSubject$
-      .pipe(
-        filter(
-          (msg: EventMessage) =>
-            msg.eventType === EventType.ACCOUNT_ADDED || msg.eventType === EventType.ACCOUNT_REMOVED
-        )
-      )
-      .subscribe((result: EventMessage) => {
-        if (this.authService.instance.getAllAccounts().length === 0) {
-          window.location.pathname = '/';
-        } else {
-          this.setLoginDisplay();
-        }
-      });
-    this.msalBroadcastService.inProgress$
-      .pipe(
-        filter((status: InteractionStatus) => status === InteractionStatus.None),
-        takeUntil(this._destroying$),
-        tap(() => {
-          this.setLoginDisplay();
-          this.checkAndSetActiveAccount();
-        }),
-        mergeMap(() => {
-          return this.assignUser().pipe(
-            tap(user => this.setPermissions(user)),
-            switchMap(() => this.menu()),
-            tap(menu => this.setMenu(menu))
-          );
-        })
-      )
-      .subscribe();
-  }
-
-  private setMenu(menu: Menu[]) {
-    this.menuService.addNamespace(menu, 'menu');
-    this.menuService.set(menu);
-  }
-
-  private setPermissions(user: User) {
-    // In a real app, you should get permissions and roles from the user information.
-    const permissions = ['canAdd', 'canDelete', 'canEdit', 'canRead'];
-    this.permissonsService.loadPermissions(permissions);
-    this.rolesService.flushRoles();
-    this.rolesService.addRoles({ ADMIN: permissions });
-    // Tips: Alternatively you can add permissions with role at the same time.
-    // this.rolesService.addRolesWithPermissions({ ADMIN: permissions });
-  }
-
-  checkAndSetActiveAccount() {
-    let activeAccount = this.authService.instance.getActiveAccount();
-    if (!activeAccount && this.authService.instance.getAllAccounts().length > 0) {
-      let accounts = this.authService.instance.getAllAccounts();
-      this.authService.instance.setActiveAccount(accounts[0]);
-    }
-  }
-
-  setLoginDisplay() {
-    this.loginDisplay = this.authService.instance.getAllAccounts().length > 0;
-  }
+  private change$ = merge(
+    this.tokenService.change(),
+    this.tokenService.refresh().pipe(switchMap(() => this.refresh()))
+  ).pipe(
+    switchMap(() => this.assignUser()),
+    share()
+  );
 
   constructor(
     private loginService: LoginService,
-    @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
-    private authService: MsalService,
-    private msalBroadcastService: MsalBroadcastService,
-    private menuService: MenuService,
-    private permissonsService: NgxPermissionsService,
-    private rolesService: NgxRolesService
-  ) {
-    this.initMSALSubscriptions();
+    private tokenService: TokenService
+  ) {}
+
+  init() {
+    return new Promise<void>(resolve => this.change$.subscribe(() => resolve()));
+  }
+
+  change() {
+    return this.change$;
   }
 
   check() {
-    return this.authService.instance.getAllAccounts().length > 0;
-    //return this.tokenService.valid();
+    return this.tokenService.valid();
+  }
+
+  login(username: string, password: string, rememberMe = false) {
+    return this.loginService.login(username, password, rememberMe).pipe(
+      tap(token => this.tokenService.set(token)),
+      map(() => this.check())
+    );
+  }
+
+  refresh() {
+    return this.loginService
+      .refresh(filterObject({ refresh_token: this.tokenService.getRefreshToken() }))
+      .pipe(
+        catchError(() => of(undefined)),
+        tap(token => this.tokenService.set(token)),
+        map(() => this.check())
+      );
   }
 
   logout() {
-    this.authService.logoutPopup({
-      mainWindowRedirectUri: '/',
-    });
-
-    /*  return this.loginService.logout().pipe(
+    return this.loginService.logout().pipe(
       tap(() => this.tokenService.clear()),
       map(() => !this.check())
-    ); */
+    );
   }
 
   user() {
@@ -136,6 +69,14 @@ export class AuthService {
   }
 
   private assignUser() {
+    if (!this.check()) {
+      return of({}).pipe(tap(user => this.user$.next(user)));
+    }
+
+    if (!isEmptyObject(this.user$.getValue())) {
+      return of(this.user$.getValue());
+    }
+
     return this.loginService.me().pipe(tap(user => this.user$.next(user)));
   }
 }

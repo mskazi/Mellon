@@ -51,6 +51,8 @@ namespace Mellon.Services.Application.Approvals.ApprovalHandlers
             var responseApprover = await client.Document_ApproverAsync(new Document_ApproverRequest());
             var responseApproverList = JsonConvert.DeserializeObject<Document_Approver_Response[]>(responseApprover.Body.Document_ApproverResult).ToList();
             var approvalsToSendEmail = new List<ApprovalNotification>();
+            var approvalsContractToSendEmail = new List<ApprovalNotification>();
+
 
             repository.ResetContext();
             FormattableString deleteApprovalLines = $"DELETE FROM dbo.ApprovalLines";
@@ -85,7 +87,7 @@ namespace Mellon.Services.Application.Approvals.ApprovalHandlers
                 foreach (var approval in approvalList)
                 {
                     newApproval.Approvals.Add(createApproval(approval));
-                    if ((approval.Status == ApprovalStatusEnum.Open || approval.Status == ApprovalStatusEnum.Requested) && approval.DocumentType== "Purchase")
+                    if ((approval.Status == ApprovalStatusEnum.Open || approval.Status == ApprovalStatusEnum.Requested) && (approval.DocumentType== "Purchase" || approval.DocumentType == "Sales" || approval.DocumentType == "Contract"))
                     {
                         approvalsToSendEmail.Add(createApprovalNotification(approval));
                     }
@@ -107,6 +109,7 @@ namespace Mellon.Services.Application.Approvals.ApprovalHandlers
                         this.logger.LogInformation($"Sending Email to  {approvalToSendEmail.email}" +
                         $"\n ApprovalToSendEmail DocumentToken: {approvalToSendEmail.DocumentToken}" +
                         $"\n ApprovalToSendEmail DocumentToken: {approvalToSendEmail.DocumentNo}" +
+                        $"\n ApprovalInfo DocumentType: {approval.DocumentType}" +
                         $"\n ApprovalInfo DocumentToken: {approval.DocumentToken}" +
                         $"\n ApprovalInfo DocumentToken: {approval.DocumentNo}"+
                         $"\n ApprovalInfo Status: {approval.Status}");
@@ -114,25 +117,37 @@ namespace Mellon.Services.Application.Approvals.ApprovalHandlers
 
                         approvalToSendEmail.NotificationSend = DateTime.Now;
                         approvalToSendEmail.NotificationCreated = DateTime.Now;
-                        emailService.sendApprovalNotification(approvalToSendEmail, approval);
+                        if (approvalToSendEmail.DocumentType == "Contract")
+                        {
+                            emailService.sendApprovalContractNotification(approvalToSendEmail, approval);
+                        }
+                        else
+                        {
+                            emailService.sendApprovalNotification(approvalToSendEmail, approval);
+                        }
+
                         repository.AddApprovalNotification(approvalToSendEmail);
                         await repository.UnitOfWork.SaveChangesAsync();
                         this.logger.LogInformation($"Save completed ApprovalToSendEmail DocumentToken {approvalToSendEmail.DocumentToken}");
                     }
                 }
             }
-          
+           
+
             if ((DateTime.Now.DayOfWeek != DayOfWeek.Saturday || DateTime.Now.DayOfWeek != DayOfWeek.Sunday)  &&  this.daysToResend!=0 && response.StatusCode!= System.Net.HttpStatusCode.OK)
             {
                 var delayedApprovalNotifications = await repository.GetDelayerdApprovals(daysToResend, cancellationToken);
                 foreach (var delayedApprovalNotification in delayedApprovalNotifications)
                 {
                     var approval = await repository.GetApproval(delayedApprovalNotification.DocumentToken, cancellationToken);
-                    if (approval != null)
+                    if (approval != null  )
                     {
-                        delayedApprovalNotification.NotificationSend = DateTime.Now;
-                        emailService.reSendApprovalNotification(delayedApprovalNotification, approval);
-                        await repository.UnitOfWork.SaveChangesAsync();
+                        if (approval.DocumentType == "Purchase" || approval.DocumentType == "Sales")
+                        {
+                            delayedApprovalNotification.NotificationSend = DateTime.Now;
+                            emailService.reSendApprovalNotification(delayedApprovalNotification, approval);
+                            await repository.UnitOfWork.SaveChangesAsync();
+                        }
                     }
 
                 }

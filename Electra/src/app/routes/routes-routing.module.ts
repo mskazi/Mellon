@@ -10,27 +10,20 @@ import { RegisterComponent } from './sessions/register/register.component';
 import { Error403Component } from './sessions/403.component';
 import { Error404Component } from './sessions/404.component';
 import { Error500Component } from './sessions/500.component';
-import { AuthGuard } from '@core';
-import { BrowserUtils } from '@azure/msal-browser';
-import { MsalGuard } from '@azure/msal-angular';
-import { ServiceIndexComponent } from './service/index.component';
+import { authGuard } from '@core';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminLayoutComponent,
-    canActivate: [MsalGuard],
-    canActivateChild: [AuthGuard],
+    canActivate: [authGuard],
+    canActivateChild: [authGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
       { path: '403', component: Error403Component },
       { path: '404', component: Error404Component },
       { path: '500', component: Error500Component },
-      {
-        path: 'service',
-        children: [{ path: 'voucher', component: ServiceIndexComponent }],
-      },
     ],
   },
   {
@@ -48,8 +41,6 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, {
       useHash: environment.useHash,
-      initialNavigation:
-        !BrowserUtils.isInIframe() && !BrowserUtils.isInPopup() ? 'enabledNonBlocking' : 'disabled', // Set to enabledBlocking to use Angular Universal
     }),
   ],
   exports: [RouterModule],
