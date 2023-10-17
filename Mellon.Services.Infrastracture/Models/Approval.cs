@@ -1,6 +1,4 @@
 ﻿using Mellon.Services.Infrastracture.ModelExtensions;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Mellon.Services.Infrastracture.Models;
@@ -26,7 +24,7 @@ public partial class Approval
     [Timestamp]
     public byte[] RowVersion { get; set; } = null!;
 
-    public  int ApprovalOrderId { get; set; }
+    public int ApprovalOrderId { get; set; }
 
 
 

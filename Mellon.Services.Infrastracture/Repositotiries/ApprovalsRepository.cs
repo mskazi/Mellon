@@ -3,8 +3,6 @@ using Mellon.Services.Infrastracture.Context;
 using Mellon.Services.Infrastracture.ModelExtensions;
 using Mellon.Services.Infrastracture.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Threading;
 
 
 namespace Mellon.Services.Infrastracture.Repositotiries
@@ -59,10 +57,10 @@ namespace Mellon.Services.Infrastracture.Repositotiries
             var date = DateTime.Now.Subtract(TimeSpan.FromDays(daysToCalcualte));
             var query = (from an in context.ApprovalNotifications
                          join a in context.Approvals
-                                      on an.DocumentToken equals a.DocumentToken   
-                                       where (a.Status == ApprovalStatusEnum.Open || a.Status== ApprovalStatusEnum.Canceled)  &&
-                                       an.NotificationSend < date
-                                      select  an
+                                      on an.DocumentToken equals a.DocumentToken
+                         where (a.Status == ApprovalStatusEnum.Open || a.Status == ApprovalStatusEnum.Canceled) &&
+                         an.NotificationSend < date
+                         select an
                                       ).ToListAsync(cancellationToken);
 
             return query;

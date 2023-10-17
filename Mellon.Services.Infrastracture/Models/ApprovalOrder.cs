@@ -1,7 +1,4 @@
-﻿using Mellon.Services.Infrastracture.ModelExtensions;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Mellon.Services.Infrastracture.Models;
 

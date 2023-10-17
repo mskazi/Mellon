@@ -1,20 +1,24 @@
+import { AccountInfo } from '@azure/msal-browser';
+
 export interface User {
   [prop: string]: any;
-
-  id?: number | string | null;
+  id: number | string | null;
   name?: string;
-  email?: string;
-  avatar?: string;
-  roles?: any[];
-  permissions?: any[];
+  member: string;
+  department: string;
+  company: string;
+  email: string;
+  isActive: boolean;
+  country: string;
+  role: number;
+  roles: Roles;
 }
 
-export interface Token {
-  [prop: string]: any;
+export interface UserInfo {
+  user: User;
+  accountInfo: AccountInfo;
+}
 
-  access_token: string;
-  token_type?: string;
-  expires_in?: number;
-  exp?: number;
-  refresh_token?: string;
+export enum Roles {
+  SERVICE = 'SERVICE',
 }

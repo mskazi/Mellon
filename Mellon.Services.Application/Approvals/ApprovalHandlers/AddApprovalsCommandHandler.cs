@@ -87,7 +87,7 @@ namespace Mellon.Services.Application.Approvals.ApprovalHandlers
                 foreach (var approval in approvalList)
                 {
                     newApproval.Approvals.Add(createApproval(approval));
-                    if ((approval.Status == ApprovalStatusEnum.Open || approval.Status == ApprovalStatusEnum.Requested) && (approval.DocumentType== "Purchase" || approval.DocumentType == "Sales" || approval.DocumentType == "Contract"))
+                    if ((approval.Status == ApprovalStatusEnum.Open || approval.Status == ApprovalStatusEnum.Requested) && (approval.DocumentType== "Purchase" || approval.DocumentType == "Sales" || approval.DocumentType == "Contract" || approval.DocumentType == "Expense"))
                     {
                         approvalsToSendEmail.Add(createApprovalNotification(approval));
                     }
@@ -117,7 +117,7 @@ namespace Mellon.Services.Application.Approvals.ApprovalHandlers
 
                         approvalToSendEmail.NotificationSend = DateTime.Now;
                         approvalToSendEmail.NotificationCreated = DateTime.Now;
-                        if (approvalToSendEmail.DocumentType == "Contract")
+                        if (approvalToSendEmail.DocumentType == "Contract" || approval.DocumentType == "Expense")
                         {
                             emailService.sendApprovalContractNotification(approvalToSendEmail, approval);
                         }

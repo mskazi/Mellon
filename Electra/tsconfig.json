@@ -18,6 +18,7 @@
     "target": "ES2022",
     "typeRoots": ["node_modules/@types"],
     "lib": ["es2019", "dom"],
+    "strictPropertyInitialization": false,
     "paths": {
       "@core": ["app/core"],
       "@core/*": ["app/core/*"],

@@ -3,12 +3,18 @@ import { PreloaderService, SettingsService } from '@core';
 
 @Component({
   selector: 'app-root',
-  template: '<router-outlet></router-outlet>',
+  template: '<router-outlet *ngIf="!isIframe"></router-outlet>',
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  constructor(private preloader: PreloaderService, private settings: SettingsService) {}
+  isIframe = false;
+
+  constructor(
+    private preloader: PreloaderService,
+    private settings: SettingsService
+  ) {}
 
   ngOnInit() {
+    this.isIframe = window !== window.parent && !window.opener;
     this.settings.setDirection();
     this.settings.setTheme();
   }

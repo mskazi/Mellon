@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>Electra</title>
@@ -43,8 +44,7 @@
       background-clip: text;
       -webkit-text-fill-color: transparent;
       background-image:
-        repeating-linear-gradient(
-          to right,
+        repeating-linear-gradient(to right,
           #f44336,
           #9c27b0,
           #3f51b5,
@@ -52,8 +52,7 @@
           #009688,
           #8bc34a,
           #ffeb3b,
-          #ff9800
-        );
+          #ff9800);
       background-size: 750% auto;
       background-position: 0 100%;
       animation: gradient 20s infinite;
@@ -70,10 +69,16 @@
         background-position: -750% 0;
       }
     }
-    </style>
+
+  </style>
 </head>
+
 <body>
   <app-root></app-root>
-  <div id="globalLoader" class="global-loader"><h1>LOADING</h1></div>
+  <app-redirect></app-redirect>
+  <div id="globalLoader" class="global-loader">
+    <h1>LOADING</h1>
+  </div>
 </body>
+
 </html>

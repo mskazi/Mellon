@@ -1,30 +1,45 @@
-import { NgModule } from '@angular/core';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+import localeGr from '@angular/common/locales/el';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppComponent } from './app.component';
-
 import { CoreModule } from '@core/core.module';
-import { ThemeModule } from '@theme/theme.module';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { SharedModule } from '@shared/shared.module';
-import { RoutesModule } from './routes/routes.module';
-import { FormlyConfigModule } from './formly-config.module';
+import { ThemeModule } from '@theme/theme.module';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { ToastrModule } from 'ngx-toastr';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { AppComponent } from './app.component';
+import { RoutesModule } from './routes/routes.module';
 
+import { BASE_URL, appInitializerProviders, httpInterceptorProviders } from '@core';
 import { environment } from '@env/environment';
-import { BASE_URL, httpInterceptorProviders, appInitializerProviders } from '@core';
 
 // Required for AOT compilation
 export function TranslateHttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-import { LoginService } from '@core/authentication/login.service';
-import { FakeLoginService } from './fake-login.service';
+import { registerLocaleData } from '@angular/common';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  MSAL_GUARD_CONFIG,
+  MSAL_INSTANCE,
+  MSAL_INTERCEPTOR_CONFIG,
+  MsalBroadcastService,
+  MsalGuard,
+  MsalInterceptor,
+  MsalRedirectComponent,
+  MsalService,
+} from '@azure/msal-angular';
+import {
+  MSALGuardConfigFactory,
+  MSALInstanceFactory,
+  MSALInterceptorConfigFactory,
+} from './msla.service';
+
+registerLocaleData(localeGr);
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,7 +50,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ThemeModule,
     RoutesModule,
     SharedModule,
-    FormlyConfigModule.forRoot(),
     NgxPermissionsModule.forRoot(),
     ToastrModule.forRoot(),
     TranslateModule.forRoot({
@@ -48,11 +62,32 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
   ],
   providers: [
-    { provide: BASE_URL, useValue: environment.baseUrl },
-    { provide: LoginService, useClass: FakeLoginService }, // <= Remove it in the real APP
+    { provide: BASE_URL, useValue: environment.baseURL },
+    { provide: LOCALE_ID, useValue: 'el-GR' },
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },
+    {
+      provide: MSAL_INSTANCE,
+      useFactory: MSALInstanceFactory,
+    },
+    {
+      provide: MSAL_GUARD_CONFIG,
+      useFactory: MSALGuardConfigFactory,
+    },
+    {
+      provide: MSAL_INTERCEPTOR_CONFIG,
+      useFactory: MSALInterceptorConfigFactory,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MsalInterceptor,
+      multi: true,
+    },
+    MsalService,
+    MsalGuard,
+    MsalBroadcastService,
     httpInterceptorProviders,
     appInitializerProviders,
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent, MsalRedirectComponent],
 })
 export class AppModule {}

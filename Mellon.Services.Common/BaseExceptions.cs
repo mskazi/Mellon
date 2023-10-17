@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
 
 namespace Mellon.Common.Services
 {
@@ -48,6 +46,16 @@ namespace Mellon.Common.Services
         }
     }
 
+    public class UnauthorizedException : BaseException
+    {
+        public const string TITLE = "The resource is not found.";
+        public UnauthorizedException(string message, object identifier, ErrorCodes? errorCode = null, Exception inner = null)
+            : base(HttpStatusCode.Unauthorized, TITLE, message, errorCode ?? ErrorCodes.GENERIC_NOT_FOUND, inner)
+        {
+        }
+
+    }
+
     public class NotFoundException : BaseException
     {
         public const string TITLE = "The resource is not found.";
@@ -90,7 +98,7 @@ namespace Mellon.Common.Services
         {
         }
 
-        
+
     }
 
     public sealed class GuardException : BadRequestException

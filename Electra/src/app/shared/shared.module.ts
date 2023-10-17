@@ -29,8 +29,6 @@ const MODULES: any[] = [
   FormsModule,
   MaterialModule,
   MaterialExtensionsModule,
-  FormlyModule,
-  FormlyMaterialModule,
   NgProgressModule,
   NgProgressRouterModule,
   NgProgressHttpModule,

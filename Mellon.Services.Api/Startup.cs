@@ -1,26 +1,25 @@
 ﻿namespace Mellon.Services.Api
 {
+    using MediatR;
+    using Mellon.Services.Apib.StartupExtensions;
+    using Mellon.Services.Application;
+    using Mellon.Services.Application.Services;
+    using Mellon.Services.Common.interfaces;
+    using Mellon.Services.Infrastracture.Context;
+    using Mellon.Services.Infrastracture.Repositotiries;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-    using System;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Infrastructure;
-    using Mellon.Services.Infrastracture.Context;
-    using System.Security.Claims;
-    using Mellon.Services.Infrastracture.Repositotiries;
-    using MediatR;
-    using Mellon.Services.Application;
-    using Mellon.Services.Application.Services;
-    using Serilog;
-    using Mellon.Services.Apib.StartupExtensions;
-    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.Identity.Web;
-    using Microsoft.AspNetCore.Authentication.OpenIdConnect;
     using Microsoft.IdentityModel.Logging;
+    using Serilog;
+    using System;
+    using System.Security.Claims;
 
     namespace XO.CRM.Services.Web
     {
@@ -56,9 +55,11 @@
                     });
 
                 services.AddScoped(typeof(IApprovalsRepository), typeof(ApprovalsRepository));
+                services.AddScoped(typeof(IMembersRepository), typeof(MembersRepository));
 
-                // services.AddTransient(s => s.GetService<IHttpContextAccessor>().HttpContext?.User ?? new ClaimsPrincipal());
-                 services.AddSingleton(Configuration);
+
+                services.AddTransient(s => s.GetService<IHttpContextAccessor>().HttpContext?.User ?? new ClaimsPrincipal());
+                services.AddSingleton(Configuration);
                 ////cors
                 services.AddCors(opt =>
                 {
@@ -78,6 +79,7 @@
 
                 services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
                 services.AddTransient<IEmailService, EmailService>();
+                services.AddScoped<ICurrentUserService, CurrentUserService>();
                 services.AddScoped<IApprovalProcessorHost, ApprovalProcessorHost>();
 
                 services.AddControllers();

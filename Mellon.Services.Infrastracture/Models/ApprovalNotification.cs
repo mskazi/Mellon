@@ -6,7 +6,7 @@ public partial class ApprovalNotification
 {
     public ApprovalNotification()
     {
-       
+
     }
     public int Id { get; set; }
     public string DocumentType { get; set; }
