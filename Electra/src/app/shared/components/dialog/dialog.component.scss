@@ -1,0 +1,51 @@
+@use 'sass:color';
+@use 'sass:map';
+@use '@angular/material'as mat;
+
+// Example for custom theming
+@mixin theme($theme) {
+  $is-dark-theme: map.get($theme, is-dark);
+  $row-odd-bg: mat.get-color-from-palette(mat.$gray-palette, 100);
+  $row-odd-bg-dark: color.adjust(mat.get-color-from-palette(mat.$gray-palette, 900), $lightness: 10%);
+
+
+  .dialog-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &:focus {
+      outline: none !important;
+    }
+  }
+
+  mat-dialog-title {
+    position: relative;
+    cursor: grab;
+    min-height: 2rem;
+
+    h1 {
+      font-size: 1.4rem;
+      font-weight: 400;
+      padding-top: 0;
+      margin-top: 0;
+    }
+  }
+
+  .close-button {
+    top: -5px
+  }
+
+  mat-dialog-actions {
+    margin-top: 0 !important;
+    padding-top: 12px;
+    border-top: 1px solid if($is-dark-theme, $row-odd-bg-dark, $row-odd-bg)
+  }
+
+  .dialog-content {
+    min-width: 50vw;
+    display: block;
+    max-height: 60vh;
+    overflow: auto;
+  }
+}

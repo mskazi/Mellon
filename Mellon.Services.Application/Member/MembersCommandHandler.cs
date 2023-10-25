@@ -5,11 +5,11 @@ using Microsoft.Extensions.Logging;
 
 namespace Mellon.Services.Application.Members.ApprovalHandlers
 {
-    public class MembersCommandHandler : IRequestHandler<GetCurrentMemberCommand, ElectraUser>
+    public class ServiceCommandHandler : IRequestHandler<GetCurrentMemberCommand, ElectraUser>
     {
         private readonly ILogger logger;
         private readonly ICurrentUserService currentUserService;
-        public MembersCommandHandler(ICurrentUserService currentUserService, ILogger<MembersCommandHandler> logger)
+        public ServiceCommandHandler(ICurrentUserService currentUserService, ILogger<ServiceCommandHandler> logger)
         {
             this.currentUserService = currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
             this.logger = logger;

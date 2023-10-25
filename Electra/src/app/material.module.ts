@@ -40,6 +40,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { PaginatorI18nService } from '@shared/services/paginator-i18n.service';
 
@@ -75,6 +76,7 @@ import { PaginatorI18nService } from '@shared/services/paginator-i18n.service';
     MatSliderModule,
     MatSlideToggleModule,
     MatSnackBarModule,
+    DragDropModule,
     MatSortModule,
     MatTableModule,
     MatTabsModule,

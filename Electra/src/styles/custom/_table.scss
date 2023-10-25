@@ -4,4 +4,12 @@ mtx-grid.mtx-grid {
   .mat-header-cell {
     white-space: nowrap;
   }
+
+  .mtx-grid-toolbar-content {
+    width: 100%;
+  }
+
+  .mtx-grid-toolbar {
+    min-height: 80px !important;
+  }
 }

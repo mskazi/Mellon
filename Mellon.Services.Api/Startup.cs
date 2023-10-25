@@ -5,7 +5,7 @@
     using Mellon.Services.Application;
     using Mellon.Services.Application.Services;
     using Mellon.Services.Common.interfaces;
-    using Mellon.Services.Infrastracture.Context;
+    using Mellon.Services.Infrastracture.Models;
     using Mellon.Services.Infrastracture.Repositotiries;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
@@ -56,6 +56,8 @@
 
                 services.AddScoped(typeof(IApprovalsRepository), typeof(ApprovalsRepository));
                 services.AddScoped(typeof(IMembersRepository), typeof(MembersRepository));
+                services.AddScoped(typeof(IVouchersRepository), typeof(VouchersRepository));
+
 
 
                 services.AddTransient(s => s.GetService<IHttpContextAccessor>().HttpContext?.User ?? new ClaimsPrincipal());

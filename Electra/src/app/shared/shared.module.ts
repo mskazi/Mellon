@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
@@ -21,6 +21,10 @@ import { ErrorCodeComponent } from './components/error-code/error-code.component
 import { DisableControlDirective } from './directives/disable-control.directive';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { ToObservablePipe } from './pipes/to-observable.pipe';
+import { DialogMessageMultipleOptionsComponent } from './components/dialog/dialog-message-multiple-options/dialog-message-multiple-options.component';
+import { DialogMessageComponent } from './components/dialog/dialog-message/dialog-message.component';
+import { DialogDynamicComponent } from './components/dialog/dialog.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 const MODULES: any[] = [
   CommonModule,
@@ -36,7 +40,15 @@ const MODULES: any[] = [
   ToastrModule,
   TranslateModule,
 ];
-const COMPONENTS: any[] = [BreadcrumbComponent, PageHeaderComponent, ErrorCodeComponent];
+const COMPONENTS: any[] = [
+  BreadcrumbComponent,
+  PageHeaderComponent,
+  ErrorCodeComponent,
+  SpinnerComponent,
+  DialogDynamicComponent,
+  DialogMessageMultipleOptionsComponent,
+  DialogMessageComponent,
+];
 const COMPONENTS_DYNAMIC: any[] = [];
 const DIRECTIVES: any[] = [DisableControlDirective];
 const PIPES: any[] = [SafeUrlPipe, ToObservablePipe];
@@ -45,5 +57,6 @@ const PIPES: any[] = [SafeUrlPipe, ToObservablePipe];
   imports: [...MODULES],
   exports: [...MODULES, ...COMPONENTS, ...DIRECTIVES, ...PIPES],
   declarations: [...COMPONENTS, ...COMPONENTS_DYNAMIC, ...DIRECTIVES, ...PIPES],
+  providers: [DatePipe],
 })
 export class SharedModule {}

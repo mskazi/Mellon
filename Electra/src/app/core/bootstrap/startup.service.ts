@@ -56,7 +56,7 @@ export class StartupService {
               console.log('No account found -> login');
               return this.msalService.loginRedirect();
             } else {
-              //this.checkAndSetActiveAccount();
+              this.checkAndSetActiveAccount();
               console.log('Logged in! Set account etc.');
               return this.loginService.info(
                 this.msalService.instance.getActiveAccount() ?? ({} as AccountInfo)

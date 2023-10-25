@@ -1,7 +1,6 @@
 ﻿using External.ERP.Service;
 using MediatR;
 using Mellon.Services.Application.Services;
-using Mellon.Services.Infrastracture.Base;
 using Mellon.Services.Infrastracture.ModelExtensions;
 using Mellon.Services.Infrastracture.Models;
 using Mellon.Services.Infrastracture.Repositotiries;
@@ -9,8 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Nager.Date;
 using Newtonsoft.Json;
-using System;
-using System.Runtime.CompilerServices;
 
 namespace Mellon.Services.Application.Approvals.ApprovalHandlers
 {
@@ -54,6 +51,7 @@ namespace Mellon.Services.Application.Approvals.ApprovalHandlers
             var approvalsContractToSendEmail = new List<ApprovalNotification>();
 
 
+
             repository.ResetContext();
             FormattableString deleteApprovalLines = $"DELETE FROM dbo.ApprovalLines";
             FormattableString deleteApprovalOrders = $"DELETE FROM dbo.ApprovalOrders";
@@ -81,13 +79,13 @@ namespace Mellon.Services.Application.Approvals.ApprovalHandlers
                 {
                     newApproval.ApprovalLines.Add(createApprovalLine(responseApprovalLine));
                 }
-                
+
 
                 var approvalList = responseApproverList.Where(p => p.DocumentNo == responseApproval.DocumentNo).ToList();
                 foreach (var approval in approvalList)
                 {
                     newApproval.Approvals.Add(createApproval(approval));
-                    if ((approval.Status == ApprovalStatusEnum.Open || approval.Status == ApprovalStatusEnum.Requested) && (approval.DocumentType== "Purchase" || approval.DocumentType == "Sales" || approval.DocumentType == "Contract" || approval.DocumentType == "Expense"))
+                    if ((approval.Status == ApprovalStatusEnum.Open || approval.Status == ApprovalStatusEnum.Requested) && (approval.DocumentType == "Purchase" || approval.DocumentType == "Sales" || approval.DocumentType == "Contract" || approval.DocumentType == "Expense"))
                     {
                         approvalsToSendEmail.Add(createApprovalNotification(approval));
                     }
@@ -98,20 +96,20 @@ namespace Mellon.Services.Application.Approvals.ApprovalHandlers
             await repository.UnitOfWork.SaveChangesAsync();
             foreach (var approvalToSendEmail in approvalsToSendEmail)
             {
-              
-                var  approvalNotification = await repository.getApprovalNotification(approvalToSendEmail.DocumentToken, cancellationToken);
-                if (approvalNotification==null)
+
+                var approvalNotification = await repository.getApprovalNotification(approvalToSendEmail.DocumentToken, cancellationToken);
+                if (approvalNotification == null)
                 {
 
                     var approval = await repository.GetApproval(approvalToSendEmail.DocumentToken, cancellationToken);
-                    if (approval!=null)
+                    if (approval != null)
                     {
                         this.logger.LogInformation($"Sending Email to  {approvalToSendEmail.email}" +
                         $"\n ApprovalToSendEmail DocumentToken: {approvalToSendEmail.DocumentToken}" +
                         $"\n ApprovalToSendEmail DocumentToken: {approvalToSendEmail.DocumentNo}" +
                         $"\n ApprovalInfo DocumentType: {approval.DocumentType}" +
                         $"\n ApprovalInfo DocumentToken: {approval.DocumentToken}" +
-                        $"\n ApprovalInfo DocumentToken: {approval.DocumentNo}"+
+                        $"\n ApprovalInfo DocumentToken: {approval.DocumentNo}" +
                         $"\n ApprovalInfo Status: {approval.Status}");
 
 
@@ -132,15 +130,15 @@ namespace Mellon.Services.Application.Approvals.ApprovalHandlers
                     }
                 }
             }
-           
 
-            if ((DateTime.Now.DayOfWeek != DayOfWeek.Saturday || DateTime.Now.DayOfWeek != DayOfWeek.Sunday)  &&  this.daysToResend!=0 && response.StatusCode!= System.Net.HttpStatusCode.OK)
+
+            if ((DateTime.Now.DayOfWeek != DayOfWeek.Saturday || DateTime.Now.DayOfWeek != DayOfWeek.Sunday) && this.daysToResend != 0 && response.StatusCode != System.Net.HttpStatusCode.OK)
             {
                 var delayedApprovalNotifications = await repository.GetDelayerdApprovals(daysToResend, cancellationToken);
                 foreach (var delayedApprovalNotification in delayedApprovalNotifications)
                 {
                     var approval = await repository.GetApproval(delayedApprovalNotification.DocumentToken, cancellationToken);
-                    if (approval != null  )
+                    if (approval != null)
                     {
                         if (approval.DocumentType == "Purchase" || approval.DocumentType == "Sales")
                         {
@@ -231,7 +229,7 @@ namespace Mellon.Services.Application.Approvals.ApprovalHandlers
             approvalNotification.DocumentOwner = response.DocumentOwner.Replace("MELLONGROUP\\", "");
             return approvalNotification;
         }
-        
+
     }
 
     internal class Document_Approver_Order_Response

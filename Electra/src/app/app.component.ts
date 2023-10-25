@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { PreloaderService, SettingsService } from '@core';
+import 'reflect-metadata';
 
 @Component({
   selector: 'app-root',

@@ -1,0 +1,14 @@
+<div class="message-container">
+  {{message | translate :messageParams }}
+</div>
+<ng-template #overrideFooterTemplate>
+  <button mat-button (click)="decline()" obButton="primary">
+    {{ dialogData.declineLabelKey | translate }}
+  </button>
+  <button mat-button (click)="accept()" obButton="primary">
+    {{ dialogData.acceptLabelKey | translate }}
+  </button>
+  <button mat-button (click)="cancel()" obButton="secondary">
+    {{ dialogData.cancelLabelKey | translate }}
+  </button>
+</ng-template>

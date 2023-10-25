@@ -1,0 +1,53 @@
+ <spinner [channel]="channel" [fixed]="false" [type]="spinnerType">
+ </spinner>
+ <mat-dialog-title tabindex="0" class="dialog-title" cdkDrag cdkDragRootElement=".mat-dialog-container" cdkDragHandle>
+   <button class="ob-flex close-button" mat-button obButton="tertiary"
+     style="float: right;position: absolute;right: -10px;" (click)="closeModal()" *ngIf="!blockClose">
+     <mat-icon class="fas fa-times"></mat-icon>
+     <span class="sr-only">{{ "lblClose" | translate }}</span>
+   </button>
+   <h1 class="ob-flex">{{ data.options.titleKey | translate: data.options?.titleParams }}</h1>
+ </mat-dialog-title>
+ <div class="ob-flex">{{ data.options.titleExtras | translate }}</div>
+ <mat-divider style="padding-bottom: 10px"></mat-divider>
+ <mat-dialog-content class="dialog-content">
+   <ng-template #target></ng-template>
+ </mat-dialog-content>
+ <div style="padding-top: 10px"></div>
+ <mat-dialog-actions>
+   <ng-container *ngIf="!overrideFooterTemplate; else overrideFooterBlock">
+     <ng-container *ngIf="form && !data.options.invisibleActionButton">
+       <button *ngIf="data.options.acceptLabelKey" mat-button (click)="action()" obButton="primary"
+         [disabled]="(data.options?.saveSkipDirtyCheck && !form.disabled)?false:!form.dirty">
+         {{ data.options.acceptLabelKey | translate }}
+       </button>
+       <button *ngIf="data.options.declineLabelKey" mat-button (click)="close()" obButton="secondary"
+         [disabled]="(data.options?.cancelSkipDirtyCheck && !form.disabled)?false:!form.dirty">
+         {{ data.options.declineLabelKey | translate }}
+       </button>
+     </ng-container>
+     <ng-container *ngIf="form && data.options.invisibleActionButton">
+       <button *ngIf="data.options.acceptLabelKey && showAction" mat-button (click)="action()" obButton="primary"
+         [disabled]="(data.options?.saveSkipDirtyCheck && !form.disabled)?false:!form.dirty">
+         {{ data.options.acceptLabelKey | translate }}
+       </button>
+       <button *ngIf="data.options.declineLabelKey" mat-button (click)="close()" obButton="secondary"
+         [disabled]="(data.options?.cancelSkipDirtyCheck && !form.disabled)?false:!form.dirty">
+         {{ data.options.declineLabelKey | translate }}
+       </button>
+     </ng-container>
+     <ng-container *ngIf="!form">
+       <button *ngIf="data.options.acceptLabelKey && !data.options.invisibleActionButton" mat-button (click)="action()"
+         obButton="primary">
+         {{ data.options.acceptLabelKey | translate }}
+       </button>
+       <button *ngIf="data.options.declineLabelKey" mat-button (click)="close()" obButton="secondary">
+         {{ data.options.declineLabelKey | translate }}
+       </button>
+     </ng-container>
+   </ng-container>
+   <ng-template #overrideFooterBlock>
+     <ng-container *ngTemplateOutlet="overrideFooterTemplate">
+     </ng-container>
+   </ng-template>
+ </mat-dialog-actions>
