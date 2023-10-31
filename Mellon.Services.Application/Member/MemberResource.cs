@@ -1,45 +1,61 @@
-﻿//using Mellon.Services.Infrastracture.Models;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//using XO.CRM.Services.Infrastructure.Models;
+﻿
+using Mellon.Common.Services;
 
-//namespace XO.CRM.Services.Application.OrganizationModel
-//{
+namespace Mellon.Services.Application
+{
+    public class MemberResource : MemberResourceData
+    {
+        public MemberResource() { }
 
-//    public class CurrentUserResource : MemberResource
-//    {
-//    //    public CurrentUserResource(CurrentUser entity, IEnumerable<Permission> grantedPermissions, string userUrl, SalesRoleType? salesRoleType) : base(entity)
-//    //    {
-//    //        this.GrantedPermissions = grantedPermissions;
-//    //        this.UserUrl = userUrl;
-//    //        this.SalesRoleType = salesRoleType;
-//    //    }
+        public MemberResource(Mellon.Services.Infrastracture.Models.Member member)
+            : base(member)
+        {
+            Id = member.Id;
+        }
+
+        public int Id { get; set; }
+
+        protected override void Validate()
+        {
+            base.Validate();
+            Guards.ValidIdentifier(Id);
+        }
+    }
+
+    public class MemberResourceData
+    {
+        public MemberResourceData() { }
+
+        public MemberResourceData(Mellon.Services.Infrastracture.Models.Member member)
+        {
+            Company = member?.Company;
+            MemberName = member?.MemberName;
+            Department = member?.Department;
+            SysCountry = member?.SysCountry;
+            IsActive = member?.IsActive ?? true;
+        }
 
 
-//    //}
+        public string Company { get; set; }
 
-//    //public class MemberResource
-//    //{
-//    //    public MemberResource(Member entity)
-//    //    {
+        public string Department { get; set; }
 
-//    //    }
+        public string MemberName { get; set; }
 
-//    //    public int Id { get; }
-//    //    public string Firstname { get; }
-//    //    public string Lastname { get; }
-//    //    public string Email { get; }
-//    //    public string Phone { get; }
-//    //    public string CreatedBy { get; }
-//    //    public DateTime? CreatedOn { get; }
-//    //    public string ModifiedBy { get; }
-//    //    public DateTime? ModifiedOn { get; }
-//    //    public int UnitId { get; }
+        public bool IsActive { get; set; }
 
-//    //    public bool IsActive { get; }
+        public string SysCountry { get; set; }
 
-//    //}
-//}
+        protected virtual void Validate()
+        {
+            Guards.StringNotNullOrEmpty(Company, nameof(Company));
+            Guards.StringMaximumLength(Company, nameof(Company), 50);
+            Guards.StringNotNullOrEmpty(Department, nameof(Department));
+            Guards.StringMaximumLength(Department, nameof(Department), 50);
+            Guards.StringNotNullOrEmpty(MemberName, nameof(MemberName));
+            Guards.StringMaximumLength(MemberName, nameof(MemberName), 50);
+            Guards.StringNotNullOrEmpty(SysCountry, nameof(SysCountry));
+            Guards.StringMaximumLength(SysCountry, nameof(SysCountry), 2);
+        }
+    }
+}

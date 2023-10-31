@@ -104,4 +104,8 @@ public partial class Datum
     public int? VoucherPrintType { get; set; }
 
     public virtual Carrier Carrier { get; set; } = null!;
+
+    public virtual ICollection<DataInability> DataInabilities { get; } = new List<DataInability>();
+
+    public virtual ICollection<DataLine> DataLines { get; } = new List<DataLine>();
 }

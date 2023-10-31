@@ -1,4 +1,4 @@
-/* .ob-spinner {
+/* .spinner {
 
   &,
   .ob-overlay {
@@ -9,13 +9,13 @@
   svg {
     display: block;
     width: 4em; // empiric number given by the design team
-    animation: ob-spin $ob-duration-default * 2 infinite linear;
+    animation: ob-spin 200 * 2 infinite linear;
     stroke-dashoffset: 55; // empiric number given by the design team
     stroke-dasharray: 64 150; // empiric number given by the design team
   }
 }
 
-.ob-spinner-viewport {
+.spinner-viewport {
   position: absolute;
   top: 50%;
   left: 50%;

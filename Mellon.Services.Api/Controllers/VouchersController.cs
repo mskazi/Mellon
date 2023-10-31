@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Mellon.Common.Services;
+using Mellon.Services.Application.Approvals;
 using Mellon.Services.Application.Services;
 using Mellon.Services.Application.Vouchers;
+using Mellon.Services.Common.resources;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -41,5 +43,17 @@ namespace Mellon.Services.Api.Controllers
             return Ok(result);
         }
 
+
+        // GET: api/<ApprovalsController>
+        [HttpGet]
+        [Route("{id}")]
+        [ProducesResponseType(typeof(ApprovalOrderResource), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Get(int id)
+        {
+            var command = new GetVoucherDetailsCommand(id);
+            VoucherDetails result = await mediator.Send(command);
+            return Ok(result);
+        }
     }
 }

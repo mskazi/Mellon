@@ -27,4 +27,25 @@ namespace Mellon.Services.Application.Members.ApprovalHandlers
         }
     }
 
+
+    public class VoucherDetailCommandHandler : IRequestHandler<GetVoucherDetailsCommand, VoucherDetails>
+    {
+        private readonly ILogger logger;
+        private readonly ICurrentUserService currentUserService;
+        private readonly IVouchersRepository repository;
+
+        public VoucherDetailCommandHandler(ICurrentUserService currentUserService, ILogger<VoucherServiceCommandHandler> logger, IVouchersRepository repository)
+        {
+            this.currentUserService = currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
+            this.logger = logger;
+            this.repository = repository;
+        }
+
+        public async Task<VoucherDetails> Handle(GetVoucherDetailsCommand request, CancellationToken cancellationToken)
+        {
+
+            return await this.repository.VoucherDetails(request.Id, cancellationToken);
+        }
+    }
+
 }

@@ -10,6 +10,7 @@ namespace Mellon.Services.Infrastracture.Repositotiries
     public interface IVouchersRepository : IRepository
     {
         Task<PaginatedListResult<VoucherServiceItem>> ServiceVouchers(string term, ListPaging paging, ListOrder order, CancellationToken cancellationToken);
+        Task<VoucherDetails> VoucherDetails(int id, CancellationToken cancellationToken);
     }
 
     public class VouchersRepository : IVouchersRepository
@@ -28,7 +29,6 @@ namespace Mellon.Services.Infrastracture.Repositotiries
         {
             paging ??= new ListPaging();
             int? total = null;
-
 
             var query = (from data in context.Data
                          join setup in context.ElectraProjectSetups on data.ElectraProjectId equals setup.Id
@@ -142,6 +142,90 @@ namespace Mellon.Services.Infrastracture.Repositotiries
                paging.Length,
                total,
                dataResults);
+        }
+
+        public async Task<VoucherDetails> VoucherDetails(int id, CancellationToken cancellationToken)
+        {
+
+            var query = (from data in context.Data
+                         join setup in context.ElectraProjectSetups on data.ElectraProjectId equals setup.Id
+                         join carriers in context.Carriers on data.CarrierId equals carriers.Id
+                         join members in context.Members on data.OrderedBy equals members.Id
+                         join dimsConditios in context.Dims on data.ConditionCode equals dimsConditios.ValueChar
+                         join dimsDepartment in context.Dims on data.SysDepartment equals dimsDepartment.ValueChar
+                         join dimsDelivery in context.Dims on data.VoucherScheduledDelivery equals dimsDelivery.ValueInt
+                         join dimsDs in context.Dims on data.SysStatus equals dimsDs.ValueInt
+                         where (
+                         //dimsConditios.Name == "sys_condition" &&
+                         //data.SysDepartment == "sys_department" &&
+                         //dimsDelivery.Name == "sys_time_delivery" &&
+                         //dimsDs.Name == "sys_status" &&
+                         data.Id == id
+                         )
+                         select new { data, setup, carriers, members, dimsConditios, dimsDepartment, dimsDelivery, dimsDs }
+            ).AsQueryable();
+
+
+            var result = query.Select(s =>
+                 new VoucherDetails()
+                 {
+                     Id = s.data.Id,
+                     SystemStatus = s.data.SysStatus,
+                     VoucherName = s.data.VoucherName,
+                     VoucherContact = s.data.VoucherContact,
+                     VoucherAddress = s.data.VoucherAddress,
+                     VoucherCity = s.data.VoucherCity,
+                     VoucherPostCode = s.data.VoucherPostCode,
+                     VoucherPhoneNo = s.data.VoucherPhoneNo,
+                     VoucherMobileNo = s.data.VoucherMobileNo,
+                     VoucherDescription = s.data.VoucherDescription,
+                     NavisionServiceOrderNo = s.data.NavisionServiceOrderNo,
+                     NavisionSalesOrderNo = s.data.NavisionSalesOrderNo,
+                     CarrierDelivereyStatus = s.dimsDs == null ? null : s.dimsDs.Description,
+                     CarrierVoucherNo = s.data.CarrierVoucherNo,
+                     CarrierPickupDate = s.data.CarrierPickupDate,
+                     CarrierDeliveryDate = s.data.CarrierDeliveryDate,
+                     CarrierDeliveredTo = s.data.CarrierDeliveredTo,
+                     ConditionCode = s.dimsConditios == null ? null : s.dimsConditios.Description,
+                     DeliverSaturday = s.data.DeliverSaturday,
+                     DeliveryDescription = s.dimsDelivery == null ? null : s.dimsDelivery.Description,
+                     CODAmount = s.data.CodAmount,
+                     CreatedBy = s.data.CreatedBy,
+                     CreatedAt = s.data.CreatedAt,
+                     SystemCompany = s.data.SysCompany,
+                     SystemDepertment = s.dimsDepartment == null ? null : s.dimsDepartment.Description,
+                     OrderedBy = s.members == null ? null : s.members.MemberName,
+                     CarrierCode = s.setup == null ? null : s.setup.CarrierCode,
+                     MellonProject = s.setup == null ? null : s.setup.MellonProject,
+                     CarrierName = s.carriers == null ? null : s.carriers.DescrShort,
+                 }
+            );
+            var voucherDetails = await result.FirstOrDefaultAsync();
+            if (voucherDetails != null)
+            {
+                voucherDetails.DataInabilities = new List<VoucherDataInability>();
+                voucherDetails.DataInabilities = context.DataInabilities.Where(x => x.DataId == id).Select(x => new VoucherDataInability()
+                {
+                    Id = x.Id,
+                    DataId = x.DataId,
+                    Reason = x.Reason,
+                    TrnDate = x.TrnDate
+                }).ToList();
+                voucherDetails.DataInabilities = new List<VoucherDataInability>();
+                voucherDetails.DataLines = context.DataLines.Where(x => x.DataId == id).Select(x => new VoucherDataLine()
+                {
+                    Id = x.Id,
+                    DataId = x.DataId,
+                    CreatedAt = x.CreatedAt,
+                    CreatedBy = x.CreatedBy,
+                    Name = x.Name,
+                    UpdatedAt = x.UpdatedAt,
+                    UpdatedBy = x.UpdatedBy,
+                    Value = x.Value
+                }).ToList();
+            }
+            return voucherDetails;
+
         }
     }
 }

@@ -1,4 +1,3 @@
-
 <div class="matero-container-wrap"
      [ngClass]="{'matero-sidenav-collapsed': options.sidenavCollapsed && options.navPos!=='top',
                  'matero-navbar-side': options.navPos==='side',
@@ -7,7 +6,7 @@
                  'matero-header-fixed': options.headerPos==='fixed',
                  'matero-header-white': themeColor!=='dark'}"
      [dir]="options.dir">
-  <ng-progress></ng-progress>
+  <!-- <ng-progress></ng-progress> -->
 
   <!-- Header Above -->
   <app-header *ngIf="options.showHeader && options.headerPos==='above'"

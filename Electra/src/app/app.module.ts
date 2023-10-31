@@ -1,6 +1,6 @@
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import localeGr from '@angular/common/locales/el';
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { Injector, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CoreModule } from '@core/core.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -20,7 +20,7 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-import { registerLocaleData } from '@angular/common';
+import { DOCUMENT, registerLocaleData } from '@angular/common';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -33,6 +33,8 @@ import {
   MsalRedirectComponent,
   MsalService,
 } from '@azure/msal-angular';
+import { WINDOW, windowProvider } from '@core/global-events.service';
+import { InjectorService } from '@core/injector.service';
 import {
   MSALGuardConfigFactory,
   MSALInstanceFactory,
@@ -62,6 +64,7 @@ registerLocaleData(localeGr);
     BrowserAnimationsModule,
   ],
   providers: [
+    { provide: WINDOW, useFactory: windowProvider, deps: [DOCUMENT] },
     { provide: BASE_URL, useValue: environment.baseURL },
     { provide: LOCALE_ID, useValue: 'el-GR' },
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },
@@ -90,4 +93,9 @@ registerLocaleData(localeGr);
   ],
   bootstrap: [AppComponent, MsalRedirectComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(injector: Injector) {
+    // initialize injector service for use in the application as static and no need dependency injection
+    InjectorService.injector = injector;
+  }
+}

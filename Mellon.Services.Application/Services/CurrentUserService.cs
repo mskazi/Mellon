@@ -1,6 +1,5 @@
 ﻿using Mellon.Common.Services;
 using Mellon.Services.Common.interfaces;
-using Mellon.Services.Infrastracture.Models;
 using Mellon.Services.Infrastracture.Repositotiries;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -12,11 +11,11 @@ namespace Mellon.Services.Application.Services
     public class ElectraUser : IElectraUser
     {
         private readonly IConfiguration configuration;
-        private readonly Member user;
+        private readonly Mellon.Services.Infrastracture.Models.Member user;
         private readonly string _email;
         private readonly RoleTypeEnum _role;
 
-        public ElectraUser(Member user, string _email, IConfiguration configuration)
+        public ElectraUser(Mellon.Services.Infrastracture.Models.Member user, string _email, IConfiguration configuration)
         {
             this.user = user ?? throw new ArgumentNullException(nameof(user));
             this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));

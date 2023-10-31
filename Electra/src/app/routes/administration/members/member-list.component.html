@@ -1,0 +1,65 @@
+<div class="w-full h-full">
+  <mat-card class="m-auto">
+    <mat-card-header class="bg-teal-600">
+      <mat-card-title>
+        Vouchers List
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="m-t-16">
+      <ng-template #toolbarTpl class="">
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="align-content-start d-flex align-items-center">
+            <button class="m-x-4" mat-raised-button color="primary"
+                    (click)="createMember()"
+                    type="submit" [disabled]="exportLoading">Create</button>
+          </div>
+          <div class="align-content-end">
+            <form class="align-items-center">
+              <mat-form-field appearance="outline" style="flex-direction: unset;">
+                <input matInput [(ngModel)]="query.term" name="q" placeholder="Search">
+              </mat-form-field>
+              <button class="m-x-4" mat-raised-button color="primary" (click)="search()"
+                      type="submit">Search</button>
+              <button class="m-x-4" mat-raised-button color="warn" (click)="reset()"
+                      type="button">Reset</button>
+            </form>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #isActiveTpl let-row let-index="index" let-col="colDef">
+        <div class="d-flex">
+          <mat-icon *ngIf="row?.isActive" class="text-green-900">check</mat-icon>
+        </div>
+      </ng-template>
+      <ng-template #functionTpl let-row let-index="index" let-col="colDef">
+        <div class="d-flex">
+          <button mat-raised-button color="primary" class="m-l-4" (click)="editMember(row)">
+            Edit</button>
+        </div>
+      </ng-template>
+      <mtx-grid [data]="data"
+                [columns]="columns"
+                [length]="total"
+                [loading]="isLoading"
+                [pageOnFront]="false"
+                [pageIndex]="query.index"
+                [pageSize]="query.pageSize"
+                [pageSizeOptions]="[10,20,50]"
+                (page)="getNextPage($event)"
+                [toolbarTemplate]="toolbarTpl"
+                [columnResizable]="true"
+                [sortOnFront]="false"
+                [showColumnMenuButton]="false"
+                [showToolbar]="true"
+                [rowHover]="true"
+                [cellTemplate]="{function: functionTpl,isActive:isActiveTpl}"
+                [sortActive]="sortActive"
+                sortDirection="asc"
+                [sortDisableClear]="false"
+                [sortDisabled]="false"
+                (sortChange)="getSortPage($event)">
+      </mtx-grid>
+    </mat-card-content>
+  </mat-card>
+</div>

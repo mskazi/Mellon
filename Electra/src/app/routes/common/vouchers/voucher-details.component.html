@@ -1,0 +1,180 @@
+<spinner [type]="spinnerType" [channel]="channel"></spinner>
+<div class="d-flex flex-wrap ajustify-content-around align-content-stretch align-items-stretch align-self-stretch"
+     style=" gap: 10px;">
+  <mat-expansion-panel class="bg-gray-50 text-gray-900" [expanded]="true">
+    <mat-expansion-panel-header class="bg-teal-600">
+      <mat-panel-title>Voucher Details</mat-panel-title>
+    </mat-expansion-panel-header>
+    <table id="VoucherDetails" class="mat-simple-table m-t-8">
+      <tbody>
+        <tr>
+          <td>Carrier</td>
+          <td>{{voucher?.carrierName}}</td>
+        </tr>
+        <tr>
+          <td>VoucherNo</td>
+          <td>{{voucher?.carrierVoucherNo}}</td>
+        </tr>
+        <tr>
+          <td>Company</td>
+          <td>{{voucher?.systemCompany}}</td>
+        </tr>
+        <tr>
+          <td>Voucher Name</td>
+          <td>{{voucher?.voucherName}}</td>
+        </tr>
+        <tr>
+          <td>Voucher Contact</td>
+          <td>{{voucher?.voucherContact}}</td>
+        </tr>
+        <tr>
+          <td>Voucher Address</td>
+          <td>{{voucher?.voucherAddress}} | {{voucher?.voucherCity}} |
+            {{voucher?.voucherPostCode}}</td>
+        </tr>
+        <tr>
+          <td>Voucher Phone</td>
+          <td>{{voucher?.voucherPhoneNo}}</td>
+        </tr>
+        <tr>
+          <td>Voucher Mobile</td>
+          <td>{{voucher?.voucherMobileNo}}</td>
+        </tr>
+        <tr>
+          <td>Voucher Notes</td>
+          <td>{{voucher?.voucherDescription}}</td>
+        </tr>
+        <tr>
+          <td>Other Conditions</td>
+          <td>{{voucher?.conditionCode}}</td>
+        </tr>
+        <tr>
+          <td>Saturday Delivery</td>
+          <td>
+            <mat-icon *ngIf="voucher?.deliverSaturday" class="text-green-900">check</mat-icon>
+          </td>
+        </tr>
+        <tr>
+          <td>Delivery Time</td>
+          <td>{{voucher?.deliveryDescription}}</td>
+        </tr>
+        <tr>
+          <td>COD Amount</td>
+          <td><span *ngIf="voucher?.codAmount">{{voucher.codAmount | number:'1.2-2'}}</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </mat-expansion-panel>
+  <mat-expansion-panel class="bg-gray-50 text-gray-900" [expanded]="true">
+    <mat-expansion-panel-header class="bg-teal-600">
+      <mat-panel-title>Delivery Details</mat-panel-title>
+    </mat-expansion-panel-header>
+    <table class="mat-simple-table m-t-8">
+      <tbody>
+        <tr>
+          <td>Delivery Status</td>
+          <td>{{voucher?.carrierDelivereyStatus}}</td>
+        </tr>
+        <tr>
+          <td>PickUp Date</td>
+          <td><span
+                  *ngIf="voucher?.carrierPickupDate">{{voucher?.carrierPickupDate | date:'dd.MM.yyyy'}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td>Delivery Date</td>
+          <td><span
+                  *ngIf="voucher?.carrierDeliveryDate">{{voucher?.carrierDeliveryDate | date:'dd.MM.yyyy'}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td>Received By</td>
+          <td>{{voucher?.carrierDeliveredTo}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </mat-expansion-panel>
+  <ng-container *ngIf="voucher && voucher.dataInabilities && voucher.dataInabilities.length>0">
+    <mat-expansion-panel class="bg-gray-50 text-gray-900" [expanded]="true">
+      <mat-expansion-panel-header class="bg-teal-600">
+        <mat-panel-title>Carrier Inabilities</mat-panel-title>
+      </mat-expansion-panel-header>
+      <table class="mat-simple-table m-t-8">
+        <tbody>
+          <tr>
+            <td>Date</td>
+            <td>Reason</td>
+          </tr>
+          <ng-container *ngFor="let i of voucher?.dataInabilities;">
+            <tr>
+              <td><span
+                      *ngIf="i?.trnDate">{{i?.trnDate | date:'dd.MM.yyyy'}}</span>
+              </td>
+              <td>{{i?.reason}}</td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </mat-expansion-panel>
+  </ng-container>
+
+  <mat-expansion-panel class="bg-gray-50 text-gray-900" [expanded]="true">
+    <mat-expansion-panel-header class="bg-teal-600">
+      <mat-panel-title>Electra Details</mat-panel-title>
+    </mat-expansion-panel-header>
+    <table class="mat-simple-table m-t-8">
+      <tbody>
+        <tr>
+          <td>Electra ID</td>
+          <td> {{voucher?.id}}</td>
+        </tr>
+        <tr>
+          <td>Electra Project</td>
+          <td>{{voucher?.mellonProject}} </td>
+        </tr>
+        <tr>
+          <td>Charge Company</td>
+          <td>{{voucher?.systemCompany}}</td>
+        </tr>
+        <tr>
+          <td>Charge Department</td>
+          <td>{{voucher?.systemDepertment}}</td>
+        </tr>
+        <tr>
+          <td>Ordered By</td>
+          <td>{{voucher?.orderedBy}}</td>
+        </tr>
+        <tr>
+          <td>Created By</td>
+          <td>{{voucher?.createdBy}}</td>
+        </tr>
+        <tr>
+          <td>Created At</td>
+          <td><span
+                  *ngIf="voucher?.createdAt">{{voucher?.createdAt | date:'dd.MM.yyyy hh:mm'}}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </mat-expansion-panel>
+  <mat-expansion-panel class="bg-gray-50 text-gray-900" [expanded]="true">
+    <mat-expansion-panel-header class="bg-teal-600">
+      <mat-panel-title>Voucher Supporting Details</mat-panel-title>
+    </mat-expansion-panel-header>
+    <table class="mat-simple-table m-t-8">
+      <tbody>
+        <tr>
+          <td>Field</td>
+          <td>Value</td>
+        </tr>
+        <ng-container *ngFor="let i of voucher?.dataLines;">
+          <tr>
+            <td>{{i?.name}}
+            </td>
+            <td>{{i?.value}}</td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </mat-expansion-panel>
+</div>

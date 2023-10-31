@@ -12,4 +12,6 @@ public partial class DataInability
     public DateTime? TrnDate { get; set; }
 
     public string? Reason { get; set; }
+
+    public virtual Datum? Data { get; set; }
 }

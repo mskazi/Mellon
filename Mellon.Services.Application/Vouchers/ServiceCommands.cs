@@ -16,4 +16,13 @@ namespace Mellon.Services.Application.Vouchers
         public ListPaging Paging { get; }
         public ListOrder Ordering { get; }
     }
+
+    public class GetVoucherDetailsCommand : IRequest<VoucherDetails>
+    {
+        public GetVoucherDetailsCommand(int id)
+        {
+            Id = id;
+        }
+        public int Id { get; set; }
+    }
 }

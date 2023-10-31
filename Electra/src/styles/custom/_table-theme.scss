@@ -10,12 +10,20 @@
 
   $row-hover-bg: mat.get-color-from-palette(mat.$indigo-palette, 50);
   $row-odd-bg: mat.get-color-from-palette(mat.$gray-palette, 100);
+  $row-odd-bg-300: mat.get-color-from-palette(mat.$gray-palette, 200);
+  $row-odd-bg-500: mat.get-color-from-palette(mat.$gray-palette, 500);
 
   $row-hover-bg-dark: mat.get-color-from-palette(mat.$blue-gray-palette, 900);
   $row-odd-bg-dark: color.adjust(mat.get-color-from-palette(mat.$gray-palette, 900), $lightness: 10%);
 
   mtx-grid.mtx-grid {
-    .mat-table {
+    .mat-mdc-table {
+
+      /*  .mat-mdc-row {
+        color: black !important;
+        background-color: $row-odd-bg-500 !important;
+      }
+ */
       &.mat-table-striped {
         .mat-row-odd {
           background-color: if($is-dark-theme, $row-odd-bg-dark, $row-odd-bg);
@@ -23,20 +31,62 @@
       }
 
       &.mat-table-hover {
-        .mat-row {
+        .mat-mdc-row {
           &:hover {
-            background-color: if($is-dark-theme, $row-hover-bg-dark, $row-hover-bg);
+            background-color: if($is-dark-theme, $row-hover-bg, $row-hover-bg);
           }
         }
       }
 
+      .mat-table-sticky-left,
+      .mat-table-sticky-right {
+        border-color: $row-odd-bg-500;
+      }
 
+      .mat-mdc-row {
+        .mat-mdc-cell {
+          border-color: $row-odd-bg-500;
+        }
 
-      .mat-row {
+        color: black;
+        background-color: $row-odd-bg-300;
+
         &.selected {
           background-color: if($is-dark-theme, $row-hover-bg-dark, $row-hover-bg);
         }
       }
+
+      /*    .mat-mdc-row {
+      color: black !important;
+      background-color: $row-odd-bg-500 !important;
+    } */
+
     }
+
+
+
+
+    .mat-simple-table {
+      width: 100%;
+      border-spacing: 0;
+      border-collapse: separate;
+
+      td,
+      th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        width: 50%;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      tr:hover {
+        background-color: #ddd;
+      }
+    }
+
   }
+
 }

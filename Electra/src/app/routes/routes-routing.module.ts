@@ -38,6 +38,18 @@ const routes: Routes = [
           },
         },
       },
+      {
+        path: 'administration',
+        loadChildren: () =>
+          import('./administration/administration.module').then(m => m.AdministrationModule),
+        canActivate: [NgxPermissionsGuard],
+        data: {
+          permissions: {
+            // only: Roles.SERVICE,
+            redirectTo: '/dashboard',
+          },
+        },
+      },
     ],
   },
   {

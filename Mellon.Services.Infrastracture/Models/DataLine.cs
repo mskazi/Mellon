@@ -20,4 +20,6 @@ public partial class DataLine
     public DateTime? CreatedAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
+
+    public virtual Datum Data { get; set; } = null!;
 }

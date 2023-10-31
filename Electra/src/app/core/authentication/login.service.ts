@@ -64,40 +64,64 @@ export class LoginService {
 
   menu(): Menu[] {
     if (this.userInfo?.user.roles === Roles.SERVICE) {
-      return [
-        {
-          route: 'service',
-          name: 'service',
-          type: 'sub',
-          icon: 'color_lens',
-          children: [
-            {
-              route: 'voucher-list',
-              name: 'VoucherList',
-              type: 'link',
-            },
-            {
-              route: 'scan-send',
-              name: 'ScanSend',
-              type: 'link',
-            },
-            {
-              route: 'srv-orders',
-              name: 'SRVOrderManual',
-              type: 'link',
-            },
-          ],
-          permissions: {
-            only: ['SERVICE'],
-          },
-        },
-      ] as Menu[];
+      return [...this.getServiceMenu(), ...this.getAdministrationMenu()];
     }
-
     return [];
   }
 
   check() {
     return this.unauthorized;
+  }
+
+  getServiceMenu() {
+    return [
+      {
+        route: 'service',
+        name: 'service',
+        type: 'sub',
+        icon: 'color_lens',
+        children: [
+          {
+            route: 'voucher-list',
+            name: 'VoucherList',
+            type: 'link',
+          },
+          {
+            route: 'scan-send',
+            name: 'ScanSend',
+            type: 'link',
+          },
+          {
+            route: 'srv-orders',
+            name: 'SRVOrderManual',
+            type: 'link',
+          },
+        ],
+        permissions: {
+          only: ['SERVICE'],
+        },
+      },
+    ] as Menu[];
+  }
+
+  getAdministrationMenu() {
+    return [
+      {
+        route: 'administration',
+        name: 'administration',
+        type: 'sub',
+        icon: 'color_lens',
+        children: [
+          {
+            route: 'members',
+            name: 'members',
+            type: 'link',
+          },
+        ],
+        permissions: {
+          only: [],
+        },
+      },
+    ] as Menu[];
   }
 }

@@ -23,3 +23,8 @@ export const defaults: AppSettings = {
   sidenavCollapsed: false,
   language: 'en-US',
 };
+
+export enum ExportFormatTypes {
+  EXCELX = 'xlsx',
+  CSV = 'csv',
+}

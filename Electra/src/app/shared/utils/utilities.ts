@@ -3,6 +3,10 @@ import * as _ from 'lodash';
 import { Observable, Subject, throwError } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import { PaginatedListParams } from '@core/table-model';
+import { DatePipe } from '@angular/common';
+import { ExportFormatTypes } from '@core';
+import * as XLSX from 'xlsx';
+
 // Utilities is a functional class that contains only static methods;
 export class Utilities {
   // Auto generates a Unique Identifier
@@ -208,6 +212,42 @@ export class Utilities {
       fileName = fileName.substring(1, fileName.length - 1);
     }
     return fileName;
+  }
+
+  static exportFile(
+    dataToSave: any[],
+    heading: string[],
+    prefixTitle: string,
+    datePipe: DatePipe,
+    exportFormatType: ExportFormatTypes
+  ) {
+    /* pass here the table id */
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataToSave);
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.sheet_add_aoa(ws, [heading]);
+    XLSX.utils.sheet_add_json(ws, dataToSave, { origin: 'A2', skipHeader: true });
+
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    /* save to file */
+    //if (exportFormatType === ExportFormatTypes.EXCELX) {
+    XLSX.writeFile(wb, Utilities.generateFilename(prefixTitle, datePipe, exportFormatType));
+    // } else {
+
+    // }
+  }
+
+  static generateFilename(
+    prefix: string,
+    datePipe: DatePipe,
+    exportFormatTypes: ExportFormatTypes
+  ) {
+    return `${prefix}_${datePipe.transform(
+      Date.now(),
+      'dd_MM_YYYY_HH_SS',
+      'UTC',
+      'en'
+    )}.${exportFormatTypes}`;
   }
 
   static paginatedQueryParams(pagingParams?: PaginatedListParams): string {

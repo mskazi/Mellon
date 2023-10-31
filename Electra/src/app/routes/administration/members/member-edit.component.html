@@ -1,0 +1,29 @@
+<form [formGroup]="form" class="form-field-full" [id]="formId" unsavedChanges>
+  <mat-form-field>
+    <mat-label>Member</mat-label>
+    <input matInput formControlName="memberName" required>
+    <mat-error>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Active</mat-label>
+    <mat-select required formControlName="isActive" required>
+      <mat-option [value]="null"></mat-option>
+      <mat-option [value]="true">Yes</mat-option>
+      <mat-option [value]="false">No</mat-option>
+    </mat-select>
+    <mat-error>
+    </mat-error>
+  </mat-form-field>
+
+  <!--  <mat-form-field>
+    <mat-label>Mobile</mat-label>
+    <input matInput  type="number" formControlName="mobile"
+           required>
+    <mat-icon matSuffix>smartphone</mat-icon>
+    <mat-error>
+    </mat-error>
+  </mat-form-field> -->
+
+</form>

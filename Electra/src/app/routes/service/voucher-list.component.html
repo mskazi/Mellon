@@ -9,11 +9,18 @@
     <mat-card-content class="m-t-16">
       <ng-template #toolbarTpl class="">
         <div class="d-flex justify-content-between align-items-center">
-          <div class="align-content-start">
-            <button class="m-x-4" mat-raised-button color="primary" (click)="search()"
-                    type="submit">CSV</button>
-            <button class="m-x-4" mat-raised-button color="primary" (click)="search()"
-                    type="submit">EXCEL</button>
+          <div class="align-content-start d-flex align-items-center">
+            <button class="m-x-4" mat-raised-button color="primary"
+                    (click)="export(ExportFormatTypes.CSV)"
+                    type="submit" [disabled]="exportLoading">CSV</button>
+            <button class="m-x-4" mat-raised-button color="primary"
+                    (click)="export(ExportFormatTypes.EXCELX)"
+                    type="submit" [disabled]="exportLoading">EXCEL</button>
+            <div>
+              <spinner [channel]="exportChannel" [type]="exportChannelSpinnerType" color="warn"
+                       [diameter]="30" [strokeWidth]="5">
+              </spinner>
+            </div>
           </div>
 
           <div class="align-content-end">
@@ -27,6 +34,7 @@
               <button class="m-x-4" mat-raised-button color="warn" (click)="reset()"
                       type="button">
                 Reset</button>
+
             </form>
           </div>
         </div>
@@ -37,6 +45,10 @@
             <!-- {{row.mobile}} -->Voucher</button>
           <button mat-raised-button color="warn" class="m-l-4">
             <!-- {{row.mobile}} -->Cancel</button>
+          <button mat-raised-button color="primary" class="m-l-4" (click)="showVoucherDetails(row)">
+            <!-- *ngIf="row.systemStatus ===90" -->
+            <!-- {{row.mobile}} -->Details</button>
+
         </div>
       </ng-template>
       <mtx-grid [data]="data"

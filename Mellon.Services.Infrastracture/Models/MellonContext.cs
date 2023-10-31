@@ -180,6 +180,10 @@ public partial class MellonContext : UnitOfWorkContext<MellonContext>
             entity.Property(e => e.TrnDate)
                 .HasColumnType("date")
                 .HasColumnName("trn_date");
+
+            entity.HasOne(d => d.Data).WithMany(p => p.DataInabilities)
+                .HasForeignKey(d => d.DataId)
+                .HasConstraintName("FK_data_inabilities_data");
         });
 
         modelBuilder.Entity<DataLine>(entity =>
@@ -212,6 +216,11 @@ public partial class MellonContext : UnitOfWorkContext<MellonContext>
                 .HasMaxLength(200)
                 .IsUnicode(false)
                 .HasColumnName("value");
+
+            entity.HasOne(d => d.Data).WithMany(p => p.DataLines)
+                .HasForeignKey(d => d.DataId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_data_lines_data");
         });
 
         modelBuilder.Entity<DataSubvoucher>(entity =>

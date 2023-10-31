@@ -1,17 +1,15 @@
  <ng-container *ngIf="type === spinnerTypes.PROGRESS_BAR">
    <div style="height: 20px;">
-     <mat-progress-bar mode="indeterminate" *ngIf="$state==='in'"></mat-progress-bar>
+     <mat-progress-bar mode="indeterminate" *ngIf="$state==='in'" [color]="color">
+     </mat-progress-bar>
    </div>
  </ng-container>
  <ng-container *ngIf="type === spinnerTypes.FIXED_CIRCLE">
-   <mat-progress-spinner mode="indeterminate" diameter="20" *ngIf="$state==='in'"></mat-progress-spinner>
+   <mat-progress-spinner mode="indeterminate" diameter="20" *ngIf="$state==='in'" [color]="color"
+                         [diameter]="diameter" [strokeWidth]="strokeWidth">
+   </mat-progress-spinner>
  </ng-container>
  <ng-container *ngIf="type === spinnerTypes.CIRCLE">
-   <div class="ob-overlay" [class.ob-overlay-fixed]="fixed" [@inOut]="$state">
-     <div class="ob-spinner-viewport" #spinnerContainer>
-       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-         <circle cx="24" cy="24" r="20" fill="none" stroke="#069" stroke-miterlimit="10" stroke-width="4" />
-       </svg>
-     </div>
-   </div>
+   <mtx-loader [loading]="$state==='in'" [type]="typeLoader" [color]="color" [hasBackdrop]="true">
+   </mtx-loader>
  </ng-container>

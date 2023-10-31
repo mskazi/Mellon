@@ -1,13 +1,17 @@
-import { AfterViewInit, Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { MtxGridColumn } from '@ng-matero/extensions/grid';
-import { ServiceCommandsService } from './service-commands.service';
-import { finalize } from 'rxjs';
-import { PageEvent } from '@angular/material/paginator';
-import { defaultPageIndex, defaultPageSize } from '@core/table-model';
 import { DatePipe } from '@angular/common';
-import * as _ from 'lodash';
-
+import { AfterViewInit, Component } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
+import { PaginatedListResults, defaultPageIndex, defaultPageSize } from '@core/table-model';
+import { MtxGridColumn } from '@ng-matero/extensions/grid';
+import { EMPTY, catchError, expand, finalize, map, reduce } from 'rxjs';
+import * as XLSX from 'xlsx';
+import { VoucherCommandService } from '../../core/services/voucher-commands.service';
+import { Utilities } from '@shared/utils/utilities';
+import { ExportFormatTypes } from '@core';
+import { SpinnerService, SpinnerType } from '@shared/components/spinner/spinner.service';
+import { DialogDynamicService } from '@shared/components/dialog/dialog.service';
+import { VoucherDetailsCommonComponent } from '../common/vouchers/voucher-details.component';
+import { VoucherServiceItem } from '@core/models/voucher-search-item';
 @Component({
   selector: 'app-service-voucher-list',
   templateUrl: './voucher-list.component.html',
@@ -15,12 +19,18 @@ import * as _ from 'lodash';
 })
 export class ServiceVoucherListComponent implements AfterViewInit {
   constructor(
-    private serviceCommandsService: ServiceCommandsService,
-    private datePipe: DatePipe
+    private serviceCommandsService: VoucherCommandService,
+    private datePipe: DatePipe,
+    private spinnerService: SpinnerService,
+    private dialogDynamicService: DialogDynamicService
   ) {}
 
   defaultPageIndex = defaultPageIndex;
   defaultPageSize = defaultPageSize;
+  exportChannel = Utilities.GenGUI();
+  exportChannelSpinnerType = SpinnerType.FIXED_CIRCLE;
+  exportLoading = false;
+  ExportFormatTypes = ExportFormatTypes;
 
   /* case '0':
                     $trflag_stat = 'text-info';
@@ -161,5 +171,90 @@ export class ServiceVoucherListComponent implements AfterViewInit {
     this.query.orderBy = [];
     this.sortActive = '';
     this.getList();
+  }
+
+  export(type: ExportFormatTypes) {
+    if (!this.total) {
+      return;
+    }
+    if (this.exportLoading) {
+      return;
+    }
+    this.exportLoading = true;
+    this.spinnerService.activate(this.exportChannel);
+
+    const length = 999;
+    const totalPages = Math.ceil(this.total / length);
+    const params = this.params;
+    params.start = 0;
+    params.pageSize = 999;
+    params.index = 0;
+    this.serviceCommandsService
+      .getVoucherList(this.query.term, params)
+      .pipe(
+        map((r: PaginatedListResults<any>) => {
+          return r.data;
+        }),
+        // get the fist page
+        expand((value, index) => {
+          if (index <= totalPages) {
+            params.index++;
+            params.start = params.index * params.pageSize;
+            return this.serviceCommandsService.getVoucherList(this.query.term, params).pipe(
+              map((r: PaginatedListResults<any>) => {
+                return r.data;
+              })
+            );
+          }
+          return EMPTY;
+        }),
+        reduce((a: any, v: any) => [...a, ...v], []),
+        catchError((error: any) => {
+          this.exportLoading = false;
+          this.spinnerService.deactivate(this.exportChannel);
+          throw error;
+        })
+      )
+      .subscribe((dataToSave: any[]) => {
+        const headers = [
+          'Id',
+          'System Status',
+          'Voucher Name',
+          'Voucher Contact',
+          'Voucher Address',
+          'Voucher City',
+          'Voucher PostCode',
+          'Voucher Phone No',
+          'Voucher Mobile No',
+          'Voucher Description',
+          'Serial No',
+          'System Company',
+          'Navision Service OrderNo',
+          'Navision Sales OrderNo',
+          'Action Type Description',
+          'Carrier Voucher No',
+          'Status Description',
+          'Ordered By',
+          'Mellon Project',
+          'Carrier Name',
+          'Created By',
+          'Created At',
+        ];
+        Utilities.exportFile(dataToSave, headers, 'Voucher_List', this.datePipe, type);
+        this.spinnerService.deactivate(this.exportChannel);
+        this.exportLoading = false;
+      });
+  }
+
+  showVoucherDetails(item: VoucherServiceItem) {
+    this.dialogDynamicService.open<VoucherDetailsCommonComponent, number, any>(
+      VoucherDetailsCommonComponent,
+      item.id,
+      {
+        titleKey: 'Voucher Details',
+        acceptLabelKey: 'Ok',
+        declineLabelKey: 'Cancel',
+      }
+    );
   }
 }
