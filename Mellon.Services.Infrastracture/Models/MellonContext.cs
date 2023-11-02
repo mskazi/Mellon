@@ -21,6 +21,7 @@ public partial class MellonContext : UnitOfWorkContext<MellonContext>
     public virtual DbSet<ApprovalLine> ApprovalLines { get; set; }
     public virtual DbSet<Approval> Approvals { get; set; }
     public virtual DbSet<ApprovalNotification> ApprovalNotifications { get; set; }
+
     public virtual DbSet<Carrier> Carriers { get; set; }
 
     public virtual DbSet<CarriersPostcodeRestriction> CarriersPostcodeRestrictions { get; set; }
@@ -49,11 +50,11 @@ public partial class MellonContext : UnitOfWorkContext<MellonContext>
 
     public virtual DbSet<Member> Members { get; set; }
 
+    public virtual DbSet<OfficeContact> OfficeContacts { get; set; }
+
     public virtual DbSet<Returned> Returneds { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=erptestdbgr.mellongroup.com;Database=MELLON_INTERNAL_APPS; Integrated Security=false; User ID=erpportal;Password=1234ep;Encrypt=True;TrustServerCertificate=True");
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -796,6 +797,136 @@ public partial class MellonContext : UnitOfWorkContext<MellonContext>
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("updated_by");
+        });
+
+        modelBuilder.Entity<OfficeContact>(entity =>
+        {
+            entity.ToTable("office_contacts");
+
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName("id");
+            entity.Property(e => e.Active).HasColumnName("active");
+            entity.Property(e => e.BankMerchantId)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("bank_merchant_id");
+            entity.Property(e => e.ContactNotes)
+                .HasMaxLength(250)
+                .IsUnicode(false)
+                .HasColumnName("contact_notes");
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
+            entity.Property(e => e.CreatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("created_by");
+            entity.Property(e => e.CustomerNo)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("customer_no");
+            entity.Property(e => e.EmailNotifyWhSent).HasColumnName("email_notify_wh_sent");
+            entity.Property(e => e.Flag0).HasColumnName("flag_0");
+            entity.Property(e => e.Flag1).HasColumnName("flag_1");
+            entity.Property(e => e.ItemNo)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("item_no");
+            entity.Property(e => e.MerchantAddress)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("merchant_address");
+            entity.Property(e => e.MerchantCity)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("merchant_city");
+            entity.Property(e => e.MerchantComment)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("merchant_comment");
+            entity.Property(e => e.MerchantFax)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("merchant_fax");
+            entity.Property(e => e.MerchantName)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("merchant_name");
+            entity.Property(e => e.MerchantPhone)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("merchant_phone");
+            entity.Property(e => e.MerchantPostcode)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("merchant_postcode");
+            entity.Property(e => e.SalesOrderNo)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("sales_order_no");
+            entity.Property(e => e.SerialNo)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("serial_no");
+            entity.Property(e => e.SrvOrderNo)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("srv_order_no");
+            entity.Property(e => e.SysCompany)
+                .HasMaxLength(5)
+                .IsUnicode(false)
+                .HasColumnName("sys_company");
+            entity.Property(e => e.SysCountry)
+                .HasMaxLength(2)
+                .IsUnicode(false)
+                .HasColumnName("sys_country");
+            entity.Property(e => e.TerminalId)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("terminal_id");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.UpdatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("updated_by");
+            entity.Property(e => e.UploadedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("uploaded_at");
+            entity.Property(e => e.VoucherAddress)
+                .HasMaxLength(100)
+                .HasColumnName("voucher_address");
+            entity.Property(e => e.VoucherCity)
+                .HasMaxLength(100)
+                .HasColumnName("voucher_city");
+            entity.Property(e => e.VoucherContact)
+                .HasMaxLength(100)
+                .HasColumnName("voucher_contact");
+            entity.Property(e => e.VoucherCountry)
+                .HasMaxLength(6)
+                .IsUnicode(false)
+                .HasColumnName("voucher_country");
+            entity.Property(e => e.VoucherFrom)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("voucher_from");
+            entity.Property(e => e.VoucherMobileNo)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("voucher_mobile_no");
+            entity.Property(e => e.VoucherName)
+                .HasMaxLength(600)
+                .HasColumnName("voucher_name");
+            entity.Property(e => e.VoucherPhoneNo)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("voucher_phone_no");
+            entity.Property(e => e.VoucherPostCode)
+                .HasMaxLength(6)
+                .IsUnicode(false)
+                .HasColumnName("voucher_post_code");
         });
 
         modelBuilder.Entity<Returned>(entity =>

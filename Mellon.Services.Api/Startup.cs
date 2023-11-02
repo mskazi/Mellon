@@ -58,6 +58,7 @@
                 services.AddScoped(typeof(IMembersRepository), typeof(MembersRepository));
                 services.AddScoped(typeof(IVouchersRepository), typeof(VouchersRepository));
                 services.AddScoped(typeof(ILookupRepository), typeof(LookupRepository));
+                services.AddScoped(typeof(IContactsRepository), typeof(ContactsRepository));
 
 
                 services.AddTransient(s => s.GetService<IHttpContextAccessor>().HttpContext?.User ?? new ClaimsPrincipal());

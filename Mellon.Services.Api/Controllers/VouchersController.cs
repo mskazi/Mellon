@@ -2,7 +2,7 @@
 using Mellon.Common.Services;
 using Mellon.Services.Application.Approvals;
 using Mellon.Services.Application.Services;
-using Mellon.Services.Application.Vouchers;
+using Mellon.Services.Application.Vouchers.Commands;
 using Mellon.Services.Common.resources;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;

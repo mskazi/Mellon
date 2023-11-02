@@ -2,7 +2,7 @@
 using Mellon.Common.Services;
 using Mellon.Services.Common.resources;
 
-namespace Mellon.Services.Application.Vouchers
+namespace Mellon.Services.Application.Vouchers.Commands
 {
     public class GetVoucherServiceCommand : IRequest<PaginatedListResult<VoucherServiceItem>>
     {

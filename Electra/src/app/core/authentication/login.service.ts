@@ -63,10 +63,7 @@ export class LoginService {
   }
 
   menu(): Menu[] {
-    if (this.userInfo?.user.roles === Roles.SERVICE) {
-      return [...this.getServiceMenu(), ...this.getAdministrationMenu()];
-    }
-    return [];
+    return [...this.getServiceMenu(), ...this.getOfficeMenu()];
   }
 
   check() {
@@ -74,6 +71,9 @@ export class LoginService {
   }
 
   getServiceMenu() {
+    if (this.userInfo?.user.roles !== Roles.SERVICE) {
+      return [];
+    }
     return [
       {
         route: 'service',
@@ -104,15 +104,22 @@ export class LoginService {
     ] as Menu[];
   }
 
-  getAdministrationMenu() {
+  getOfficeMenu() {
     return [
       {
-        route: 'administration/members',
-        name: 'members',
-        type: 'link',
-        icon: 'person',
+        route: 'administration',
+        name: 'office',
+        type: 'sub',
+        icon: 'office',
+        children: [
+          {
+            route: 'members',
+            name: 'members',
+            type: 'link',
+          },
+        ],
         permissions: {
-          only: [],
+          only: [''],
         },
       },
     ] as Menu[];
