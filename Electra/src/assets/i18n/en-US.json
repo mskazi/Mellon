@@ -1,17 +1,22 @@
 {
+  "unsavedChangesTitle": "Unsaved Changes",
+  "unsavedChanges": "Any unsaved changes will be lost.Are you sure you want to continue?",
+  "lblNo": "No",
+  "lblYes": "Yes",
   "menu": {
     "dashboard": "Dashboard",
     "service": "Service",
     "service.VoucherList": "Voucher List",
     "service.ScanSend": "Scan & Send",
-    "service.SRVOrderManual": "SRVOrder Manual"
+    "service.SRVOrderManual": "SRVOrder Manual",
+    "members": "Members"
   },
   "validations": {
     "required": "This field is required",
-    "minlength": "Should have atleast {{number}} characters",
-    "maxlength": "This value should be less than {{number}} characters",
-    "min": "This value should be more than {{number}}",
-    "max": "This value should be less than {{number}}",
+    "minlength": "Should have atleast {{requiredLength}} characters",
+    "maxlength": "This value should be less than {{requiredLength}} characters",
+    "min": "This value should be more than {{min}}",
+    "max": "This value should be less than {{max}}",
     "exist": "The {{value}} has exists",
     "inconsistent": "Inconsistent with {{value}}",
     "invalid_email": "Invalid email"

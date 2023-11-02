@@ -10,7 +10,7 @@
         <div class="d-flex justify-content-between align-items-center">
           <div class="align-content-start d-flex align-items-center">
             <button class="m-x-4" mat-raised-button color="primary"
-                    (click)="createMember()"
+                    (click)="editMember()"
                     type="submit" [disabled]="exportLoading">Create</button>
           </div>
           <div class="align-content-end">
@@ -34,8 +34,9 @@
       </ng-template>
       <ng-template #functionTpl let-row let-index="index" let-col="colDef">
         <div class="d-flex">
-          <button mat-raised-button color="primary" class="m-l-4" (click)="editMember(row)">
-            Edit</button>
+          <button mat-icon-button color="primary" class="m-l-4" (click)="editMember(row)">
+            <mat-icon>edit</mat-icon>
+          </button>
         </div>
       </ng-template>
       <mtx-grid [data]="data"

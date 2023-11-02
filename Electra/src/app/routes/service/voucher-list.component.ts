@@ -1,7 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { AfterViewInit, Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { PaginatedListResults, defaultPageIndex, defaultPageSize } from '@core/table-model';
 import { MtxGridColumn } from '@ng-matero/extensions/grid';
 import { EMPTY, catchError, expand, finalize, map, reduce } from 'rxjs';
 import * as XLSX from 'xlsx';
@@ -12,6 +11,7 @@ import { SpinnerService, SpinnerType } from '@shared/components/spinner/spinner.
 import { DialogDynamicService } from '@shared/components/dialog/dialog.service';
 import { VoucherDetailsCommonComponent } from '../common/vouchers/voucher-details.component';
 import { VoucherServiceItem } from '@core/models/voucher-search-item';
+import { PaginatedListResults, defaultPageIndex, defaultPageSize } from '@core/core-model';
 @Component({
   selector: 'app-service-voucher-list',
   templateUrl: './voucher-list.component.html',

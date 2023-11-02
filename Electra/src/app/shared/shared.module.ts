@@ -26,6 +26,8 @@ import { DisableControlDirective } from './directives/disable-control.directive'
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { ToObservablePipe } from './pipes/to-observable.pipe';
 import { UnsavedChangesDirective } from './components/unsavedChanges/unsaved-changes.directive';
+import { SelectFieldComponent } from './components/input/select-field.component';
+import { InputFieldComponent } from './components/input/text/input-field.component';
 
 const MODULES: any[] = [
   CommonModule,
@@ -52,6 +54,8 @@ const COMPONENTS: any[] = [
   ErrorDirective,
   ErrorMessagesDirective,
   UnsavedChangesDirective,
+  SelectFieldComponent,
+  InputFieldComponent,
 ];
 const COMPONENTS_DYNAMIC: any[] = [];
 const DIRECTIVES: any[] = [DisableControlDirective];

@@ -24,11 +24,11 @@ namespace Mellon.Services.Application.Lookup
     {
         public LookupStringResource(Dim dim)
         {
-            Code = dim?.ValueChar;
+            Id = dim?.ValueChar;
             Description = dim?.Description;
         }
 
-        public string Code { get; set; }
+        public string Id { get; set; }
 
         public string Description { get; set; }
     }

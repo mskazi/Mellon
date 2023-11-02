@@ -2,16 +2,14 @@ import { DatePipe } from '@angular/common';
 import { AfterViewInit, Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ExportFormatTypes } from '@core';
-import { VoucherServiceItem } from '@core/models/voucher-search-item';
+import { defaultPageIndex, defaultPageSize } from '@core/core-model';
+import { MemberItem } from '@core/models/member';
 import { MembersCommandService } from '@core/services/member-commands.service';
-import { defaultPageIndex, defaultPageSize } from '@core/table-model';
 import { MtxGridColumn } from '@ng-matero/extensions/grid';
 import { DialogDynamicService } from '@shared/components/dialog/dialog.service';
 import { SpinnerService, SpinnerType } from '@shared/components/spinner/spinner.service';
 import { Utilities } from '@shared/utils/utilities';
 import { finalize } from 'rxjs';
-import { VoucherDetailsCommonComponent } from '../../common/vouchers/voucher-details.component';
-import { MemberItem } from '@core/models/member';
 import { AdministrationMemberEditComponent } from './member-edit.component';
 @Component({
   selector: 'app-administration-member-list',
@@ -115,27 +113,20 @@ export class AdministrationMemberListComponent implements AfterViewInit {
     this.getList();
   }
 
-  createMember() {
-    this.dialogDynamicService.open<AdministrationMemberEditComponent, MemberItem, MemberItem>(
+  editMember(item?: MemberItem) {
+    const dialogRef = this.dialogDynamicService.open<
       AdministrationMemberEditComponent,
-      {} as MemberItem,
-      {
-        titleKey: 'Voucher Details',
-        acceptLabelKey: 'Ok',
-        declineLabelKey: 'Cancel',
+      MemberItem,
+      MemberItem
+    >(AdministrationMemberEditComponent, item ?? ({} as MemberItem), {
+      titleKey: 'Voucher Details',
+      acceptLabelKey: 'Ok',
+      declineLabelKey: 'Cancel',
+    });
+    dialogRef.afterClosed().subscribe((response: any) => {
+      if (response) {
+        this.getList();
       }
-    );
-  }
-
-  editMember(item: MemberItem) {
-    this.dialogDynamicService.open<AdministrationMemberEditComponent, MemberItem, MemberItem>(
-      AdministrationMemberEditComponent,
-      item,
-      {
-        titleKey: 'Voucher Details',
-        acceptLabelKey: 'Ok',
-        declineLabelKey: 'Cancel',
-      }
-    );
+    });
   }
 }

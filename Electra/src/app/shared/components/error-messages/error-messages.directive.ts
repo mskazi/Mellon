@@ -6,8 +6,8 @@ import { Observable, Subject, merge } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Directive({
-  selector: '[ErrorMessages]',
-  exportAs: 'errorMessages',
+  selector: '[showErrorMessages]',
+  exportAs: 'showErrorMessages',
 })
 export class ErrorMessagesDirective implements AfterViewInit, OnDestroy {
   @ContentChild(MatInput) matInput: any;

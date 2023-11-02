@@ -36,14 +36,17 @@ export class UnsavedChangesService {
       const dialogOptions = {
         acceptLabelKey: 'lblYes',
         declineLabelKey: 'lblNo',
+        blockClose: true,
+        position: { top: '0px' },
       };
       const dialog = this.dialogService.openConfirmationDialog(
         new ModalMessageAttribute(
-          this.translateService.instant('i18n.validation.unsavedChanges'),
-          this.translateService.instant('i18n.validation.unsavedChangesTitle')
+          this.translateService.instant('unsavedChanges'),
+          this.translateService.instant('unsavedChangesTitle')
         ),
         dialogOptions
       );
+      dialog.updatePosition({ top: '20px' });
 
       return dialog.afterClosed().pipe(
         map((answer: any) => {

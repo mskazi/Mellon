@@ -19,7 +19,7 @@ namespace Mellon.Services.Application.Services
         {
             this.user = user ?? throw new ArgumentNullException(nameof(user));
             this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-
+            this._email = _email;
             switch (user.Department)
             {
                 case "office":

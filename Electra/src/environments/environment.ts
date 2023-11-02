@@ -10,6 +10,7 @@ export const environment = {
   useHash: true,
   servicesMembersUrl: `${apiHost}/members`,
   serviceRoleUrl: `${apiHost}/vouchers`,
+  serviceLookupUrl: `${apiHost}/lookup`,
   administrationUrl: `${apiHost}/administration`,
   auth: {
     clientId: '483acf7e-32db-465c-9210-2327682b6eaf',

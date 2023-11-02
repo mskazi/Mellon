@@ -1,6 +1,7 @@
 import { ComponentType } from '@angular/cdk/portal';
 import { TemplateRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { DialogPosition } from '@angular/material/dialog';
 import { Observable } from 'rxjs/internal/Observable';
 /**
  * Interface that need to be implemented by any component that we want to dynamic load on dialog
@@ -73,4 +74,6 @@ export interface DialogOptions {
   saveSkipDirtyCheck?: boolean;
   //whenever cancel button will be available without checking if form is dirty
   cancelSkipDirtyCheck?: boolean;
+
+  position?: DialogPosition;
 }

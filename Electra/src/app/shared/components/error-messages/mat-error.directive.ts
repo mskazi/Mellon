@@ -10,14 +10,13 @@ import { ErrorMessagesDirective } from './error-messages.directive';
   selector: 'mat-error',
 })
 export class ErrorDirective implements OnInit, OnDestroy {
-  private readonly pipe: TranslatePipe;
   private errors: ValidationErrors = {};
   private readonly unsubscribe = new Subject<void>();
 
   constructor(
     @Optional() private readonly control: ErrorMessagesDirective,
     private readonly el: ElementRef,
-    translate: TranslateService
+    private translate: TranslateService
   ) {
     if (this.control) {
       translate.onLangChange.subscribe(() => this.showErrors(this.errors || {}));
@@ -43,7 +42,7 @@ export class ErrorDirective implements OnInit, OnDestroy {
 
   private showErrors(errors: ValidationErrors): void {
     this.el.nativeElement.innerText = Object.keys(errors)
-      .map(key => this.pipe.transform(`i18n.validation.${key}`, errors[key]))
+      .map(key => this.translate.instant(`validations.${key}`, errors[key]))
       .join('\n');
   }
 }

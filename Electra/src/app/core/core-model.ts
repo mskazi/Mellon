@@ -1,3 +1,11 @@
+export interface ListResult<T> {
+  data: T[];
+}
+export interface PartialListResult<T> {
+  data: T[];
+  hasMore: boolean;
+}
+
 export interface PaginatedListParams {
   start?: number;
   pageSize?: number;

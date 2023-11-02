@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { PaginatedListResults } from '@core/core-model';
 import { Voucher } from '@core/models/voucher-details-item';
 import { VoucherServiceItem } from '@core/models/voucher-search-item';
-import { PaginatedListResults } from '@core/table-model';
 import { environment } from '@env/environment';
 import { Utilities } from '@shared/utils/utilities';
 import { Observable } from 'rxjs';

@@ -1,0 +1,41 @@
+.filter_holder {
+  display: inline-block;
+  height: 36px;
+  width: 100%;
+
+  background-color: #424242;
+}
+
+.sticky {
+  position: sticky;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  z-index: 5;
+}
+
+.sticky>input {
+  border-radius: 5px;
+}
+
+.filter-alt {
+  height: 40px;
+  width: 100%;
+  border-radius: 0;
+  border: 1px solid white;
+  padding-left: 10px;
+}
+
+.filter {
+  height: 24px;
+  width: 100%;
+  border-radius: 0;
+  padding-left: 10px;
+  background-color: #424242;
+
+}
+
+.search-icon {
+  top: 0 !important;
+  color: black;
+}

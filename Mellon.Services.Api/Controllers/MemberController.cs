@@ -60,7 +60,7 @@ namespace Mellon.Services.Api.Controllers
         [ProducesResponseType(typeof(MemberResource), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateCustomerSoursssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssce(int id)
+        public async Task<IActionResult> GetMember(int id)
         {
             var command = new GetMemberCommand(id);
             MemberResource result = await mediator.Send(command);
@@ -72,7 +72,7 @@ namespace Mellon.Services.Api.Controllers
         [Consumes("application/json")]
         [ProducesResponseType(typeof(MemberResource), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(MemberResource), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateCustomerSource([FromBody] MemberResourceData request)
+        public async Task<IActionResult> CreateMember([FromBody] MemberResourceData request)
         {
             var command = new MemberCreateCommand(request.MemberName, request.Department, request.Company, request.SysCountry, request.IsActive);
             MemberResource result = await mediator.Send(command);
@@ -85,7 +85,7 @@ namespace Mellon.Services.Api.Controllers
         [ProducesResponseType(typeof(MemberResource), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateCustomerSource(int id, [FromBody] MemberResource request)
+        public async Task<IActionResult> UpdateMember(int id, [FromBody] MemberResource request)
         {
             var command = new MemberUpdateCommand(request.Id, request.MemberName, request.Department, request.Company, request.SysCountry, request.IsActive);
             MemberResource result = await mediator.Send(command);

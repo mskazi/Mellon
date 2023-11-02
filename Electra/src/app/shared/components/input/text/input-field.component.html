@@ -1,0 +1,15 @@
+<mat-form-field #materialFormField showErrorMessages [formGroup]="form">
+  <!--  <span matPrefix *ngIf="prefix">
+    <ng-content select="[prefix]"></ng-content>
+  </span> -->
+  <mat-label>{{label | translate}}</mat-label>
+  <input [type]="type" [step]="step" [min]="min" matInput [formControlName]="controlName"
+         (change)="valueChanged($event)"
+         [attr.placeholder]="placeHolder"
+         [readonly]="readOnly">
+  <mat-hint *ngIf="showHint">{{hint | translate}}</mat-hint>
+  <span matSuffix>
+    <ng-content select="[suffix]"></ng-content>
+  </span>
+  <mat-error></mat-error>
+</mat-form-field>

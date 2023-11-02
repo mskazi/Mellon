@@ -1,11 +1,11 @@
 import { UUID } from 'angular2-uuid';
 import * as _ from 'lodash';
-import { Observable, Subject, throwError } from 'rxjs';
+import { Subject, throwError } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
-import { PaginatedListParams } from '@core/table-model';
 import { DatePipe } from '@angular/common';
 import { ExportFormatTypes } from '@core';
 import * as XLSX from 'xlsx';
+import { PaginatedListParams } from '@core/core-model';
 
 // Utilities is a functional class that contains only static methods;
 export class Utilities {

@@ -1,0 +1,20 @@
+<mat-form-field showErrorMessages [formGroup]="form">
+  <mat-label>{{label | translate}}</mat-label>
+  <mat-select [formControlName]="controlName" (selectionChange)="selectionChange($event)"
+              [disableOptionCentering]="true" (openedChange)="openedChange($event)">
+    <!--    <mat-form-field class="filter_holder sticky">
+      <input matInput (keyup)="onKey($event)" class="filter" (keydown)="onKeyDown($event)"
+             placeholder="{{'lblFilterOptions' | translate}}" [placeholder]="placeholder" #search>
+      <mat-icon matSuffix class="fas fa-search search-icon"></mat-icon>
+    </mat-form-field> -->
+    <ng-container *ngIf="allowEmpty">
+      <mat-option [value]="null"></mat-option>
+    </ng-container>
+    <ng-container *ngIf="options">
+      <mat-option *ngFor="let option of selectedOptions" [value]="option.id">
+        {{ option[displayProperty]}}
+      </mat-option>
+    </ng-container>
+  </mat-select>
+  <mat-error></mat-error>
+</mat-form-field>

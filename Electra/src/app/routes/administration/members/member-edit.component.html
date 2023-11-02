@@ -1,11 +1,20 @@
 <form [formGroup]="form" class="form-field-full" [id]="formId" unsavedChanges>
-  <mat-form-field>
-    <mat-label>Member</mat-label>
-    <input matInput formControlName="memberName" required>
-    <mat-error>
-    </mat-error>
-  </mat-form-field>
+  <div class="row">
+    <div class="col-sm-12">
+      <app-input-field controlName="memberName" label="Member"> </app-input-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <app-select-field controlName="department" [options$]="optionsDepartments$"
+                        displayProperty="description" label="Department"></app-select-field>
+    </div>
 
+    <div class="col-sm-6">
+      <app-select-field controlName="company" [options$]="optionsCompanies$"
+                        displayProperty="description" label="Company"></app-select-field>
+    </div>
+  </div>
   <mat-form-field>
     <mat-label>Active</mat-label>
     <mat-select required formControlName="isActive" required>

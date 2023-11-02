@@ -107,17 +107,10 @@ export class LoginService {
   getAdministrationMenu() {
     return [
       {
-        route: 'administration',
-        name: 'administration',
-        type: 'sub',
-        icon: 'color_lens',
-        children: [
-          {
-            route: 'members',
-            name: 'members',
-            type: 'link',
-          },
-        ],
+        route: 'administration/members',
+        name: 'members',
+        type: 'link',
+        icon: 'person',
         permissions: {
           only: [],
         },

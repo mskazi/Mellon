@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { PaginatedListResults } from '@core/core-model';
 import { MemberItem } from '@core/models/member';
-import { PaginatedListResults } from '@core/table-model';
 import { environment } from '@env/environment';
 import { Utilities } from '@shared/utils/utilities';
 import { Observable } from 'rxjs';
