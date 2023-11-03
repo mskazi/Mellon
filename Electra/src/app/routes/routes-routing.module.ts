@@ -39,9 +39,8 @@ const routes: Routes = [
         },
       },
       {
-        path: 'administration',
-        loadChildren: () =>
-          import('./administration/administration.module').then(m => m.AdministrationModule),
+        path: 'office',
+        loadChildren: () => import('./office/office.module').then(m => m.OfficeModule),
         canActivate: [NgxPermissionsGuard],
         data: {
           permissions: {

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Mellon.Common.Services;
 using Mellon.Services.Application.Vouchers.Commands;
 using Mellon.Services.Common.interfaces;
 using Mellon.Services.Common.resources;
@@ -7,7 +8,10 @@ using Microsoft.Extensions.Logging;
 
 namespace Mellon.Services.Application.Vouchers.CommandHander
 {
-    public class VoucherDetailCommandHandler : IRequestHandler<GetVoucherDetailsCommand, VoucherDetails>
+    public class VoucherDetailCommandHandler : IRequestHandler<GetVoucherDetailsCommand, VoucherDetails>,
+        IRequestHandler<GetVoucherSearchCommand, PaginatedListResult<VoucherSearchItem>>,
+        IRequestHandler<GetSummaryCommand, VoucherSummary>
+
     {
         private readonly ILogger logger;
         private readonly ICurrentUserService currentUserService;
@@ -25,6 +29,16 @@ namespace Mellon.Services.Application.Vouchers.CommandHander
 
             return await this.repository.VoucherDetails(request.Id, cancellationToken);
         }
-    }
 
+        public async Task<PaginatedListResult<VoucherSearchItem>> Handle(GetVoucherSearchCommand request, CancellationToken cancellationToken)
+        {
+            return await repository.Search(request.Term, request.Paging, request.Ordering, cancellationToken);
+        }
+
+        public async Task<VoucherSummary> Handle(GetSummaryCommand request, CancellationToken cancellationToken)
+        {
+            return await repository.Summary(cancellationToken);
+        }
+
+    }
 }

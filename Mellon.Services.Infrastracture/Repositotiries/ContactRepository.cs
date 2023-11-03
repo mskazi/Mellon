@@ -7,7 +7,7 @@ namespace Mellon.Services.Infrastracture.Repositotiries
 {
     public interface IContactsRepository : IRepository
     {
-        Task<PaginatedListResult<OfficeContact>> GetContacts(string term, ListPaging paging, ListOrder order, CancellationToken cancellationToken);
+        Task<PaginatedListResult<OfficeContact>> GetContacts(int role, string term, ListPaging paging, ListOrder order, CancellationToken cancellationToken);
         Task<OfficeContact> GetContact(int id, CancellationToken cancellationToken);
         void AddContact(OfficeContact member);
     }
@@ -33,14 +33,14 @@ namespace Mellon.Services.Infrastracture.Repositotiries
 
         }
 
-        public async Task<PaginatedListResult<OfficeContact>> GetContacts(string term, ListPaging paging, ListOrder order, CancellationToken cancellationToken)
+        public async Task<PaginatedListResult<OfficeContact>> GetContacts(int role, string term, ListPaging paging, ListOrder order, CancellationToken cancellationToken)
         {
 
             paging ??= new ListPaging();
             int? total = null;
 
             var query = context.OfficeContacts.AsQueryable();
-
+            query = query.Where(p => p.Flag0 == role);
             if (!string.IsNullOrWhiteSpace(term))
             {
                 query = query.Where(s => s.VoucherFrom.Contains(term) ||

@@ -22,7 +22,7 @@ namespace Mellon.Services.Application.Contact
 
         public async Task<PaginatedListResult<ContactResource>> Handle(GetContactsCommand request, CancellationToken cancellationToken)
         {
-            PaginatedListResult<OfficeContact> result = await repository.GetContacts(request.Term, request.Paging, request.Ordering, cancellationToken);
+            PaginatedListResult<OfficeContact> result = await repository.GetContacts(request.Role, request.Term, request.Paging, request.Ordering, cancellationToken);
             return new PaginatedListResult<ContactResource>(
                result.Start,
                result.Length,

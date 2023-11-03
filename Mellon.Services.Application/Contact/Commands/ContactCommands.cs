@@ -5,12 +5,15 @@ namespace Mellon.Services.Application.Contact
 {
     public class GetContactsCommand : IRequest<PaginatedListResult<ContactResource>>
     {
-        public GetContactsCommand(string term, ListPaging paging, ListOrder ordering)
+        public GetContactsCommand(int role, string term, ListPaging paging, ListOrder ordering)
         {
+            Role = role;
             Term = term;
             Paging = paging;
             Ordering = ordering;
         }
+
+        public int Role { get; set; }
         public string? Term { get; set; }
         public ListPaging Paging { get; }
         public ListOrder Ordering { get; }

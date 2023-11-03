@@ -25,12 +25,13 @@ namespace Mellon.Services.Api.Controllers
         }
 
         [HttpGet]
-        [Route("list")]
+        [Route("list/{role}")]
         [ProducesResponseType(typeof(PaginatedListResult<ContactResource>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> List([FromQuery] string term, [FromQuery] QueryPaging paging, [FromQuery] QueryOrder order)
+        public async Task<IActionResult> List(int role, [FromQuery] string term, [FromQuery] QueryPaging paging, [FromQuery] QueryOrder order)
         {
             var command = new GetContactsCommand(
+                role,
                 term,
                 new ListPaging(paging),
                 new ListOrder(order)

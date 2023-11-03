@@ -8,4 +8,4 @@ const routes: Routes = [{ path: 'members', component: AdministrationMemberListCo
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AdministrationRoutingModule {}
+export class OfficeRoutingModule {}

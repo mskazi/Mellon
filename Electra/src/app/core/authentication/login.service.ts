@@ -107,7 +107,7 @@ export class LoginService {
   getOfficeMenu() {
     return [
       {
-        route: 'administration',
+        route: 'office',
         name: 'office',
         type: 'sub',
         icon: 'office',

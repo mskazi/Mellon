@@ -4,9 +4,19 @@ using Mellon.Services.Common.resources;
 
 namespace Mellon.Services.Application.Vouchers.Commands
 {
-    public class GetVoucherServiceCommand : IRequest<PaginatedListResult<VoucherServiceItem>>
+
+    public class GetVoucherDetailsCommand : IRequest<VoucherDetails>
     {
-        public GetVoucherServiceCommand(string term, ListPaging paging, ListOrder ordering)
+        public GetVoucherDetailsCommand(int id)
+        {
+            Id = id;
+        }
+        public int Id { get; set; }
+    }
+
+    public class GetVoucherSearchCommand : IRequest<PaginatedListResult<VoucherSearchItem>>
+    {
+        public GetVoucherSearchCommand(string term, ListPaging paging, ListOrder ordering)
         {
             Term = term;
             Paging = paging;
@@ -17,12 +27,8 @@ namespace Mellon.Services.Application.Vouchers.Commands
         public ListOrder Ordering { get; }
     }
 
-    public class GetVoucherDetailsCommand : IRequest<VoucherDetails>
+    public class GetSummaryCommand : IRequest<VoucherSummary>
     {
-        public GetVoucherDetailsCommand(int id)
-        {
-            Id = id;
-        }
-        public int Id { get; set; }
+
     }
 }
