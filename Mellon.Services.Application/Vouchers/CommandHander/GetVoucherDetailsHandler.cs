@@ -39,6 +39,5 @@ namespace Mellon.Services.Application.Vouchers.CommandHander
         {
             return await repository.Summary(cancellationToken);
         }
-
     }
 }

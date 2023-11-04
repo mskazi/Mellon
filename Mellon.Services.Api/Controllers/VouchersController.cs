@@ -99,5 +99,27 @@ namespace Mellon.Services.Api.Controllers
             var result = await mediator.Send(command);
             return Ok(result);
         }
+
+        [HttpGet]
+        [Route("track/{id}")]
+        [ProducesResponseType(typeof(VoucherSummary), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetTrack()
+        {
+            var command = new GetVoucherTrackCommand();
+            var result = await mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("details/{id}")]
+        [ProducesResponseType(typeof(VoucherSummary), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetDetails(int id)
+        {
+            var command = new GetVoucherDetailsCommand(id);
+            var result = await mediator.Send(command);
+            return Ok(result);
+        }
     }
 }

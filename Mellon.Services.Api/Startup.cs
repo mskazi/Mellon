@@ -5,6 +5,7 @@
     using Mellon.Services.Application;
     using Mellon.Services.Application.Services;
     using Mellon.Services.Common.interfaces;
+    using Mellon.Services.External.CourierProviders;
     using Mellon.Services.Infrastracture.Models;
     using Mellon.Services.Infrastracture.Repositotiries;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -82,6 +83,10 @@
 
                 services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
                 services.AddTransient<IEmailService, EmailService>();
+
+                services.AddTransient<ICourierService, GenikiTaxydromikiCourierService>();
+                services.AddTransient<CourierServiceFactory>();
+
                 services.AddScoped<ICurrentUserService, CurrentUserService>();
                 services.AddScoped<IApprovalProcessorHost, ApprovalProcessorHost>();
 
