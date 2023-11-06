@@ -1,6 +1,5 @@
 ﻿namespace Mellon.Services.Api
 {
-    using MediatR;
     using Mellon.Services.Apib.StartupExtensions;
     using Mellon.Services.Application;
     using Mellon.Services.Application.Services;
@@ -20,6 +19,7 @@
     using Microsoft.IdentityModel.Logging;
     using Serilog;
     using System;
+    using System.Reflection;
     using System.Security.Claims;
 
     namespace XO.CRM.Services.Web
@@ -46,7 +46,7 @@
                 services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddMicrosoftIdentityWebApi(Configuration);
                 // Creating policies that wraps the authorization requirements
                 services.AddAuthorization();
-                services.AddMediatR(typeof(App).Assembly);
+                services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetAssembly(typeof(App))));
                 //ef core contexts
                 services.AddDbContext<MellonContext>(
                     options =>
