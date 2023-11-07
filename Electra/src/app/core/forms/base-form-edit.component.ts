@@ -6,11 +6,14 @@ import * as _ from 'lodash';
 import { Observable, Subject, catchError, finalize, map, mergeMap, of, tap } from 'rxjs';
 import { BaseFormComponent, IPersistObjectService } from './base-form.component';
 import { InjectorService } from '@core/injector.service';
+import { NotificationService } from '@core/notification.service';
 
 export abstract class BaseFormEditComponent<T> extends BaseFormComponent {
   readonly formId = Utilities.GenGUI();
 
   saveCompleted(_data: T): void {
+    const not = InjectorService.injector.get(NotificationService);
+    not.success('Save completed');
     //do nothing
   }
   loadCompleted(_item: T): void {
@@ -71,6 +74,7 @@ export abstract class BaseFormEditComponent<T> extends BaseFormComponent {
     if (!this.form.valid) {
       this.markTouchedFields(this.form);
       this.form.updateValueAndValidity();
+      return of();
     }
     return (this.onSave$ || of(true)).pipe(
       mergeMap(() => {

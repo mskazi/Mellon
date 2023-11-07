@@ -2,39 +2,49 @@
   <mat-card class="m-auto">
     <mat-card-header>
       <mat-card-title>
-        Vouchers List
+        Contact List
       </mat-card-title>
     </mat-card-header>
+
     <mat-card-content class="m-t-16">
       <ng-template #toolbarTpl class="">
         <div class="d-flex justify-content-between align-items-center">
           <div class="align-content-start d-flex align-items-center">
             <button class="m-x-4" mat-raised-button color="primary"
-                    (click)="editMember()"
-                    type="submit" [disabled]="exportLoading">Create</button>
+                    (click)="editContactDetails()"
+                    type="submit" [disabled]="exportLoading">New Contact</button>
+            <button class="m-x-4" mat-raised-button color="primary"
+                    (click)="export(ExportFormatTypes.CSV)"
+                    type="submit" [disabled]="exportLoading">CSV</button>
+            <button class="m-x-4" mat-raised-button color="primary"
+                    (click)="export(ExportFormatTypes.EXCELX)"
+                    type="submit" [disabled]="exportLoading">EXCEL</button>
+            <div>
+              <spinner [channel]="exportChannel" [type]="exportChannelSpinnerType" color="warn"
+                       [diameter]="30" [strokeWidth]="5">
+              </spinner>
+            </div>
           </div>
+
           <div class="align-content-end">
             <form class="align-items-center">
               <mat-form-field appearance="outline" style="flex-direction: unset;">
                 <input matInput [(ngModel)]="query.term" name="q" placeholder="Search">
               </mat-form-field>
+
               <button class="m-x-4" mat-raised-button color="primary" (click)="search()"
                       type="submit">Search</button>
               <button class="m-x-4" mat-raised-button color="warn" (click)="reset()"
-                      type="button">Reset</button>
+                      type="button">
+                Reset</button>
+
             </form>
           </div>
         </div>
       </ng-template>
-
-      <ng-template #isActiveTpl let-row let-index="index" let-col="colDef">
-        <div class="d-flex">
-          <mat-icon *ngIf="row?.isActive" class="text-green-900">check</mat-icon>
-        </div>
-      </ng-template>
       <ng-template #functionTpl let-row let-index="index" let-col="colDef">
         <div class="d-flex">
-          <button mat-icon-button color="primary" class="m-l-4" (click)="editMember(row)">
+          <button mat-icon-button color="primary" class="m-l-4" (click)="editContactDetails(row)">
             <mat-icon>edit</mat-icon>
           </button>
         </div>
@@ -54,13 +64,14 @@
                 [showColumnMenuButton]="false"
                 [showToolbar]="true"
                 [rowHover]="true"
-                [cellTemplate]="{function: functionTpl,isActive:isActiveTpl}"
+                [cellTemplate]="{function: functionTpl}"
                 [sortActive]="sortActive"
                 sortDirection="asc"
                 [sortDisableClear]="false"
                 [sortDisabled]="false"
                 (sortChange)="getSortPage($event)">
       </mtx-grid>
+
     </mat-card-content>
   </mat-card>
 </div>

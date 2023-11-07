@@ -9,7 +9,7 @@
                    [ngxPermissionsExcept]="menuItem.permissions?.except">
 
         <li navAccordionItem class="menu-item" routerLinkActive="active"
-            [route]="menuItem.route" [type]="menuItem.type">
+            [route]="menuItem.route" [type]="menuItem.type" [expanded]="menuItem.expanded">
 
           <a class="menu-heading"
              [routerLink]="buildRoute(parentRoute.concat([menuItem.route]))"

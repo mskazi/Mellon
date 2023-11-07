@@ -1,0 +1,5 @@
+<mat-form-field showErrorMessages [formGroup]="form">
+  <mat-label>{{ label | translate}}</mat-label>
+  <mat-hint *ngIf="showHint">{{hint | translate}}</mat-hint>
+  <textarea matInput [formControlName]="propertyName" [rows]="rows"></textarea>
+</mat-form-field>

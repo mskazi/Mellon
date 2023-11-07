@@ -10,13 +10,13 @@ import { DialogDynamicService } from '@shared/components/dialog/dialog.service';
 import { SpinnerService, SpinnerType } from '@shared/components/spinner/spinner.service';
 import { Utilities } from '@shared/utils/utilities';
 import { finalize } from 'rxjs';
-import { AdministrationMemberEditComponent } from './member-edit.component';
+import { OfficeMemberEditComponent } from './member-edit.component';
 @Component({
   selector: 'app-administration-member-list',
   templateUrl: './member-list.component.html',
   styleUrls: ['./member-list.component.scss'],
 })
-export class AdministrationMemberListComponent implements AfterViewInit {
+export class OfficeMemberListComponent implements AfterViewInit {
   constructor(
     private administrationCommandService: MembersCommandService,
     private datePipe: DatePipe,
@@ -115,10 +115,10 @@ export class AdministrationMemberListComponent implements AfterViewInit {
 
   editMember(item?: MemberItem) {
     const dialogRef = this.dialogDynamicService.open<
-      AdministrationMemberEditComponent,
+      OfficeMemberEditComponent,
       MemberItem,
       MemberItem
-    >(AdministrationMemberEditComponent, item ?? ({} as MemberItem), {
+    >(OfficeMemberEditComponent, item ?? ({} as MemberItem), {
       titleKey: 'Voucher Details',
       acceptLabelKey: 'Ok',
       declineLabelKey: 'Cancel',

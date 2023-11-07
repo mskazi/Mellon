@@ -1,0 +1,46 @@
+<form [formGroup]="form" class="form-field-full" [id]="formId" unsavedChanges>
+  <div class="row">
+    <div class="col-sm-12">
+      <app-input-field controlName="voucherName" label="Company Name"> </app-input-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <app-input-field controlName="voucherContact" label="Contact"> </app-input-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <app-input-field controlName="voucherAddress" label="Address"> </app-input-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <app-input-field controlName="voucherCity" label="voucherCity"> </app-input-field>
+    </div>
+    <div class="col-sm-6">
+      <app-input-field controlName="voucherPostCode" label="PostCode"> </app-input-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <app-select-field controlName="voucherCountry" [options$]="optionsCountries$"
+                        displayProperty="description" label="Country"></app-select-field>
+    </div>
+
+
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <app-input-field controlName="voucherPhoneNo" label="Phone"> </app-input-field>
+    </div>
+    <div class="col-sm-6">
+      <app-input-field controlName="voucherMobileNo" label="Mobile"> </app-input-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <app-textarea-field controlName="contactNotes" label="Notes" [rows]="4"></app-textarea-field>
+    </div>
+  </div>
+</form>

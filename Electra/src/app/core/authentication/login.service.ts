@@ -63,7 +63,21 @@ export class LoginService {
   }
 
   menu(): Menu[] {
-    return [...this.getServiceMenu(), ...this.getOfficeMenu()];
+    return [
+      ...this.getServiceMenu(),
+      ...this.getOfficeMenu(),
+      ...this.getWarehouseMenu(),
+      ...this.getReturnsMenu(),
+      {
+        route: '/',
+        name: 'openBI',
+        type: 'extTabLink',
+        icon: 'extension',
+        permissions: {
+          only: '',
+        },
+      },
+    ];
   }
 
   check() {
@@ -79,7 +93,8 @@ export class LoginService {
         route: 'service',
         name: 'service',
         type: 'sub',
-        icon: 'color_lens',
+        icon: 'brightness_low',
+        expanded: true,
         children: [
           {
             route: 'voucher-list',
@@ -104,22 +119,98 @@ export class LoginService {
     ] as Menu[];
   }
 
+  getWarehouseMenu() {
+    return [
+      {
+        route: 'warehouse',
+        name: 'warehouse',
+        type: 'sub',
+        icon: 'domain',
+        expanded: true,
+
+        children: [
+          {
+            route: 'vouchers',
+            name: 'voucherList',
+            type: 'link',
+          },
+          {
+            route: 'contacts',
+            name: 'contactList',
+            type: 'link',
+          },
+          {
+            route: 'search-send',
+            name: 'searchAndSend',
+            type: 'link',
+          },
+        ],
+        permissions: {
+          only: ['SERVICE'],
+        },
+      },
+    ] as Menu[];
+  }
+
   getOfficeMenu() {
     return [
       {
         route: 'office',
         name: 'office',
         type: 'sub',
-        icon: 'office',
+        icon: 'meeting_room',
+        expanded: true,
         children: [
           {
+            route: 'vouchers',
+            name: 'voucherList',
+            type: 'link',
+          },
+          {
+            route: 'contacts',
+            name: 'contactList',
+            type: 'link',
+          },
+          {
             route: 'members',
-            name: 'members',
+            name: 'memberList',
+            type: 'link',
+          },
+          {
+            route: 'print-voucher',
+            name: 'printVoucherList',
             type: 'link',
           },
         ],
         permissions: {
-          only: [''],
+          only: ['SERVICE'],
+        },
+      },
+    ] as Menu[];
+  }
+
+  getReturnsMenu() {
+    return [
+      {
+        route: 'returns',
+        name: 'returns',
+        type: 'sub',
+        icon: 'settings_backup_restore',
+        expanded: true,
+        children: [
+          {
+            route: 'import',
+            name: 'import',
+            type: 'link',
+          },
+          {
+            route: 'returns',
+            name: 'returns',
+            type: 'link',
+          },
+        ],
+        permissions: {
+          only: ['SERVICE'],
         },
       },
     ] as Menu[];

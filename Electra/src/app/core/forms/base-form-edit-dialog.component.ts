@@ -1,10 +1,11 @@
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { Observable, map } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import { InjectorService } from '../injector.service';
 import { BaseFormEditComponent } from './base-form-edit.component';
 import { IPersistObjectService } from './base-form.component';
 import { IDialogDataComponent, DialogResponse } from '@shared/components/dialog/dialog';
 import { UnsavedChangesService } from '@shared/components/unsavedChanges/unsaved-changes.service';
+import { NotificationService } from '@core/notification.service';
 
 export abstract class CommonDialogEditComponent<T, K, S>
   extends BaseFormEditComponent<K>
@@ -48,6 +49,7 @@ export abstract class CommonDialogEditComponent<T, K, S>
    * @param data
    */
   override saveCompleted(_data: K): void {
-    //do nothing
+    const not = InjectorService.injector.get(NotificationService);
+    not.success('Save completed');
   }
 }

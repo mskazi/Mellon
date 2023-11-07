@@ -53,7 +53,11 @@ registerLocaleData(localeGr);
     RoutesModule,
     SharedModule,
     NgxPermissionsModule.forRoot(),
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-bottom-center',
+      preventDuplicates: true,
+    }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

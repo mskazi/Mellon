@@ -28,6 +28,7 @@ import { ToObservablePipe } from './pipes/to-observable.pipe';
 import { UnsavedChangesDirective } from './components/unsavedChanges/unsaved-changes.directive';
 import { SelectFieldComponent } from './components/input/select-field.component';
 import { InputFieldComponent } from './components/input/text/input-field.component';
+import { TextareaFieldComponent } from './components/input/text-area/textarea-field.component';
 
 const MODULES: any[] = [
   CommonModule,
@@ -56,6 +57,7 @@ const COMPONENTS: any[] = [
   UnsavedChangesDirective,
   SelectFieldComponent,
   InputFieldComponent,
+  TextareaFieldComponent,
 ];
 const COMPONENTS_DYNAMIC: any[] = [];
 const DIRECTIVES: any[] = [DisableControlDirective];

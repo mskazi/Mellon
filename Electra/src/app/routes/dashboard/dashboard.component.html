@@ -1,1 +1,154 @@
-<page-header></page-header>
+<div class="w-full h-full">
+  <mat-card class="m-auto">
+    <mat-card-header class="cyan-100">
+      <mat-card-title>
+        Deliveries Counter
+      </mat-card-title>
+    </mat-card-header>
+    <div class="row m-24">
+      <div class="col-sm-6 col-md-3">
+        <mat-card [ngClass]="['text-white', 'bg-teal-500']">
+          <mat-card-header>
+            <mat-card-subtitle class="text-white">Delivered</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <h2 class="m-y-8">{{summaryData?.cDelivered}}</h2>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <mat-card [ngClass]="['text-white', 'bg-amber-500']">
+          <mat-card-header>
+            <mat-card-subtitle class="text-white">Transit</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <h2 class="m-y-8">{{summaryData?.cIntransit}}</h2>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <mat-card [ngClass]="['text-white', 'bg-gray-500']">
+          <mat-card-header>
+            <mat-card-subtitle class="text-white">To Receive</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <h2 class="m-y-8">{{summaryData?.cForPickup}}</h2>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <mat-card [ngClass]="['text-white', 'bg-gray-800']">
+          <mat-card-header>
+            <mat-card-subtitle class="text-white">Pend.Vch.No.</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <h2 class="m-y-8">{{summaryData?.cForVoucher}}</h2>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </mat-card>
+</div>
+<div class="w-full h-full">
+  <mat-card class="m-auto m-t-16">
+    <mat-card-header class="cyan-100">
+      <mat-card-title>
+        PickUps Counter
+      </mat-card-title>
+    </mat-card-header>
+    <div class="row m-24">
+      <div class="col-sm-6 col-md-3">
+        <mat-card [ngClass]="['text-white', 'bg-teal-500']">
+          <mat-card-header>
+            <mat-card-subtitle class="text-white">Returned</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <h2 class="m-y-8">{{summaryData?.pDelivered}}</h2>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div class="col-sm-6 col-md-3">
+        <mat-card [ngClass]="['text-white', 'bg-amber-500']">
+          <mat-card-header>
+            <mat-card-subtitle class="text-white">Transit</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <h2 class="m-y-8">{{summaryData?.pIntransit}}</h2>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+
+      <div class="col-sm-6 col-md-3">
+        <mat-card [ngClass]="['text-white', 'bg-gray-800']">
+          <mat-card-header>
+            <mat-card-subtitle class="text-white">Pend.Vch.No.</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <h2 class="m-y-8">{{summaryData?.pForVoucher}}</h2>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </mat-card>
+</div>
+<div class="w-full h-full">
+  <mat-card class="m-auto m-t-16">
+    <mat-card-header>
+      <mat-card-title>Προϋποθέσεις</mat-card-title>
+
+    </mat-card-header>
+    <mat-card-content>
+      <strong>Για να λειτουργήσετε το Electra, πρέπει να έχετε:</strong>
+      <mat-list role="list">
+        <mat-list-item role="listitem">Username/Password για το OpenBI Server </mat-list-item>
+        <mat-list-item role="listitem">Εκτυπωτή (προτεινόμενα Laser) </mat-list-item>
+        <mat-list-item role="listitem">Δυνατότητα εκτύπωσης σε λευκό χαρτί Α </mat-list-item>
+        <mat-list-item role="listitem">Διαφανή αυτοκόλλητη ζελατίνη (πληροφ. Τμήμα Προμηθειών)
+        </mat-list-item>
+      </mat-list>
+      <strong>Για να λειτουργήσετε το Electra, πρέπει να έχετε:</strong>
+      <mat-list role="list">
+        <mat-list-item role="listitem">Έχουν παραλαβή σημερινή. </mat-list-item>
+        <mat-list-item role="listitem">Εκτέλεση από την επόμενη εργάσιμη.</mat-list-item>
+        <mat-list-item role="listitem"> </mat-list-item>
+        <mat-list-item role="listitem"> </mat-list-item>
+        <mat-list-item role="listitem"> </mat-list-item>
+      </mat-list>
+      <strong>Για αποστολή διαγωνισμών & συμβάσεων με δεσμευτική ημ/νια:</strong>
+      <mat-list role="list">
+        <mat-list-item role="listitem">Επικοινωνήστε με το Τμ. Προμηθειών τουλάχιστον 4 εργάσιμες
+          ημέρες νωρίτερα. </mat-list-item>
+      </mat-list>
+      <strong>Για Αυθημερον παραδόσεις:</strong>
+      <mat-list role="list">
+        <mat-list-item role="listitem">Επικοινωνήστε με το Τμ. Προμηθειών.</mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</div>
+<!-- <div class="row">
+
+  <div class="col-sm-6 col-md-3">
+    <mat-card [ngClass]="['text-white', 'bg-teal-500']">
+      <mat-card-header>
+        <mat-card-subtitle class="text-white">cCancelledMellon</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <h2 class="m-y-8">{{summaryData?.cCancelledMellon}}</h2>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col-sm-6 col-md-3">
+    <mat-card [ngClass]="['text-white', 'bg-teal-500']">
+      <mat-card-header>
+        <mat-card-subtitle class="text-white">cCancelledCarrier</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <h2 class="m-y-8">{{summaryData?.cCancelledCarrier}}</h2>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+ -->

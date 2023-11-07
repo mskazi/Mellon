@@ -1,5 +1,6 @@
 export interface Department extends LookUpString {}
 export interface Company extends LookUpString {}
+export interface Country extends LookUpString {}
 
 export interface LookUpString {
   id: string;

@@ -22,3 +22,30 @@ export interface VoucherServiceItem {
   createdBy: string;
   createdAt: Date;
 }
+
+export interface VoucherWarehouseItem extends VoucherBaseItem {
+  systemStatus: number;
+  systemCompany: string;
+  navisionServiceOrderNo: string;
+  navisionSalesOrderNo: string;
+  actionTypeDescription: string;
+  carrierVoucherNo: string;
+  statusDescription: string;
+  orderedBy: string;
+  mellonProject: string;
+  carrierName: string;
+  createdBy: string;
+  createdAt: string;
+}
+
+export interface VoucherBaseItem {
+  id: number;
+  voucherName: string;
+  voucherContact?: string;
+  voucherAddress: string;
+  voucherCity: string;
+  voucherPostCode: string;
+  voucherPhoneNo: string;
+  voucherMobileNo: string;
+  voucherDescription?: string;
+}

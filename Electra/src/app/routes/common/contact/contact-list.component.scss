@@ -1,0 +1,8 @@
+:host ::ng-deep .mtx-grid {
+  max-height: 85vh !important;
+}
+
+.mdc-text-field--no-label:not(.mdc-text-field--textarea) .mat-mdc-form-field-input-control.mdc-text-field__input,
+.mat-mdc-text-field-wrapper .mat-mdc-form-field-input-control {
+  height: 40px !important;
+}

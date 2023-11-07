@@ -9,7 +9,20 @@
     "service.VoucherList": "Voucher List",
     "service.ScanSend": "Scan & Send",
     "service.SRVOrderManual": "SRVOrder Manual",
-    "members": "Members"
+    "members": "Members",
+    "office": "Office",
+    "office.voucherList": "Voucher List",
+    "office.contactList": "Contact List",
+    "office.memberList": "Member List",
+    "office.printVoucherList": "Print Voucher List",
+    "warehouse": "Warehouse",
+    "warehouse.voucherList": "Voucher List",
+    "warehouse.contactList": "Contact List",
+    "warehouse.searchAndSend": "Search & Send",
+    "returns": "Returns",
+    "returns.import": "WH Import",
+    "returns.returns": "Returns List",
+    "openBI": "Open BI"
   },
   "validations": {
     "required": "This field is required",
@@ -19,7 +32,8 @@
     "max": "This value should be less than {{max}}",
     "exist": "The {{value}} has exists",
     "inconsistent": "Inconsistent with {{value}}",
-    "invalid_email": "Invalid email"
+    "invalid_email": "Invalid email",
+    "phoneOrMobile": "Phone number or Mobile number is required"
   },
   "paginator": {
     "items_per_page_label": "Items per page:",

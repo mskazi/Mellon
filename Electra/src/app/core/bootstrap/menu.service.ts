@@ -29,6 +29,7 @@ export interface Menu {
   badge?: MenuTag;
   children?: MenuChildrenItem[];
   permissions?: MenuPermissions;
+  expanded?: boolean;
 }
 
 @Injectable({

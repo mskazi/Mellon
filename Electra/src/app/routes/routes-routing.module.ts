@@ -49,6 +49,17 @@ const routes: Routes = [
           },
         },
       },
+      {
+        path: 'warehouse',
+        loadChildren: () => import('./warehouse/warehouse.module').then(m => m.WarehouseModule),
+        canActivate: [NgxPermissionsGuard],
+        data: {
+          permissions: {
+            // only: Roles.SERVICE,
+            redirectTo: '/dashboard',
+          },
+        },
+      },
     ],
   },
   {

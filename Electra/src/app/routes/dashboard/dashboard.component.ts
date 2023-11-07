@@ -1,13 +1,23 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { VoucherSummary } from '@core/models/voucher-sumamry';
+import { VoucherCommandService } from '@core/services/voucher-commands.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardComponent implements OnInit {
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private voucherCommandService: VoucherCommandService
+  ) {}
 
-  ngOnInit() {}
+  summaryData: VoucherSummary;
+
+  ngOnInit() {
+    this.voucherCommandService.getSummary().subscribe((data: VoucherSummary) => {
+      this.summaryData = data;
+    });
+  }
 }

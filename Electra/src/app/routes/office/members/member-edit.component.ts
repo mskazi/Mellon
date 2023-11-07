@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { CommonDialogEditComponent } from '@core/forms/base-form-edit-dialog.component';
-import { MemberItem } from '@core/models/member';
-import { MembersEditService as MemberEditService } from './member-edit-service';
-import { LookupCommandService } from '@core/services/lookup-commands.service';
-import { Observable, forkJoin, map, tap } from 'rxjs';
-import { Company, Department } from '@core/models/lookup';
 import { ListResult } from '@core/core-model';
+import { CommonDialogEditComponent } from '@core/forms/base-form-edit-dialog.component';
+import { Company, Department } from '@core/models/lookup';
+import { MemberItem } from '@core/models/member';
+import { LookupCommandService } from '@core/services/lookup-commands.service';
+import { Observable, map } from 'rxjs';
+import { MembersEditService as MemberEditService } from './member-edit-service';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +14,7 @@ import { ListResult } from '@core/core-model';
   styleUrls: ['./member-edit.component.scss'],
   providers: [MemberEditService],
 })
-export class AdministrationMemberEditComponent
+export class OfficeMemberEditComponent
   extends CommonDialogEditComponent<MemberItem, MemberItem, any>
   implements OnInit
 {
