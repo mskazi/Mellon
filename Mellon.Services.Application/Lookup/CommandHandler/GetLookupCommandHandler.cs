@@ -42,4 +42,23 @@ namespace Mellon.Services.Application.Lookup
         }
     }
 
+    public class GetCountryLookupCommandHandler : IRequestHandler<GeCountryLookupCommand, ListResult<CountryLookupResourse>>
+    {
+        private readonly ILookupRepository repository;
+        private readonly ICurrentUserService currentUserService;
+
+        public GetCountryLookupCommandHandler(ILookupRepository repository, ICurrentUserService currentUserService)
+        {
+            this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this.currentUserService = currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
+        }
+
+        public async Task<ListResult<CountryLookupResourse>> Handle(GeCountryLookupCommand request, CancellationToken cancellationToken)
+        {
+            var entities = await repository.GetCountries(cancellationToken);
+            var items = entities.Select(entity => new CountryLookupResourse(entity));
+            return new ListResult<CountryLookupResourse>(items);
+        }
+    }
+
 }

@@ -25,8 +25,17 @@ namespace Mellon.Services.Application.Contacts
         {
             var entity = new Mellon.Services.Infrastracture.Models.OfficeContact()
             {
-
-                SysCountry = this.currentUserService.CurrentUser.Country,
+                VoucherFrom = request?.VoucherFrom,
+                VoucherName = request?.VoucherName,
+                VoucherContact = request?.VoucherContact,
+                VoucherAddress = request?.VoucherAddress,
+                VoucherCity = request?.VoucherCity,
+                VoucherPostCode = request?.VoucherPostCode,
+                VoucherCountry = request?.VoucherCountry,
+                VoucherPhoneNo = request?.VoucherPhoneNo,
+                VoucherMobileNo = request?.VoucherMobileNo,
+                ContactNotes = request?.ContactNotes,
+                Flag0 = (int)request.Mode,
                 CreatedBy = this.currentUserService.CurrentUser.Email,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
@@ -45,14 +54,20 @@ namespace Mellon.Services.Application.Contacts
             if (existingEntity is null)
                 throw new NotFoundException(nameof(ContactResource), request.Id);
 
-
-            existingEntity.SysCountry = this.currentUserService.CurrentUser.Country;
+            existingEntity.VoucherFrom = request?.VoucherFrom;
+            existingEntity.VoucherName = request?.VoucherName;
+            existingEntity.VoucherContact = request?.VoucherContact;
+            existingEntity.VoucherAddress = request?.VoucherAddress;
+            existingEntity.VoucherCity = request?.VoucherCity;
+            existingEntity.VoucherPostCode = request?.VoucherPostCode;
+            existingEntity.VoucherCountry = request?.VoucherCountry;
+            existingEntity.VoucherPhoneNo = request?.VoucherPhoneNo;
+            existingEntity.VoucherMobileNo = request?.VoucherMobileNo;
+            existingEntity.ContactNotes = request?.ContactNotes;
+            existingEntity.Flag0 = (int)request.Mode;
             existingEntity.UpdatedAt = DateTime.Now;
             existingEntity.UpdatedBy = this.currentUserService.CurrentUser.Email;
-
             await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
-
-
             return new ContactResource(existingEntity);
         }
 

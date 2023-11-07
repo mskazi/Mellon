@@ -18,5 +18,10 @@ namespace Mellon.Services.Application.Lookup
     }
 
 
-
+    public class GeCountryLookupCommand : IRequest<ListResult<CountryLookupResourse>>
+    {
+        public GeCountryLookupCommand()
+        {
+        }
+    }
 }

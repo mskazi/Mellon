@@ -10,6 +10,7 @@ namespace Mellon.Services.Infrastracture.Repositotiries
 
         Task<IEnumerable<Dim>> GetCompanies(string country, CancellationToken cancellationToken);
 
+        Task<IEnumerable<Country>> GetCountries(CancellationToken cancellationToken);
 
     }
 
@@ -27,6 +28,12 @@ namespace Mellon.Services.Infrastracture.Repositotiries
             return await this.context.Dims
                  .Where(p => p.Name == "sys_company" && p.SysCountry == country)
                  .OrderBy(o => o.ValueChar).ToListAsync(cancellationToken);
+        }
+
+        public async Task<IEnumerable<Country>> GetCountries(CancellationToken cancellationToken)
+        {
+            return await this.context.Countries
+                  .OrderBy(o => o.Country1).ToListAsync(cancellationToken);
         }
 
         public async Task<IEnumerable<Dim>> GetDepartments(CancellationToken cancellationToken)

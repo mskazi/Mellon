@@ -42,7 +42,7 @@ namespace Mellon.Services.Application.Contact
             VoucherPhoneNo = contact?.VoucherPhoneNo;
             VoucherMobileNo = contact?.VoucherMobileNo;
             ContactNotes = contact?.ContactNotes;
-            SysCompany = contact?.SysCompany;
+            Mode = contact?.Mode;
             Validate();
         }
     }
@@ -62,7 +62,7 @@ namespace Mellon.Services.Application.Contact
             VoucherPhoneNo = contact?.VoucherPhoneNo;
             VoucherMobileNo = contact?.VoucherMobileNo;
             ContactNotes = contact?.ContactNotes;
-            SysCompany = contact?.SysCompany;
+            Mode = contact?.Mode;
             Validate();
         }
     }

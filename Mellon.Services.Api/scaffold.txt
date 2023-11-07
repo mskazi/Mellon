@@ -1,1 +1,8 @@
 ﻿ Scaffold-DbContext "Server=erptestdbgr.mellongroup.com;Database=MELLON_INTERNAL_APPS; Integrated Security=false; User ID=erpportal;Password=1234ep;Encrypt=True;TrustServerCertificate=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Context MellonContext -Force -Tables carriers,carriers_postcode_restrictions,carriers_project_restrictions,countries,data_cancellations,data_inabilities,data_lines,data_subvouchers,data_upload,dims,electra_project_setup,from_erp,members,returned,data,office_contacts
+
+
+
+
+ Actions 
+ Changed data --> carrier_jobid from text to nvarchar(50)
+ changed members ---> column rename member to membername

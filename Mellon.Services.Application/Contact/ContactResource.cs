@@ -38,10 +38,14 @@ namespace Mellon.Services.Application.Contact
             VoucherPhoneNo = contact?.VoucherPhoneNo;
             VoucherMobileNo = contact?.VoucherMobileNo;
             ContactNotes = contact?.ContactNotes;
-            SysCompany = contact?.SysCompany;
+            if (contact.Flag0 != null)
+            {
+                Mode = (ContractMode)Enum.ToObject(typeof(ContractMode), contact.Flag0);
+            }
             Active = contact?.Active ?? true;
         }
 
+        public ContractMode? Mode { get; set; }
 
         public string? VoucherFrom { get; set; }
 
@@ -63,12 +67,11 @@ namespace Mellon.Services.Application.Contact
 
         public string? ContactNotes { get; set; }
 
-        public string SysCompany { get; set; } = null!;
-
         public bool Active { get; set; }
 
         protected virtual void Validate()
         {
+            Guards.ObjectNotNull(Mode, nameof(Mode));
             Guards.StringNotNullOrEmpty(VoucherName, nameof(VoucherName));
             Guards.StringMaximumLength(VoucherName, nameof(VoucherName), 600);
             Guards.StringNotNullOrEmpty(VoucherPostCode, nameof(VoucherPostCode));
@@ -80,6 +83,12 @@ namespace Mellon.Services.Application.Contact
 
 
         }
+    }
+
+    public enum ContractMode
+    {
+        Office = 1,
+        Warehouse = 4
     }
 
 }

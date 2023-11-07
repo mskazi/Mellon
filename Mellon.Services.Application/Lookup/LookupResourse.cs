@@ -18,10 +18,21 @@ namespace Mellon.Services.Application.Lookup
         }
     }
 
-
+    public class CountryLookupResourse : LookupStringResource
+    {
+        public CountryLookupResourse(Country country) : base()
+        {
+            Id = country.Iso;
+            Description = country.Country1;
+        }
+    }
 
     public class LookupStringResource
     {
+        public LookupStringResource()
+        {
+
+        }
         public LookupStringResource(Dim dim)
         {
             Id = dim?.ValueChar;

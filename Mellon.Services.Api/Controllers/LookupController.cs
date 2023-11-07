@@ -37,7 +37,6 @@ namespace Mellon.Services.Api.Controllers
         }
 
 
-        // GET: api/<ApprovalsController>
         [HttpGet]
         [Route("companies")]
         [ProducesResponseType(typeof(ListResult<CompanyLookupResourse>), StatusCodes.Status200OK)]
@@ -45,6 +44,18 @@ namespace Mellon.Services.Api.Controllers
         public async Task<IActionResult> GetCompanies()
         {
             var command = new GeCompanyLookupCommand();
+            var result = await mediator.Send(command);
+            return Ok(result);
+        }
+
+
+        [HttpGet]
+        [Route("countries")]
+        [ProducesResponseType(typeof(ListResult<CountryLookupResourse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetCountries()
+        {
+            var command = new GeCountryLookupCommand();
             var result = await mediator.Send(command);
             return Ok(result);
         }

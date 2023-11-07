@@ -26,7 +26,7 @@ namespace Mellon.Services.Infrastracture.Repositotiries
                           dimsStatus.Name == "sys_status" &&
                           data.SysStatus < 9000
                           )
-                          select new { data, setup, carriers, members, dimsStatus, dimsActionType, dimsDeliveryTime }).Distinct()
+                          select new { data, setup, carriers, members, dimsStatus, dimsActionType, dimsDeliveryTime })
             ).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(term))
@@ -49,8 +49,9 @@ namespace Mellon.Services.Infrastracture.Repositotiries
                       (s.setup.MellonProject ?? "").Contains(term) ||
                       (s.carriers.DescrShort ?? "").Contains(term)
                     );
-            }
 
+            }
+            query = query.Distinct();
 
             //get total
             total = await query.CountAsync(cancellationToken);
