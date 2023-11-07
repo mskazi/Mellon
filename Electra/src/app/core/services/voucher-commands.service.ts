@@ -3,7 +3,11 @@ import { Injectable } from '@angular/core';
 import { PaginatedListResults } from '@core/core-model';
 import { ISearchService } from '@core/forms/base-form-search.component';
 import { Voucher } from '@core/models/voucher-details-item';
-import { VoucherServiceItem, VoucherWarehouseItem } from '@core/models/voucher-search-item';
+import {
+  VoucherSearchItem,
+  VoucherServiceItem,
+  VoucherWarehouseItem,
+} from '@core/models/voucher-search-item';
 import { VoucherSummary } from '@core/models/voucher-sumamry';
 import { environment } from '@env/environment';
 import { Utilities } from '@shared/utils/utilities';
@@ -13,9 +17,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class VoucherCommandService {
-  warehouseCommands: WarehouseCommands;
+  warehouseCommands: VoucherWarehouseCommands;
+  searchCommands: VoucherSearchCommands;
+
   constructor(private http: HttpClient) {
-    this.warehouseCommands = new WarehouseCommands(http);
+    this.warehouseCommands = new VoucherWarehouseCommands(http);
+    this.searchCommands = new VoucherSearchCommands(http);
   }
 
   getVoucherList(
@@ -44,7 +51,7 @@ export class VoucherCommandService {
   }
 }
 
-export class WarehouseCommands implements ISearchService<VoucherWarehouseItem> {
+export class VoucherWarehouseCommands implements ISearchService<VoucherWarehouseItem> {
   constructor(private http: HttpClient) {}
 
   search(
@@ -62,6 +69,24 @@ export class WarehouseCommands implements ISearchService<VoucherWarehouseItem> {
 
     return this.http.get<PaginatedListResults<any>>(
       `${environment.serviceRoleUrl}/warehouse?${query}`
+    );
+  }
+}
+
+export class VoucherSearchCommands implements ISearchService<VoucherSearchItem> {
+  constructor(private http: HttpClient) {}
+
+  search(term: string, params: any): Observable<PaginatedListResults<VoucherSearchItem>> {
+    let query = Utilities.paginatedQueryParams(params) + '&';
+    if (params) {
+      query += Utilities.orderQueryParams(params) + '&';
+    }
+    if (term) {
+      query += `term=${term.toString()}`;
+    }
+
+    return this.http.get<PaginatedListResults<any>>(
+      `${environment.serviceRoleUrl}/search?${query}`
     );
   }
 }

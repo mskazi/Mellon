@@ -10,6 +10,7 @@ namespace Mellon.Services.Infrastracture.Repositotiries
     {
         public async Task<PaginatedListResult<VoucherSearchItem>> Search(string term, ListPaging paging, ListOrder order, CancellationToken cancellationToken)
         {
+            context.Database.SetCommandTimeout(180);
             paging ??= new ListPaging();
             int? total = null;
 
@@ -29,18 +30,34 @@ namespace Mellon.Services.Infrastracture.Repositotiries
             //  data.SysStatus < 9000
             //  )
             // select new { data, setup, carriers, dims1, dims2, dimsDS, members, dimsDeliveryTime }).Distinct()
-            var query = ((from data in context.Data
-                          join setup in context.ElectraProjectSetups on data.CarrierId equals setup.Id
-                          join carriers in context.Carriers on data.CarrierId equals carriers.Id
-                          join members in context.Members on data.OrderedBy equals members.Id
-                          join dataLines in context.DataLines on data.Id equals dataLines.DataId
-                          join dims1 in context.Dims on data.SysStatus equals dims1.ValueInt
-                          where (
-                        dims1.Name == "sys_status" && (
-                        data.SysStatus == 20 || data.SysStatus == 21 || data.SysStatus == 22 || data.SysStatus == 9920 || data.SysStatus == 9921 || data.SysStatus == 9922
-                        )
-                          )
-                          select new { data, setup, carriers, dims1, dataLines, members }).Distinct()
+            var ids = new List<int>() { 20, 21, 22, 9920, 9921, 9922 };
+            var query = (from data in context.Data
+                         join setup in context.ElectraProjectSetups on data.CarrierId equals setup.Id into joinSetup
+                         from setupsDefaultIfEmpty in joinSetup.DefaultIfEmpty()
+
+                         join carriers in context.Carriers on data.CarrierId equals carriers.Id into joinCarriers
+                         from carriersDefaultIfEmpty in joinCarriers.DefaultIfEmpty()
+
+                         join members in context.Members on data.OrderedBy equals members.Id into joinMembers
+                         from membersDefaultIfEmpty in joinMembers.DefaultIfEmpty()
+
+                         join dataLines in context.DataLines on data.Id equals dataLines.DataId into joinDataLines
+                         from dataLinesDefaultIfEmpty in joinDataLines.DefaultIfEmpty()
+
+                         join dims1 in context.Dims on new
+                         {
+                             Id = data.SysStatus,
+                             Val = "sys_status"
+                         } equals new
+                         {
+                             Id = dims1.ValueInt,
+                             Val = dims1.Name
+                         } into jointDims
+                         from dimsDefaultIfEmpty in jointDims.DefaultIfEmpty()
+                         where (
+                             !ids.Contains(data.SysStatus)
+                         )
+                         select new { data, setupsDefaultIfEmpty, carriersDefaultIfEmpty, dimsDefaultIfEmpty, dataLinesDefaultIfEmpty, membersDefaultIfEmpty }
             ).AsQueryable();
             DateTime date;
             if (DateTime.TryParse(term, out date))
@@ -54,13 +71,14 @@ namespace Mellon.Services.Infrastracture.Repositotiries
                 query = query.Where(s =>
                     s.data.VoucherName.Contains(term) ||
                     (s.data.VoucherContact ?? "").Contains(term) ||
-                    (s.data.CarrierVoucherNo ?? "").Contains(term) ||
-                    (s.data.NavisionServiceOrderNo ?? "").Contains(term) ||
-                    (s.data.NavisionSalesOrderNo ?? "").Contains(term) ||
-                    (s.data.NavisionSellToCustomerNo ?? "").Contains(term) ||
-                    (s.dataLines.Value ?? "").Contains(term)
+                    s.data.CarrierVoucherNo.Contains(term) ||
+                    s.data.NavisionServiceOrderNo.Contains(term) ||
+                    s.data.NavisionSalesOrderNo.Contains(term) ||
+                    (s.data.NavisionSellToCustomerNo != null && s.data.NavisionSellToCustomerNo.Contains(term)) ||
+                                                                                                                  (s.dataLinesDefaultIfEmpty.Value != null && s.dataLinesDefaultIfEmpty.Value.Contains(term))
                    );
             }
+
 
             //get total
             total = await query.CountAsync(cancellationToken);
@@ -83,17 +101,18 @@ namespace Mellon.Services.Infrastracture.Repositotiries
                         case "createdAt": prop.Name = "data.CreatedAt"; break;
                         case "systemCompany": prop.Name = "data.SysCompany"; break;
                         case "carrierVoucherNo": prop.Name = "data.CarrierVoucherNo"; break;
-                        case "carrierName": prop.Name = "carriers.DescrShort"; break;
-                        case "carrierDeliveryStatus": prop.Name = "dims1.Description"; break;
-                        case "orderedBy": prop.Name = "members.MemberName"; break;
+                        case "carrierName": prop.Name = "carriersDefaultIfEmpty.DescrShort"; break;
+                        case "carrierDeliveryStatus": prop.Name = "dimsDefaultIfEmpty.Description"; break;
+                        case "orderedBy": prop.Name = "membersDefaultIfEmpty.MemberName"; break;
                     }
                 }
                 query = query.OrderBy(order?.Properties);
             }
 
-            var results = await query.Skip(paging.Start)
-                .Take(paging.Length)
-                .ToListAsync(cancellationToken);
+            var qureyResults = query.Skip(paging.Start)
+                .Take(paging.Length).AsQueryable();
+
+            var results = await qureyResults.ToListAsync(cancellationToken);
 
             var dataResults = results.Select(s =>
                  new VoucherSearchItem()
@@ -110,9 +129,9 @@ namespace Mellon.Services.Infrastracture.Repositotiries
                      CreatedAt = s.data.CreatedAt,
                      SystemCompany = s.data.SysCompany,
                      CarrierVoucherNo = s.data.CarrierVoucherNo,
-                     CarrierName = s.carriers == null ? null : s.carriers.DescrShort,
-                     CarrierDeliveryStatus = s.dims1.Description,
-                     OrderedBy = s.members == null ? null : s.members.MemberName,
+                     CarrierName = s.carriersDefaultIfEmpty?.DescrShort,
+                     CarrierDeliveryStatus = s.dimsDefaultIfEmpty?.Description,
+                     OrderedBy = s.membersDefaultIfEmpty?.MemberName,
                  }
             ).ToList();
 

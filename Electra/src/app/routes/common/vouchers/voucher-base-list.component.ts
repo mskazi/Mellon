@@ -6,9 +6,10 @@ import { VoucherDetailsCommonComponent } from 'app/routes/common/vouchers/vouche
 export abstract class BaseVoucherListComponent<T> extends BaseSearchFormComponent<T> {
   constructor(
     protected service: ISearchService<T>,
-    protected dialogDynamicService: DialogDynamicService
+    protected dialogDynamicService: DialogDynamicService,
+    protected forceLoad = true
   ) {
-    super(service);
+    super(service, forceLoad);
   }
 
   showVoucherDetails(item: number) {

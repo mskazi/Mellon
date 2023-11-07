@@ -5,4 +5,16 @@
   .matero-toolbar {
     padding: 0 8px;
   }
+
+  .small-icon {
+    .mdc-fab--mini {
+      width: 30px;
+      height: 30px;
+    }
+
+    .mat-mdc-fab,
+    .mat-mdc-mini-fab {
+      --mdc-fab-container-shape: unset;
+    }
+  }
 }

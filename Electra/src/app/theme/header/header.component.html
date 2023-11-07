@@ -3,9 +3,47 @@
     <mat-icon>menu</mat-icon>
   </button>
   <span class="flex-fill"></span>
-
+  <div class="m-r-16">
+    <form>
+      <mat-form-field appearance="outline" style="flex-direction: unset;"
+                      class="p-0 m-0 small-icon">
+        <span matPrefix #popoverTrigger="mtxPopoverTrigger" mtxPopoverTriggerOn="hover"
+              [mtxPopoverTriggerFor]="popover">
+          <mat-icon>info</mat-icon>
+        </span>
+        <input matInput [(ngModel)]="searchTerm" name="q" placeholder="Search"
+               style="font-size: large;">
+        <button mat-mini-fab (click)="search()" matSuffix type="submit">
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+    </form>
+  </div>
   <button mat-icon-button (click)="toggleFullscreen()">
     <mat-icon>fullscreen</mat-icon>
   </button>
   <app-user></app-user>
 </mat-toolbar>
+
+
+<mtx-popover #popover="mtxPopover">
+  <ng-template mtxPopoverContent>
+    <div class="m-12">
+      <h4>Help about Searching</h4>
+      You can search for:
+      <ul>
+        <br>
+        <li>Voucher No</li>
+        <li>Company Name</li>
+        <li>Contact Name</li>
+        <li>ERP Customer No</li>
+        <li>ERP SRV Order No</li>
+        <li>ERP SALES Order No</li>
+        <li>Invoice Number (valid for ACCT only)</li>
+        <li>Terminal ID</li>
+        <li>Serial No</li>
+        <li>Create Date (dd/mm/yyyy)</li>
+      </ul>
+    </div>
+  </ng-template>
+</mtx-popover>

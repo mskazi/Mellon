@@ -14,6 +14,7 @@ import { RegisterComponent } from './sessions/register/register.component';
 import { UnauthorizedComponent } from './sessions/unauthorized.component';
 import { NgxPermissionsGuard } from 'ngx-permissions';
 import { Roles } from '@core';
+import { SearchVoucherListComponent } from './search/voucher-list.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,7 @@ const routes: Routes = [
       { path: '403', component: Error403Component },
       { path: '404', component: Error404Component },
       { path: '500', component: Error500Component },
+      { path: 'search', component: SearchVoucherListComponent },
       {
         path: 'service',
         loadChildren: () => import('./service/service.module').then(m => m.ServiceModule),

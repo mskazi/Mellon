@@ -38,6 +38,16 @@ export interface VoucherWarehouseItem extends VoucherBaseItem {
   createdAt: string;
 }
 
+export interface VoucherSearchItem extends VoucherBaseItem {
+  systemStatus: any;
+  systemCompany: string;
+  carrierVoucherNo: string;
+  orderedBy: string;
+  carrierName: string;
+  carrierDeliveryStatus: string;
+  createdAt: string;
+}
+
 export interface VoucherBaseItem {
   id: number;
   voucherName: string;
