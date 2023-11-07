@@ -48,6 +48,22 @@ export interface VoucherSearchItem extends VoucherBaseItem {
   createdAt: string;
 }
 
+export interface VoucherOfficeItem extends VoucherBaseItem {
+  systemStatus: number;
+  serialNo: any;
+  systemCompany: string;
+  actionTypeDescription: string;
+  deliveryTimeDescription: string;
+  carrierVoucherNo: string;
+  carrierActionType: number;
+  statusDescription: string;
+  orderedBy: string;
+  mellonProject: any;
+  carrierName: string;
+  createdBy: string;
+  createdAt: string;
+}
+
 export interface VoucherBaseItem {
   id: number;
   voucherName: string;

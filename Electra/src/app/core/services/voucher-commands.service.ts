@@ -4,6 +4,7 @@ import { PaginatedListResults } from '@core/core-model';
 import { ISearchService } from '@core/forms/base-form-search.component';
 import { Voucher } from '@core/models/voucher-details-item';
 import {
+  VoucherOfficeItem,
   VoucherSearchItem,
   VoucherServiceItem,
   VoucherWarehouseItem,
@@ -19,10 +20,12 @@ import { Observable } from 'rxjs';
 export class VoucherCommandService {
   warehouseCommands: VoucherWarehouseCommands;
   searchCommands: VoucherSearchCommands;
+  officeCommands: VoucherOfficeCommands;
 
   constructor(private http: HttpClient) {
     this.warehouseCommands = new VoucherWarehouseCommands(http);
     this.searchCommands = new VoucherSearchCommands(http);
+    this.officeCommands = new VoucherOfficeCommands(http);
   }
 
   getVoucherList(
@@ -87,6 +90,24 @@ export class VoucherSearchCommands implements ISearchService<VoucherSearchItem> 
 
     return this.http.get<PaginatedListResults<any>>(
       `${environment.serviceRoleUrl}/search?${query}`
+    );
+  }
+}
+
+export class VoucherOfficeCommands implements ISearchService<VoucherOfficeItem> {
+  constructor(private http: HttpClient) {}
+
+  search(term: string, params: any): Observable<PaginatedListResults<VoucherOfficeItem>> {
+    let query = Utilities.paginatedQueryParams(params) + '&';
+    if (params) {
+      query += Utilities.orderQueryParams(params) + '&';
+    }
+    if (term) {
+      query += `term=${term.toString()}`;
+    }
+
+    return this.http.get<PaginatedListResults<any>>(
+      `${environment.serviceRoleUrl}/office?${query}`
     );
   }
 }

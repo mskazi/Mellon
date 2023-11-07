@@ -14,22 +14,6 @@ namespace Mellon.Services.Infrastracture.Repositotiries
             paging ??= new ListPaging();
             int? total = null;
 
-            //((from data in context.Data
-            //  join setup in context.ElectraProjectSetups on data.CarrierId equals setup.Id
-            //  join carriers in context.Carriers on data.CarrierId equals carriers.Id
-            //  join members in context.Members on data.OrderedBy equals members.Id
-            //  join dims1 in context.Dims on data.ConditionCode equals dims1.ValueChar
-            //  join dims2 in context.Dims on data.SysDepartment equals dims2.ValueChar
-            //  join dimsDeliveryTime in context.Dims on data.VoucherScheduledDelivery equals dimsDeliveryTime.ValueInt
-            //  join dimsDS in context.Dims on data.SysStatus equals dimsDS.ValueInt
-            //  where (
-            //  dimsDeliveryTime.Name == "sys_time_delivery" &&
-            //  data.SysDepartment != "service" &&
-            //  data.SysSource != "OpenBI_Acct_Upload" &&
-            //  data.ElectraProjectId != 72 &&
-            //  data.SysStatus < 9000
-            //  )
-            // select new { data, setup, carriers, dims1, dims2, dimsDS, members, dimsDeliveryTime }).Distinct()
             var ids = new List<int>() { 20, 21, 22, 9920, 9921, 9922 };
             var query = (from data in context.Data
                          join setup in context.ElectraProjectSetups on data.CarrierId equals setup.Id into joinSetup

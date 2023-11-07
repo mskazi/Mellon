@@ -14,22 +14,32 @@ namespace Mellon.Services.Infrastracture.Repositotiries
             int? total = null;
 
             var query = ((from data in context.Data
-                          join setup in context.ElectraProjectSetups on data.CarrierId equals setup.Id
-                          join carriers in context.Carriers on data.CarrierId equals carriers.Id
-                          join members in context.Members on data.OrderedBy equals members.Id
-                          join dimsStatus in context.Dims on data.SysStatus equals dimsStatus.ValueInt
-                          join dimsActionType in context.Dims on data.CarrierActionType equals dimsActionType.ValueInt
-                          join dimsDeliveryTime in context.Dims on data.VoucherScheduledDelivery equals dimsDeliveryTime.ValueInt
+                          join setup in context.ElectraProjectSetups on data.CarrierId equals setup.Id into joinSetup
+                          from setupsDefaultIfEmpty in joinSetup.DefaultIfEmpty()
+
+                          join carriers in context.Carriers on data.CarrierId equals carriers.Id into joinCarriers
+                          from carriersDefaultIfEmpty in joinCarriers.DefaultIfEmpty()
+                          join members in context.Members on data.OrderedBy equals members.Id into joinMembers
+                          from membersDefaultIfEmpty in joinMembers.DefaultIfEmpty()
+
+                          join dimsStatus in context.Dims on data.SysStatus equals dimsStatus.ValueInt into jointDimStatus
+                          from jointDimStatusDefaultIfEmpty in jointDimStatus.DefaultIfEmpty()
+
+                          join dimsActionType in context.Dims on data.CarrierActionType equals dimsActionType.ValueInt into jointDimsActionType
+                          from jointDimsActionTypeDefaultIfEmpty in jointDimsActionType.DefaultIfEmpty()
+
+                          join dimsDeliveryTime in context.Dims on data.VoucherScheduledDelivery equals dimsDeliveryTime.ValueInt into jointDimsDeliveryTime
+                          from jointDimsDeliveryTimeDefaultIfEmpty in jointDimsDeliveryTime.DefaultIfEmpty()
                           where (
-                          dimsActionType.Name == "carrier_action_type" &&
-                          dimsDeliveryTime.Name == "sys_time_delivery" &&
+                          jointDimsActionTypeDefaultIfEmpty.Name == "carrier_action_type" &&
+                          jointDimsDeliveryTimeDefaultIfEmpty.Name == "sys_time_delivery" &&
                           data.SysDepartment != "service" &&
                           data.SysSource != "OpenBI_Acct_Upload" &&
                           data.ElectraProjectId != 72 &&
-                          dimsStatus.Name == "sys_status" &&
+                          jointDimStatusDefaultIfEmpty.Name == "sys_status" &&
                           data.SysStatus < 9000
                           )
-                          select new { data, setup, carriers, members, dimsStatus, dimsActionType, dimsDeliveryTime }).Distinct()
+                          select new { data, setupsDefaultIfEmpty, carriersDefaultIfEmpty, membersDefaultIfEmpty, jointDimStatusDefaultIfEmpty, jointDimsActionTypeDefaultIfEmpty, jointDimsDeliveryTimeDefaultIfEmpty })
             ).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(term))
@@ -45,10 +55,10 @@ namespace Mellon.Services.Infrastracture.Repositotiries
                       (s.data.VoucherDescription ?? "").Contains(term) ||
                       (s.data.SysCompany ?? "").Contains(term) ||
                       (s.data.CarrierVoucherNo ?? "").Contains(term) ||
-                      (s.members.MemberName ?? "").Contains(term) ||
-                      (s.dimsActionType.Description ?? "").Contains(term) ||
-                      (s.dimsStatus.Description ?? "").Contains(term) ||
-                      (s.carriers.DescrShort ?? "").Contains(term) ||
+                      (s.membersDefaultIfEmpty.MemberName ?? "").Contains(term) ||
+                      (s.jointDimsActionTypeDefaultIfEmpty.Description ?? "").Contains(term) ||
+                      (s.jointDimStatusDefaultIfEmpty.Description ?? "").Contains(term) ||
+                      s.carriersDefaultIfEmpty.DescrShort.Contains(term) ||
                       (s.data.CreatedBy ?? "").Contains(term)
                     );
             }
@@ -73,13 +83,13 @@ namespace Mellon.Services.Infrastracture.Repositotiries
                         case "systemCompany": prop.Name = "data.SysCompany"; break;
                         case "carrierVoucherNo": prop.Name = "data.CarrierVoucherNo"; break;
                         case "carrierActionType": prop.Name = "data.CarrierActionType"; break;
-                        case "statusDescription": prop.Name = "dimsStatus.Description"; break;
-                        case "orderedBy": prop.Name = "members.MemberName"; break;
-                        case "actionTypeDescription": prop.Name = "dimsActionType.Description"; break;
-                        case "DeliveryTimeDescription": prop.Name = "dimsDeliveryTime.Description"; break;
                         case "createdBy": prop.Name = "data.CreatedBy"; break;
-                        case "carrierName": prop.Name = "carriers.DescrShort"; break;
                         case "createdAt": prop.Name = "data.CreatedAt"; break;
+                        case "statusDescription": prop.Name = "jointDimStatusDefaultIfEmpty.Description"; break;
+                        case "orderedBy": prop.Name = "membersDefaultIfEmpty.MemberName"; break;
+                        case "actionTypeDescription": prop.Name = "jointDimsActionTypeDefaultIfEmpty.Description"; break;
+                        case "DeliveryTimeDescription": prop.Name = "jointDimsDeliveryTimeDefaultIfEmpty.Description"; break;
+                        case "carrierName": prop.Name = "carriersDefaultIfEmpty.DescrShort"; break;
                     }
                 }
                 query = query.OrderBy(order?.Properties);
@@ -105,11 +115,11 @@ namespace Mellon.Services.Infrastracture.Repositotiries
                      SystemCompany = s.data.SysCompany,
                      CarrierVoucherNo = s.data.CarrierVoucherNo,
                      CarrierActionType = s.data.CarrierActionType,
-                     StatusDescription = s.dimsStatus.Description,
-                     OrderedBy = s.members == null ? null : s.members.MemberName,
-                     ActionTypeDescription = s.dimsActionType == null ? null : s.dimsActionType.Description,
-                     DeliveryTimeDescription = s.dimsDeliveryTime.Description,
-                     CarrierName = s.carriers == null ? null : s.carriers.DescrShort,
+                     StatusDescription = s.jointDimStatusDefaultIfEmpty.Description,
+                     OrderedBy = s.membersDefaultIfEmpty == null ? null : s.membersDefaultIfEmpty.MemberName,
+                     ActionTypeDescription = s.jointDimsActionTypeDefaultIfEmpty == null ? null : s.jointDimsActionTypeDefaultIfEmpty.Description,
+                     DeliveryTimeDescription = s.jointDimsDeliveryTimeDefaultIfEmpty.Description,
+                     CarrierName = s.carriersDefaultIfEmpty == null ? null : s.carriersDefaultIfEmpty.DescrShort,
                      CreatedBy = s.data.CreatedBy,
                      CreatedAt = s.data.CreatedAt,
                  }

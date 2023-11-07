@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared';
 import { RoutesCommonModule } from '../common/common.module';
-import { OfficeRoutingModule } from './office-routing.module';
+import { OfficeContactListComponent } from './contact/contact-list.component';
 import { OfficeMemberEditComponent } from './members/member-edit.component';
 import { OfficeMemberListComponent } from './members/member-list.component';
-import { OfficeContactListComponent } from './contact/contact-list.component';
+import { OfficeRoutingModule } from './office-routing.module';
+import { OfficeVoucherListComponent } from './voucher/voucher-list.component';
 
 const COMPONENTS: any[] = [
   OfficeMemberListComponent,
   OfficeMemberEditComponent,
   OfficeContactListComponent,
+  OfficeVoucherListComponent,
 ];
 const COMPONENTS_DYNAMIC: any[] = [];
 
