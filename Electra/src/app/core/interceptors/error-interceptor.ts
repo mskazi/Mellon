@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
+import { NotificationService } from '@core/notification.service';
 
 export enum STATUS {
   UNAUTHORIZED = 401,
@@ -34,9 +35,16 @@ export class ErrorInterceptor implements HttpInterceptor {
     return `${error.status} ${error.statusText}`;
   };
 
+  private getSubTitle = (error: HttpErrorResponse) => {
+    if (error.error?.detail) {
+      return `(${error.error?.Code ?? '-'}) ${error.error.detail}`;
+    }
+    return ``;
+  };
+
   constructor(
     private router: Router,
-    private toast: ToastrService
+    private toast: NotificationService
   ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -50,6 +58,8 @@ export class ErrorInterceptor implements HttpInterceptor {
       this.router.navigateByUrl(`/${error.status}`, {
         skipLocationChange: true,
       });
+    } else if (error.status === 400) {
+      this.toast.error(this.getSubTitle(error), this.getMessage(error));
     } else {
       console.error('ERROR', error);
       this.toast.error(this.getMessage(error));

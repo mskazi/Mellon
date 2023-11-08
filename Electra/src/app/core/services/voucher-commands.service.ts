@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PaginatedListResults } from '@core/core-model';
 import { ISearchService } from '@core/forms/base-form-search.component';
-import { Voucher } from '@core/models/voucher-details-item';
+import { Voucher, VoucherTrack } from '@core/models/voucher-details-item';
 import {
   VoucherOfficeItem,
   VoucherSearchItem,
@@ -47,6 +47,10 @@ export class VoucherCommandService {
 
   getVoucherDetails(id: number): Observable<Voucher> {
     return this.http.get<Voucher>(`${environment.serviceRoleUrl}/details/${id}`);
+  }
+
+  getVoucherTrack(id: number): Observable<VoucherTrack> {
+    return this.http.get<VoucherTrack>(`${environment.serviceRoleUrl}/track/${id}`);
   }
 
   getSummary(): Observable<VoucherSummary> {

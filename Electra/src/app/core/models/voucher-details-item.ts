@@ -52,3 +52,8 @@ export interface VoucherDataInabilities {
   trnDate: Date;
   reason: string;
 }
+
+export interface VoucherTrack {
+  details: Voucher;
+  courierTrackResource: any;
+}

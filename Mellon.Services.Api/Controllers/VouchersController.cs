@@ -104,9 +104,9 @@ namespace Mellon.Services.Api.Controllers
         [Route("track/{id}")]
         [ProducesResponseType(typeof(VoucherSummary), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetTrack()
+        public async Task<IActionResult> GetTrack(int id)
         {
-            var command = new GetVoucherTrackCommand();
+            var command = new GetVoucherTrackCommand(id);
             var result = await mediator.Send(command);
             return Ok(result);
         }

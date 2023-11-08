@@ -32,7 +32,9 @@ export class NotificationService {
    * @param title
    */
   error(message: string, title?: string) {
-    this.toastrService.error(message, title);
+    this.toastrService.error(message, title, {
+      timeOut: 6000,
+    });
   }
   /**
    * Warning message

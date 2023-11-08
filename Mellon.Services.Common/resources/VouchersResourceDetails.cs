@@ -61,6 +61,10 @@
         public string? SystemDepertment { get; set; }
         public string? CarrierCode { get; set; }
         public string? CarrierDelivereyStatus { get; set; }
+        public int CarrierId { get; set; }
+
+        public int ElectraProjectEdit { get; set; }
+
     }
 
     public partial class VoucherDataInability

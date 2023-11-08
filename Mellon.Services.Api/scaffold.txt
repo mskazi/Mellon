@@ -4,5 +4,7 @@
 
 
  Actions 
+ Delete data from data_lines where data Id does not exist
+ Delete data form data_ where data Id does not exist
  Changed data --> carrier_jobid from text to nvarchar(50)
  changed members ---> column rename member to membername

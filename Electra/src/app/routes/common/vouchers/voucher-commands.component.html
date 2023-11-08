@@ -1,0 +1,27 @@
+  <div class="d-flex">
+    <button mat-mini-fab class="bg-red-400" matTooltip="Cancel"
+            *ngIf="cancelButton">
+      <mat-icon>cancel</mat-icon>
+    </button>
+    <ng-container *ngIf="canShowAdminCancelButton">
+      <button mat-mini-fab class="bg-orange-400 m-l-4" matTooltip="Cancel Admin"
+              *ngIf="cancelAdminButton">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </ng-container>
+    <button mat-mini-fab class="bg-blue-400 m-l-4" matTooltip="Trace"
+            *ngIf="showTrackButton "
+            (click)="showTrackDetails()">
+      <mat-icon>place</mat-icon>
+    </button>
+
+    <button mat-mini-fab class="bg-teal-400 m-l-4" matTooltip="Voucher"
+            *ngIf="showTrackButton">
+      <mat-icon>local_printshop</mat-icon>
+    </button>
+    <button mat-mini-fab class="bg-orange-400 m-l-4" (click)="showVoucherDetails()"
+            matTooltip="Details"
+            *ngIf="voucherDetailsButton">
+      <mat-icon>grid_on</mat-icon>
+    </button>
+  </div>

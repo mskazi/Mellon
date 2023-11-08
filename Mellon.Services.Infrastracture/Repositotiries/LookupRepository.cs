@@ -12,6 +12,7 @@ namespace Mellon.Services.Infrastracture.Repositotiries
 
         Task<IEnumerable<Country>> GetCountries(CancellationToken cancellationToken);
 
+        Task<ElectraProjectSetup> GetElectraProjectSetup(int carriedId, int projectId, CancellationToken cancellationToken);
     }
 
     public class LookupRepository : ILookupRepository
@@ -41,6 +42,12 @@ namespace Mellon.Services.Infrastracture.Repositotiries
             return await this.context.Dims
                 .Where(p => p.Name == "sys_department")
                 .OrderBy(o => o.ValueChar).ToListAsync(cancellationToken);
+        }
+
+        public async Task<ElectraProjectSetup> GetElectraProjectSetup(int carriedId, int projectId, CancellationToken cancellationToken)
+        {
+            return await this.context.ElectraProjectSetups
+                .Where(p => p.CarrierId == carriedId && p.Id == projectId).FirstOrDefaultAsync(cancellationToken);
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿namespace Mellon.Services.External.CourierProviders
+﻿using Mellon.Services.Common.resources;
+using Mellon.Services.Common.resources.Couriers;
+
+namespace Mellon.Services.External.CourierProviders
 {
     public interface ICourierService
     {
@@ -7,10 +10,12 @@
             get;
         }
         void Print();
+        Task<CourierTrackResource> Track(VoucherDetails voucherDetails);
+
     }
 
     public enum CourierMode
     {
-        GenikiTaxydromiki = 4
+        GenikiTaxydromiki = 1
     }
 }

@@ -55,7 +55,7 @@ registerLocaleData(localeGr);
     NgxPermissionsModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 3000,
-      positionClass: 'toast-bottom-center',
+      positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
     TranslateModule.forRoot({

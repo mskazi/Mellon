@@ -63,21 +63,36 @@ namespace Mellon.Services.Infrastracture.Repositotiries
         {
 
             var query = (from data in context.Data
-                         join setup in context.ElectraProjectSetups on data.ElectraProjectId equals setup.Id
-                         join carriers in context.Carriers on data.CarrierId equals carriers.Id
-                         join members in context.Members on data.OrderedBy equals members.Id
-                         join dimsConditios in context.Dims on data.ConditionCode equals dimsConditios.ValueChar
-                         join dimsDepartment in context.Dims on data.SysDepartment equals dimsDepartment.ValueChar
-                         join dimsDelivery in context.Dims on data.VoucherScheduledDelivery equals dimsDelivery.ValueInt
-                         join dimsDs in context.Dims on data.SysStatus equals dimsDs.ValueInt
+                         join setup in context.ElectraProjectSetups on data.ElectraProjectId equals setup.Id into joinSetup
+                         from setupsDefaultIfEmpty in joinSetup.DefaultIfEmpty()
+                         join carriers in context.Carriers on data.CarrierId equals carriers.Id into joinCarriers
+                         from carriersDefaultIfEmpty in joinCarriers.DefaultIfEmpty()
+                         join members in context.Members on data.OrderedBy equals members.Id into joinMembers
+                         from membersDefaultIfEmpty in joinMembers.DefaultIfEmpty()
+                         join dimsConditios in context.Dims on data.ConditionCode equals dimsConditios.ValueChar into jointDimsConditios
+                         from dimsConditiosDefaultIfEmpty in jointDimsConditios.DefaultIfEmpty()
+                         join dimsDepartment in context.Dims on data.SysDepartment equals dimsDepartment.ValueChar into jointDimsDepartmen
+                         from dimsDepartmenDefaultIfEmpty in jointDimsDepartmen.DefaultIfEmpty()
+                         join dimsDelivery in context.Dims on data.VoucherScheduledDelivery equals dimsDelivery.ValueInt into jointDimsDelivery
+                         from dimsDeliveryDefaultIfEmpty in jointDimsDelivery.DefaultIfEmpty()
+                         join dims1 in context.Dims on new
+                         {
+                             Id = data.SysStatus,
+                             Val = "sys_status"
+                         } equals new
+                         {
+                             Id = dims1.ValueInt,
+                             Val = dims1.Name
+                         } into jointDimsStatus
+                         from dimsStatusDefaultIfEmpty in jointDimsStatus.DefaultIfEmpty()
+
                          where (
-                         //dimsConditios.Name == "sys_condition" &&
-                         //data.SysDepartment == "sys_department" &&
-                         //dimsDelivery.Name == "sys_time_delivery" &&
-                         //dimsDs.Name == "sys_status" &&
+                         dimsConditiosDefaultIfEmpty.Name == "sys_condition" &&
+                         dimsDepartmenDefaultIfEmpty.Name == "sys_department" &&
+                         dimsDeliveryDefaultIfEmpty.Name == "sys_time_delivery" &&
                          data.Id == id
                          )
-                         select new { data, setup, carriers, members, dimsConditios, dimsDepartment, dimsDelivery, dimsDs }
+                         select new { data, setupsDefaultIfEmpty, carriersDefaultIfEmpty, membersDefaultIfEmpty, dimsConditiosDefaultIfEmpty, dimsDepartmenDefaultIfEmpty, dimsDeliveryDefaultIfEmpty, dimsStatusDefaultIfEmpty }
             ).AsQueryable();
 
 
@@ -96,23 +111,25 @@ namespace Mellon.Services.Infrastracture.Repositotiries
                      VoucherDescription = s.data.VoucherDescription,
                      NavisionServiceOrderNo = s.data.NavisionServiceOrderNo,
                      NavisionSalesOrderNo = s.data.NavisionSalesOrderNo,
-                     CarrierDelivereyStatus = s.dimsDs == null ? null : s.dimsDs.Description,
+                     CarrierDelivereyStatus = s.dimsStatusDefaultIfEmpty.Description,
                      CarrierVoucherNo = s.data.CarrierVoucherNo,
                      CarrierPickupDate = s.data.CarrierPickupDate,
                      CarrierDeliveryDate = s.data.CarrierDeliveryDate,
                      CarrierDeliveredTo = s.data.CarrierDeliveredTo,
-                     ConditionCode = s.dimsConditios == null ? null : s.dimsConditios.Description,
+                     ConditionCode = s.dimsConditiosDefaultIfEmpty.Description,
                      DeliverSaturday = s.data.DeliverSaturday,
-                     DeliveryDescription = s.dimsDelivery == null ? null : s.dimsDelivery.Description,
+                     DeliveryDescription = s.dimsDeliveryDefaultIfEmpty.Description,
                      CODAmount = s.data.CodAmount,
                      CreatedBy = s.data.CreatedBy,
                      CreatedAt = s.data.CreatedAt,
                      SystemCompany = s.data.SysCompany,
-                     SystemDepertment = s.dimsDepartment == null ? null : s.dimsDepartment.Description,
-                     OrderedBy = s.members == null ? null : s.members.MemberName,
-                     CarrierCode = s.setup == null ? null : s.setup.CarrierCode,
-                     MellonProject = s.setup == null ? null : s.setup.MellonProject,
-                     CarrierName = s.carriers == null ? null : s.carriers.DescrShort,
+                     SystemDepertment = s.dimsDepartmenDefaultIfEmpty.Description,
+                     OrderedBy = s.membersDefaultIfEmpty.MemberName,
+                     CarrierCode = s.setupsDefaultIfEmpty.CarrierCode,
+                     MellonProject = s.setupsDefaultIfEmpty.MellonProject,
+                     CarrierName = s.carriersDefaultIfEmpty.DescrShort,
+                     CarrierId = s.data.CarrierId,
+                     ElectraProjectEdit = s.data.ElectraProjectId
                  }
             );
             var voucherDetails = await result.FirstOrDefaultAsync();
@@ -142,6 +159,10 @@ namespace Mellon.Services.Infrastracture.Repositotiries
             return voucherDetails;
 
         }
+
+
+
+
 
 
 

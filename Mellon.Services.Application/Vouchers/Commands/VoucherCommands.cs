@@ -34,7 +34,11 @@ namespace Mellon.Services.Application.Vouchers.Commands
 
     public class GetVoucherTrackCommand : IRequest<VoucherTrack>
     {
-
+        public GetVoucherTrackCommand(int id)
+        {
+            Id = id;
+        }
+        public int Id { get; set; }
     }
 
     public class GetVoucherPrintCommand : IRequest<VoucherTrack>
