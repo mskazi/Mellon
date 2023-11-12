@@ -37,15 +37,15 @@ public partial class Datum
 
     public bool SysCheck { get; set; }
 
-    public string NavisionSalesOrderNo { get; set; } = null!;
+    public string? NavisionSalesOrderNo { get; set; }
 
-    public string NavisionServiceOrderNo { get; set; } = null!;
+    public string? NavisionServiceOrderNo { get; set; }
 
     public DateTime? NavisionServiceOrderDate { get; set; }
 
     public string? NavisionSellToCustomerNo { get; set; }
 
-    public string NavisionLinkedDocumentNo { get; set; } = null!;
+    public string? NavisionLinkedDocumentNo { get; set; }
 
     public DateTime? NavisionLinkedDocumentDate { get; set; }
 
@@ -53,15 +53,15 @@ public partial class Datum
 
     public int CarrierActionType { get; set; }
 
-    public string CarrierVoucherNo { get; set; } = null!;
+    public string? CarrierVoucherNo { get; set; }
 
-    public string CarrierDeliveryStatus { get; set; } = null!;
+    public string? CarrierDeliveryStatus { get; set; }
 
     public DateTime? CarrierPickupDate { get; set; }
 
     public DateTime? CarrierDeliveryDate { get; set; }
 
-    public string CarrierDeliveredTo { get; set; } = null!;
+    public string? CarrierDeliveredTo { get; set; }
 
     public decimal CarrierPackageItems { get; set; }
 
@@ -105,7 +105,7 @@ public partial class Datum
 
     public virtual Carrier Carrier { get; set; } = null!;
 
-    public virtual ICollection<DataInability> DataInabilities { get; } = new List<DataInability>();
+    public virtual ICollection<DataInability> DataInabilities { get; set; } = new List<DataInability>();
 
-    public virtual ICollection<DataLine> DataLines { get; } = new List<DataLine>();
+    public virtual ICollection<DataLine> DataLines { get; set; } = new List<DataLine>();
 }

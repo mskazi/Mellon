@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
 import { BaseSearchFormComponent } from '@core/forms/base-form-search.component';
 import { ContactMode } from '@core/models/contac';
 import { VoucherServiceItem } from '@core/models/voucher-search-item';
@@ -25,9 +25,24 @@ export class ContactListComponent
   }
 
   @Input() mode: ContactMode;
+  @Output() createNewVoucher = new EventEmitter<number>();
 
   override getExportHeaders() {
-    return ['Id', 'Company Name'];
+    return [
+      'Id',
+      'Company Name',
+      'From',
+      'Name',
+      'Contact',
+      'Address',
+      'City',
+      'Post Code',
+      'Country',
+      'Phone',
+      'Mobile',
+      'Note',
+      'Active',
+    ];
   }
 
   override getExtraParams() {
@@ -79,5 +94,9 @@ export class ContactListComponent
         this.search();
       }
     });
+  }
+
+  createVoucher(contactId: number) {
+    this.createNewVoucher.emit(contactId);
   }
 }

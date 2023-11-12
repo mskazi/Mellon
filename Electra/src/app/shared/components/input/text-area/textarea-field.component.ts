@@ -1,15 +1,15 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { ControlContainer, UntypedFormGroup } from "@angular/forms";
+import { Component, Input, OnInit } from '@angular/core';
+import { ControlContainer, UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-textarea-field',
-  templateUrl: './textarea-field.component.html'
+  templateUrl: './textarea-field.component.html',
 })
 export class TextareaFieldComponent implements OnInit {
   // the label of the field
   @Input() public label: string;
   // the property name where the input field will be bind to
-  @Input() public propertyName: string;
+  @Input() public controlName: string;
   // specifies if field is mandatory
   @Input() public mandatory: boolean = false;
   // specifies the rows of the text field
@@ -21,9 +21,7 @@ export class TextareaFieldComponent implements OnInit {
   @Input() inputGroup: UntypedFormGroup;
   // the parent form group
   public form: UntypedFormGroup;
-  constructor(protected controlContainer: ControlContainer) {
-
-  }
+  constructor(protected controlContainer: ControlContainer) {}
   // On init of component
   ngOnInit() {
     // access parent form group control

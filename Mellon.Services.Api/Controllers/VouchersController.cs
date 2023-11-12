@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Mellon.Common.Services;
+using Mellon.Services.Application.Vouchers;
 using Mellon.Services.Application.Vouchers.Commands;
 using Mellon.Services.Common.resources;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -113,11 +114,33 @@ namespace Mellon.Services.Api.Controllers
 
         [HttpGet]
         [Route("details/{id}")]
-        [ProducesResponseType(typeof(VoucherSummary), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(VoucherDetails), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetDetails(int id)
         {
             var command = new GetVoucherDetailsCommand(id);
+            var result = await mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("print/{id}")]
+        [ProducesResponseType(typeof(VoucherDetails), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Print(int id)
+        {
+            var command = new GetVoucherPrintCommand(id);
+            var result = await mediator.Send(command);
+            return File(result, "application/pdf");
+        }
+
+        [HttpPost]
+        [Route("office/new/{id}")]
+        [ProducesResponseType(typeof(Boolean), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetDetails([FromRoute] int id, [FromBody] CreateVoucherRequestData data)
+        {
+            var command = new CreateVoucherOfficeCommand(id, data);
             var result = await mediator.Send(command);
             return Ok(result);
         }

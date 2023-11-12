@@ -7,12 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace VoucherTaxydromiki
+namespace CourierGenikiTaxydromiki
 {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", ConfigurationName="VoucherTaxydromiki.JobServicesSoap")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", ConfigurationName="CourierGenikiTaxydromiki.JobServicesSoap")]
     public interface JobServicesSoap
     {
         
@@ -21,140 +21,140 @@ namespace VoucherTaxydromiki
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BaseJob))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MethodResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
-        System.Threading.Tasks.Task<VoucherTaxydromiki.AuthenticateResponse> AuthenticateAsync(VoucherTaxydromiki.AuthenticateRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://voucher.taxydromiki.gr/JobServices.asmx/CreateJob", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BaseJob))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MethodResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
-        System.Threading.Tasks.Task<VoucherTaxydromiki.CreateJobResponse> CreateJobAsync(VoucherTaxydromiki.CreateJobRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://voucher.taxydromiki.gr/JobServices.asmx/AddJobReport", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BaseJob))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MethodResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
-        System.Threading.Tasks.Task<VoucherTaxydromiki.AddJobReportResponse> AddJobReportAsync(VoucherTaxydromiki.AddJobReportRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://voucher.taxydromiki.gr/JobServices.asmx/GetVoucherJob", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BaseJob))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MethodResult))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
-        System.Threading.Tasks.Task<VoucherTaxydromiki.GetVoucherJobResponse> GetVoucherJobAsync(VoucherTaxydromiki.GetVoucherJobRequest request);
+        System.Threading.Tasks.Task<CourierGenikiTaxydromiki.AuthenticateResult> AuthenticateAsync(string sUsrName, string sUsrPwd, string applicationKey);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://voucher.taxydromiki.gr/JobServices.asmx/ClosePendingJobs", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BaseJob))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MethodResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
-        System.Threading.Tasks.Task<VoucherTaxydromiki.ClosePendingJobsResponse> ClosePendingJobsAsync(VoucherTaxydromiki.ClosePendingJobsRequest request);
+        System.Threading.Tasks.Task<int> ClosePendingJobsAsync(string sAuthKey);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://voucher.taxydromiki.gr/JobServices.asmx/CreateJob", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BaseJob))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MethodResult))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
+        System.Threading.Tasks.Task<CourierGenikiTaxydromiki.CreateJobResult> CreateJobAsync(string sAuthKey, CourierGenikiTaxydromiki.Record oVoucher, CourierGenikiTaxydromiki.JobType eType);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://voucher.taxydromiki.gr/JobServices.asmx/AddJobReport", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BaseJob))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MethodResult))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
+        System.Threading.Tasks.Task<int> AddJobReportAsync(string sAuthKey, long nJobId, string sOrderId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://voucher.taxydromiki.gr/JobServices.asmx/GetVoucherJob", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BaseJob))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MethodResult))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
+        System.Threading.Tasks.Task<CourierGenikiTaxydromiki.GetVoucherJobResult> GetVoucherJobAsync(string sAuthKey, long nJobId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://voucher.taxydromiki.gr/JobServices.asmx/ClosePendingJobsByDate", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BaseJob))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MethodResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
-        System.Threading.Tasks.Task<VoucherTaxydromiki.ClosePendingJobsByDateResponse> ClosePendingJobsByDateAsync(VoucherTaxydromiki.ClosePendingJobsByDateRequest request);
+        System.Threading.Tasks.Task<int> ClosePendingJobsByDateAsync(string sAuthKey, System.DateTime dFr, System.DateTime dTo);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://voucher.taxydromiki.gr/JobServices.asmx/CancelJob", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BaseJob))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MethodResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
-        System.Threading.Tasks.Task<VoucherTaxydromiki.CancelJobResponse> CancelJobAsync(VoucherTaxydromiki.CancelJobRequest request);
+        System.Threading.Tasks.Task<int> CancelJobAsync(string sAuthKey, long nJobId, bool bCancel);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://voucher.taxydromiki.gr/JobServices.asmx/CancelAndCloseJob", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BaseJob))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MethodResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
-        System.Threading.Tasks.Task<VoucherTaxydromiki.CancelAndCloseJobResponse> CancelAndCloseJobAsync(VoucherTaxydromiki.CancelAndCloseJobRequest request);
+        System.Threading.Tasks.Task<int> CancelAndCloseJobAsync(string authKey, long jobId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://voucher.taxydromiki.gr/JobServices.asmx/GetJobsFromOrderId", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BaseJob))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MethodResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
-        System.Threading.Tasks.Task<VoucherTaxydromiki.GetJobsFromOrderIdResponse> GetJobsFromOrderIdAsync(VoucherTaxydromiki.GetJobsFromOrderIdRequest request);
+        System.Threading.Tasks.Task<CourierGenikiTaxydromiki.GetJobsResult> GetJobsFromOrderIdAsync(string sAuthKey, string sOrderId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://voucher.taxydromiki.gr/JobServices.asmx/GetJobs", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BaseJob))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MethodResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
-        System.Threading.Tasks.Task<VoucherTaxydromiki.GetJobsResponse> GetJobsAsync(VoucherTaxydromiki.GetJobsRequest request);
+        System.Threading.Tasks.Task<CourierGenikiTaxydromiki.GetJobsResult> GetJobsAsync(string sAuthKey, CourierGenikiTaxydromiki.QueryParameters oParams);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://voucher.taxydromiki.gr/JobServices.asmx/TrackAndTrace", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BaseJob))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MethodResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
-        System.Threading.Tasks.Task<VoucherTaxydromiki.TrackAndTraceResponse> TrackAndTraceAsync(VoucherTaxydromiki.TrackAndTraceRequest request);
+        System.Threading.Tasks.Task<CourierGenikiTaxydromiki.TrackAndTraceResult> TrackAndTraceAsync(string authKey, string voucherNo, string language);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://voucher.taxydromiki.gr/JobServices.asmx/ChangePassword", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BaseJob))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MethodResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
-        System.Threading.Tasks.Task<VoucherTaxydromiki.ChangePasswordResponse> ChangePasswordAsync(VoucherTaxydromiki.ChangePasswordRequest request);
+        System.Threading.Tasks.Task<int> ChangePasswordAsync(string authKey, string newPassword);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://voucher.taxydromiki.gr/JobServices.asmx/GetVoucherPdf", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BaseJob))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MethodResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
-        System.Threading.Tasks.Task<VoucherTaxydromiki.GetVoucherPdfResponse> GetVoucherPdfAsync(VoucherTaxydromiki.GetVoucherPdfRequest request);
+        System.Threading.Tasks.Task GetVoucherPdfAsync(string authKey, string voucherNo, CourierGenikiTaxydromiki.MediaFormat format, CourierGenikiTaxydromiki.ExtraInfoFormat extraInfoFormat);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://voucher.taxydromiki.gr/JobServices.asmx/GetVouchersPdf", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BaseJob))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MethodResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
-        System.Threading.Tasks.Task<VoucherTaxydromiki.GetVouchersPdfResponse> GetVouchersPdfAsync(VoucherTaxydromiki.GetVouchersPdfRequest request);
+        System.Threading.Tasks.Task GetVouchersPdfAsync(string authKey, string[] voucherNumbers, CourierGenikiTaxydromiki.MediaFormat format, CourierGenikiTaxydromiki.ExtraInfoFormat extraInfoFormat);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://voucher.taxydromiki.gr/JobServices.asmx/AddExtraInfo", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BaseJob))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MethodResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
-        System.Threading.Tasks.Task<VoucherTaxydromiki.AddExtraInfoResponse> AddExtraInfoAsync(VoucherTaxydromiki.AddExtraInfoRequest request);
+        System.Threading.Tasks.Task<int> AddExtraInfoAsync(string authKey, long jobId, string extraInfo, CourierGenikiTaxydromiki.ExtraInfoFormat extraInfoFormat);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://voucher.taxydromiki.gr/JobServices.asmx/GetShopsList", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BaseJob))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MethodResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
-        System.Threading.Tasks.Task<VoucherTaxydromiki.GetShopsListResponse> GetShopsListAsync(VoucherTaxydromiki.GetShopsListRequest request);
+        System.Threading.Tasks.Task<CourierGenikiTaxydromiki.GetShopsResult> GetShopsListAsync(string authKey);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://voucher.taxydromiki.gr/JobServices.asmx/CalculateCost", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BaseJob))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MethodResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
-        System.Threading.Tasks.Task<VoucherTaxydromiki.CalculateCostResponse> CalculateCostAsync(VoucherTaxydromiki.CalculateCostRequest request);
+        System.Threading.Tasks.Task<CourierGenikiTaxydromiki.CalculateCostResult> CalculateCostAsync(string authKey, int routeId, decimal weight, string[] services);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://voucher.taxydromiki.gr/JobServices.asmx/CalculateDay", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BaseJob))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MethodResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
-        System.Threading.Tasks.Task<VoucherTaxydromiki.CalculateDayResponse> CalculateDayAsync(VoucherTaxydromiki.CalculateDayRequest request);
+        System.Threading.Tasks.Task<CourierGenikiTaxydromiki.CalculateDayResult> CalculateDayAsync(string authKey, int regionFromId, int regionToId, System.DateTime receivedOn, CourierGenikiTaxydromiki.ShipmentType shipmentType, bool deliverOnSaturday);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://voucher.taxydromiki.gr/JobServices.asmx/Helper", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BaseJob))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MethodResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
-        System.Threading.Tasks.Task<VoucherTaxydromiki.HelperResponse> HelperAsync(VoucherTaxydromiki.HelperRequest request);
+        System.Threading.Tasks.Task<object> HelperAsync(string paramName, object[] parameters);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://voucher.taxydromiki.gr/JobServices.asmx/Echo", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(BaseJob))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(MethodResult))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
-        System.Threading.Tasks.Task<VoucherTaxydromiki.EchoResponse> EchoAsync(VoucherTaxydromiki.EchoRequest request);
+        System.Threading.Tasks.Task<int> EchoAsync(int value);
     }
     
     /// <remarks/>
@@ -1727,530 +1727,6 @@ namespace VoucherTaxydromiki
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="Authenticate", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class AuthenticateRequest
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public string sUsrName;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=1)]
-        public string sUsrPwd;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=2)]
-        public string applicationKey;
-        
-        public AuthenticateRequest()
-        {
-        }
-        
-        public AuthenticateRequest(string sUsrName, string sUsrPwd, string applicationKey)
-        {
-            this.sUsrName = sUsrName;
-            this.sUsrPwd = sUsrPwd;
-            this.applicationKey = applicationKey;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="AuthenticateResponse", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class AuthenticateResponse
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public VoucherTaxydromiki.AuthenticateResult AuthenticateResult;
-        
-        public AuthenticateResponse()
-        {
-        }
-        
-        public AuthenticateResponse(VoucherTaxydromiki.AuthenticateResult AuthenticateResult)
-        {
-            this.AuthenticateResult = AuthenticateResult;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="CreateJob", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class CreateJobRequest
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public string sAuthKey;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=1)]
-        public VoucherTaxydromiki.Record oVoucher;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=2)]
-        public VoucherTaxydromiki.JobType eType;
-        
-        public CreateJobRequest()
-        {
-        }
-        
-        public CreateJobRequest(string sAuthKey, VoucherTaxydromiki.Record oVoucher, VoucherTaxydromiki.JobType eType)
-        {
-            this.sAuthKey = sAuthKey;
-            this.oVoucher = oVoucher;
-            this.eType = eType;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="CreateJobResponse", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class CreateJobResponse
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public VoucherTaxydromiki.CreateJobResult CreateJobResult;
-        
-        public CreateJobResponse()
-        {
-        }
-        
-        public CreateJobResponse(VoucherTaxydromiki.CreateJobResult CreateJobResult)
-        {
-            this.CreateJobResult = CreateJobResult;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="AddJobReport", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class AddJobReportRequest
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public string sAuthKey;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=1)]
-        public long nJobId;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=2)]
-        public string sOrderId;
-        
-        public AddJobReportRequest()
-        {
-        }
-        
-        public AddJobReportRequest(string sAuthKey, long nJobId, string sOrderId)
-        {
-            this.sAuthKey = sAuthKey;
-            this.nJobId = nJobId;
-            this.sOrderId = sOrderId;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="AddJobReportResponse", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class AddJobReportResponse
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public int AddJobReportResult;
-        
-        public AddJobReportResponse()
-        {
-        }
-        
-        public AddJobReportResponse(int AddJobReportResult)
-        {
-            this.AddJobReportResult = AddJobReportResult;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetVoucherJob", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class GetVoucherJobRequest
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public string sAuthKey;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=1)]
-        public long nJobId;
-        
-        public GetVoucherJobRequest()
-        {
-        }
-        
-        public GetVoucherJobRequest(string sAuthKey, long nJobId)
-        {
-            this.sAuthKey = sAuthKey;
-            this.nJobId = nJobId;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetVoucherJobResponse", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class GetVoucherJobResponse
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public VoucherTaxydromiki.GetVoucherJobResult GetVoucherJobResult;
-        
-        public GetVoucherJobResponse()
-        {
-        }
-        
-        public GetVoucherJobResponse(VoucherTaxydromiki.GetVoucherJobResult GetVoucherJobResult)
-        {
-            this.GetVoucherJobResult = GetVoucherJobResult;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="ClosePendingJobs", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class ClosePendingJobsRequest
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public string sAuthKey;
-        
-        public ClosePendingJobsRequest()
-        {
-        }
-        
-        public ClosePendingJobsRequest(string sAuthKey)
-        {
-            this.sAuthKey = sAuthKey;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="ClosePendingJobsResponse", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class ClosePendingJobsResponse
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public int ClosePendingJobsResult;
-        
-        public ClosePendingJobsResponse()
-        {
-        }
-        
-        public ClosePendingJobsResponse(int ClosePendingJobsResult)
-        {
-            this.ClosePendingJobsResult = ClosePendingJobsResult;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="ClosePendingJobsByDate", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class ClosePendingJobsByDateRequest
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public string sAuthKey;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=1)]
-        public System.DateTime dFr;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=2)]
-        public System.DateTime dTo;
-        
-        public ClosePendingJobsByDateRequest()
-        {
-        }
-        
-        public ClosePendingJobsByDateRequest(string sAuthKey, System.DateTime dFr, System.DateTime dTo)
-        {
-            this.sAuthKey = sAuthKey;
-            this.dFr = dFr;
-            this.dTo = dTo;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="ClosePendingJobsByDateResponse", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class ClosePendingJobsByDateResponse
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public int ClosePendingJobsByDateResult;
-        
-        public ClosePendingJobsByDateResponse()
-        {
-        }
-        
-        public ClosePendingJobsByDateResponse(int ClosePendingJobsByDateResult)
-        {
-            this.ClosePendingJobsByDateResult = ClosePendingJobsByDateResult;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="CancelJob", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class CancelJobRequest
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public string sAuthKey;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=1)]
-        public long nJobId;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=2)]
-        public bool bCancel;
-        
-        public CancelJobRequest()
-        {
-        }
-        
-        public CancelJobRequest(string sAuthKey, long nJobId, bool bCancel)
-        {
-            this.sAuthKey = sAuthKey;
-            this.nJobId = nJobId;
-            this.bCancel = bCancel;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="CancelJobResponse", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class CancelJobResponse
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public int CancelJobResult;
-        
-        public CancelJobResponse()
-        {
-        }
-        
-        public CancelJobResponse(int CancelJobResult)
-        {
-            this.CancelJobResult = CancelJobResult;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="CancelAndCloseJob", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class CancelAndCloseJobRequest
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public string authKey;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=1)]
-        public long jobId;
-        
-        public CancelAndCloseJobRequest()
-        {
-        }
-        
-        public CancelAndCloseJobRequest(string authKey, long jobId)
-        {
-            this.authKey = authKey;
-            this.jobId = jobId;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="CancelAndCloseJobResponse", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class CancelAndCloseJobResponse
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public int CancelAndCloseJobResult;
-        
-        public CancelAndCloseJobResponse()
-        {
-        }
-        
-        public CancelAndCloseJobResponse(int CancelAndCloseJobResult)
-        {
-            this.CancelAndCloseJobResult = CancelAndCloseJobResult;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetJobsFromOrderId", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class GetJobsFromOrderIdRequest
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public string sAuthKey;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=1)]
-        public string sOrderId;
-        
-        public GetJobsFromOrderIdRequest()
-        {
-        }
-        
-        public GetJobsFromOrderIdRequest(string sAuthKey, string sOrderId)
-        {
-            this.sAuthKey = sAuthKey;
-            this.sOrderId = sOrderId;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetJobsFromOrderIdResponse", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class GetJobsFromOrderIdResponse
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public VoucherTaxydromiki.GetJobsResult GetJobsFromOrderIdResult;
-        
-        public GetJobsFromOrderIdResponse()
-        {
-        }
-        
-        public GetJobsFromOrderIdResponse(VoucherTaxydromiki.GetJobsResult GetJobsFromOrderIdResult)
-        {
-            this.GetJobsFromOrderIdResult = GetJobsFromOrderIdResult;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetJobs", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class GetJobsRequest
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public string sAuthKey;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=1)]
-        public VoucherTaxydromiki.QueryParameters oParams;
-        
-        public GetJobsRequest()
-        {
-        }
-        
-        public GetJobsRequest(string sAuthKey, VoucherTaxydromiki.QueryParameters oParams)
-        {
-            this.sAuthKey = sAuthKey;
-            this.oParams = oParams;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetJobsResponse", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class GetJobsResponse
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public VoucherTaxydromiki.GetJobsResult GetJobsResult;
-        
-        public GetJobsResponse()
-        {
-        }
-        
-        public GetJobsResponse(VoucherTaxydromiki.GetJobsResult GetJobsResult)
-        {
-            this.GetJobsResult = GetJobsResult;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="TrackAndTrace", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class TrackAndTraceRequest
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public string authKey;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=1)]
-        public string voucherNo;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=2)]
-        public string language;
-        
-        public TrackAndTraceRequest()
-        {
-        }
-        
-        public TrackAndTraceRequest(string authKey, string voucherNo, string language)
-        {
-            this.authKey = authKey;
-            this.voucherNo = voucherNo;
-            this.language = language;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="TrackAndTraceResponse", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class TrackAndTraceResponse
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public VoucherTaxydromiki.TrackAndTraceResult TrackAndTraceResult;
-        
-        public TrackAndTraceResponse()
-        {
-        }
-        
-        public TrackAndTraceResponse(VoucherTaxydromiki.TrackAndTraceResult TrackAndTraceResult)
-        {
-            this.TrackAndTraceResult = TrackAndTraceResult;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="ChangePassword", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class ChangePasswordRequest
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public string authKey;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=1)]
-        public string newPassword;
-        
-        public ChangePasswordRequest()
-        {
-        }
-        
-        public ChangePasswordRequest(string authKey, string newPassword)
-        {
-            this.authKey = authKey;
-            this.newPassword = newPassword;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="ChangePasswordResponse", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class ChangePasswordResponse
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public int ChangePasswordResult;
-        
-        public ChangePasswordResponse()
-        {
-        }
-        
-        public ChangePasswordResponse(int ChangePasswordResult)
-        {
-            this.ChangePasswordResult = ChangePasswordResult;
-        }
-    }
-    
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx")]
@@ -2280,228 +1756,6 @@ namespace VoucherTaxydromiki
         ThreeW,
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetVoucherPdf", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class GetVoucherPdfRequest
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public string authKey;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=1)]
-        public string voucherNo;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=2)]
-        public VoucherTaxydromiki.MediaFormat format;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=3)]
-        public VoucherTaxydromiki.ExtraInfoFormat extraInfoFormat;
-        
-        public GetVoucherPdfRequest()
-        {
-        }
-        
-        public GetVoucherPdfRequest(string authKey, string voucherNo, VoucherTaxydromiki.MediaFormat format, VoucherTaxydromiki.ExtraInfoFormat extraInfoFormat)
-        {
-            this.authKey = authKey;
-            this.voucherNo = voucherNo;
-            this.format = format;
-            this.extraInfoFormat = extraInfoFormat;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetVoucherPdfResponse", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class GetVoucherPdfResponse
-    {
-        
-        public GetVoucherPdfResponse()
-        {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetVouchersPdf", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class GetVouchersPdfRequest
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public string authKey;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=1)]
-        public string[] voucherNumbers;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=2)]
-        public VoucherTaxydromiki.MediaFormat format;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=3)]
-        public VoucherTaxydromiki.ExtraInfoFormat extraInfoFormat;
-        
-        public GetVouchersPdfRequest()
-        {
-        }
-        
-        public GetVouchersPdfRequest(string authKey, string[] voucherNumbers, VoucherTaxydromiki.MediaFormat format, VoucherTaxydromiki.ExtraInfoFormat extraInfoFormat)
-        {
-            this.authKey = authKey;
-            this.voucherNumbers = voucherNumbers;
-            this.format = format;
-            this.extraInfoFormat = extraInfoFormat;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetVouchersPdfResponse", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class GetVouchersPdfResponse
-    {
-        
-        public GetVouchersPdfResponse()
-        {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="AddExtraInfo", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class AddExtraInfoRequest
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public string authKey;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=1)]
-        public long jobId;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=2)]
-        public string extraInfo;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=3)]
-        public VoucherTaxydromiki.ExtraInfoFormat extraInfoFormat;
-        
-        public AddExtraInfoRequest()
-        {
-        }
-        
-        public AddExtraInfoRequest(string authKey, long jobId, string extraInfo, VoucherTaxydromiki.ExtraInfoFormat extraInfoFormat)
-        {
-            this.authKey = authKey;
-            this.jobId = jobId;
-            this.extraInfo = extraInfo;
-            this.extraInfoFormat = extraInfoFormat;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="AddExtraInfoResponse", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class AddExtraInfoResponse
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public int AddExtraInfoResult;
-        
-        public AddExtraInfoResponse()
-        {
-        }
-        
-        public AddExtraInfoResponse(int AddExtraInfoResult)
-        {
-            this.AddExtraInfoResult = AddExtraInfoResult;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetShopsList", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class GetShopsListRequest
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public string authKey;
-        
-        public GetShopsListRequest()
-        {
-        }
-        
-        public GetShopsListRequest(string authKey)
-        {
-            this.authKey = authKey;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetShopsListResponse", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class GetShopsListResponse
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public VoucherTaxydromiki.GetShopsResult GetShopsListResult;
-        
-        public GetShopsListResponse()
-        {
-        }
-        
-        public GetShopsListResponse(VoucherTaxydromiki.GetShopsResult GetShopsListResult)
-        {
-            this.GetShopsListResult = GetShopsListResult;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="CalculateCost", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class CalculateCostRequest
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public string authKey;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=1)]
-        public int routeId;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=2)]
-        public decimal weight;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=3)]
-        public string[] services;
-        
-        public CalculateCostRequest()
-        {
-        }
-        
-        public CalculateCostRequest(string authKey, int routeId, decimal weight, string[] services)
-        {
-            this.authKey = authKey;
-            this.routeId = routeId;
-            this.weight = weight;
-            this.services = services;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="CalculateCostResponse", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class CalculateCostResponse
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public VoucherTaxydromiki.CalculateCostResult CalculateCostResult;
-        
-        public CalculateCostResponse()
-        {
-        }
-        
-        public CalculateCostResponse(VoucherTaxydromiki.CalculateCostResult CalculateCostResult)
-        {
-            this.CalculateCostResult = CalculateCostResult;
-        }
-    }
-    
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx")]
@@ -2515,152 +1769,14 @@ namespace VoucherTaxydromiki
         PackageMore2Kg,
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="CalculateDay", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class CalculateDayRequest
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public string authKey;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=1)]
-        public int regionFromId;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=2)]
-        public int regionToId;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=3)]
-        public System.DateTime receivedOn;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=4)]
-        public VoucherTaxydromiki.ShipmentType shipmentType;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=5)]
-        public bool deliverOnSaturday;
-        
-        public CalculateDayRequest()
-        {
-        }
-        
-        public CalculateDayRequest(string authKey, int regionFromId, int regionToId, System.DateTime receivedOn, VoucherTaxydromiki.ShipmentType shipmentType, bool deliverOnSaturday)
-        {
-            this.authKey = authKey;
-            this.regionFromId = regionFromId;
-            this.regionToId = regionToId;
-            this.receivedOn = receivedOn;
-            this.shipmentType = shipmentType;
-            this.deliverOnSaturday = deliverOnSaturday;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="CalculateDayResponse", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class CalculateDayResponse
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public VoucherTaxydromiki.CalculateDayResult CalculateDayResult;
-        
-        public CalculateDayResponse()
-        {
-        }
-        
-        public CalculateDayResponse(VoucherTaxydromiki.CalculateDayResult CalculateDayResult)
-        {
-            this.CalculateDayResult = CalculateDayResult;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="Helper", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class HelperRequest
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public string paramName;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=1)]
-        public object[] parameters;
-        
-        public HelperRequest()
-        {
-        }
-        
-        public HelperRequest(string paramName, object[] parameters)
-        {
-            this.paramName = paramName;
-            this.parameters = parameters;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="HelperResponse", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class HelperResponse
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public object HelperResult;
-        
-        public HelperResponse()
-        {
-        }
-        
-        public HelperResponse(object HelperResult)
-        {
-            this.HelperResult = HelperResult;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="Echo", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class EchoRequest
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public int value;
-        
-        public EchoRequest()
-        {
-        }
-        
-        public EchoRequest(int value)
-        {
-            this.value = value;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="EchoResponse", WrapperNamespace="http://voucher.taxydromiki.gr/JobServices.asmx", IsWrapped=true)]
-    public partial class EchoResponse
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://voucher.taxydromiki.gr/JobServices.asmx", Order=0)]
-        public int EchoResult;
-        
-        public EchoResponse()
-        {
-        }
-        
-        public EchoResponse(int EchoResult)
-        {
-            this.EchoResult = EchoResult;
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    public interface JobServicesSoapChannel : VoucherTaxydromiki.JobServicesSoap, System.ServiceModel.IClientChannel
+    public interface JobServicesSoapChannel : CourierGenikiTaxydromiki.JobServicesSoap, System.ServiceModel.IClientChannel
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    public partial class JobServicesSoapClient : System.ServiceModel.ClientBase<VoucherTaxydromiki.JobServicesSoap>, VoucherTaxydromiki.JobServicesSoap
+    public partial class JobServicesSoapClient : System.ServiceModel.ClientBase<CourierGenikiTaxydromiki.JobServicesSoap>, CourierGenikiTaxydromiki.JobServicesSoap
     {
         
         /// <summary>
@@ -2696,104 +1812,104 @@ namespace VoucherTaxydromiki
         {
         }
         
-        public System.Threading.Tasks.Task<VoucherTaxydromiki.AuthenticateResponse> AuthenticateAsync(VoucherTaxydromiki.AuthenticateRequest request)
+        public System.Threading.Tasks.Task<CourierGenikiTaxydromiki.AuthenticateResult> AuthenticateAsync(string sUsrName, string sUsrPwd, string applicationKey)
         {
-            return base.Channel.AuthenticateAsync(request);
+            return base.Channel.AuthenticateAsync(sUsrName, sUsrPwd, applicationKey);
         }
         
-        public System.Threading.Tasks.Task<VoucherTaxydromiki.CreateJobResponse> CreateJobAsync(VoucherTaxydromiki.CreateJobRequest request)
+        public System.Threading.Tasks.Task<int> ClosePendingJobsAsync(string sAuthKey)
         {
-            return base.Channel.CreateJobAsync(request);
+            return base.Channel.ClosePendingJobsAsync(sAuthKey);
         }
         
-        public System.Threading.Tasks.Task<VoucherTaxydromiki.AddJobReportResponse> AddJobReportAsync(VoucherTaxydromiki.AddJobReportRequest request)
+        public System.Threading.Tasks.Task<CourierGenikiTaxydromiki.CreateJobResult> CreateJobAsync(string sAuthKey, CourierGenikiTaxydromiki.Record oVoucher, CourierGenikiTaxydromiki.JobType eType)
         {
-            return base.Channel.AddJobReportAsync(request);
+            return base.Channel.CreateJobAsync(sAuthKey, oVoucher, eType);
         }
         
-        public System.Threading.Tasks.Task<VoucherTaxydromiki.GetVoucherJobResponse> GetVoucherJobAsync(VoucherTaxydromiki.GetVoucherJobRequest request)
+        public System.Threading.Tasks.Task<int> AddJobReportAsync(string sAuthKey, long nJobId, string sOrderId)
         {
-            return base.Channel.GetVoucherJobAsync(request);
+            return base.Channel.AddJobReportAsync(sAuthKey, nJobId, sOrderId);
         }
         
-        public System.Threading.Tasks.Task<VoucherTaxydromiki.ClosePendingJobsResponse> ClosePendingJobsAsync(VoucherTaxydromiki.ClosePendingJobsRequest request)
+        public System.Threading.Tasks.Task<CourierGenikiTaxydromiki.GetVoucherJobResult> GetVoucherJobAsync(string sAuthKey, long nJobId)
         {
-            return base.Channel.ClosePendingJobsAsync(request);
+            return base.Channel.GetVoucherJobAsync(sAuthKey, nJobId);
         }
         
-        public System.Threading.Tasks.Task<VoucherTaxydromiki.ClosePendingJobsByDateResponse> ClosePendingJobsByDateAsync(VoucherTaxydromiki.ClosePendingJobsByDateRequest request)
+        public System.Threading.Tasks.Task<int> ClosePendingJobsByDateAsync(string sAuthKey, System.DateTime dFr, System.DateTime dTo)
         {
-            return base.Channel.ClosePendingJobsByDateAsync(request);
+            return base.Channel.ClosePendingJobsByDateAsync(sAuthKey, dFr, dTo);
         }
         
-        public System.Threading.Tasks.Task<VoucherTaxydromiki.CancelJobResponse> CancelJobAsync(VoucherTaxydromiki.CancelJobRequest request)
+        public System.Threading.Tasks.Task<int> CancelJobAsync(string sAuthKey, long nJobId, bool bCancel)
         {
-            return base.Channel.CancelJobAsync(request);
+            return base.Channel.CancelJobAsync(sAuthKey, nJobId, bCancel);
         }
         
-        public System.Threading.Tasks.Task<VoucherTaxydromiki.CancelAndCloseJobResponse> CancelAndCloseJobAsync(VoucherTaxydromiki.CancelAndCloseJobRequest request)
+        public System.Threading.Tasks.Task<int> CancelAndCloseJobAsync(string authKey, long jobId)
         {
-            return base.Channel.CancelAndCloseJobAsync(request);
+            return base.Channel.CancelAndCloseJobAsync(authKey, jobId);
         }
         
-        public System.Threading.Tasks.Task<VoucherTaxydromiki.GetJobsFromOrderIdResponse> GetJobsFromOrderIdAsync(VoucherTaxydromiki.GetJobsFromOrderIdRequest request)
+        public System.Threading.Tasks.Task<CourierGenikiTaxydromiki.GetJobsResult> GetJobsFromOrderIdAsync(string sAuthKey, string sOrderId)
         {
-            return base.Channel.GetJobsFromOrderIdAsync(request);
+            return base.Channel.GetJobsFromOrderIdAsync(sAuthKey, sOrderId);
         }
         
-        public System.Threading.Tasks.Task<VoucherTaxydromiki.GetJobsResponse> GetJobsAsync(VoucherTaxydromiki.GetJobsRequest request)
+        public System.Threading.Tasks.Task<CourierGenikiTaxydromiki.GetJobsResult> GetJobsAsync(string sAuthKey, CourierGenikiTaxydromiki.QueryParameters oParams)
         {
-            return base.Channel.GetJobsAsync(request);
+            return base.Channel.GetJobsAsync(sAuthKey, oParams);
         }
         
-        public System.Threading.Tasks.Task<VoucherTaxydromiki.TrackAndTraceResponse> TrackAndTraceAsync(VoucherTaxydromiki.TrackAndTraceRequest request)
+        public System.Threading.Tasks.Task<CourierGenikiTaxydromiki.TrackAndTraceResult> TrackAndTraceAsync(string authKey, string voucherNo, string language)
         {
-            return base.Channel.TrackAndTraceAsync(request);
+            return base.Channel.TrackAndTraceAsync(authKey, voucherNo, language);
         }
         
-        public System.Threading.Tasks.Task<VoucherTaxydromiki.ChangePasswordResponse> ChangePasswordAsync(VoucherTaxydromiki.ChangePasswordRequest request)
+        public System.Threading.Tasks.Task<int> ChangePasswordAsync(string authKey, string newPassword)
         {
-            return base.Channel.ChangePasswordAsync(request);
+            return base.Channel.ChangePasswordAsync(authKey, newPassword);
         }
         
-        public System.Threading.Tasks.Task<VoucherTaxydromiki.GetVoucherPdfResponse> GetVoucherPdfAsync(VoucherTaxydromiki.GetVoucherPdfRequest request)
+        public System.Threading.Tasks.Task GetVoucherPdfAsync(string authKey, string voucherNo, CourierGenikiTaxydromiki.MediaFormat format, CourierGenikiTaxydromiki.ExtraInfoFormat extraInfoFormat)
         {
-            return base.Channel.GetVoucherPdfAsync(request);
+            return base.Channel.GetVoucherPdfAsync(authKey, voucherNo, format, extraInfoFormat);
         }
         
-        public System.Threading.Tasks.Task<VoucherTaxydromiki.GetVouchersPdfResponse> GetVouchersPdfAsync(VoucherTaxydromiki.GetVouchersPdfRequest request)
+        public System.Threading.Tasks.Task GetVouchersPdfAsync(string authKey, string[] voucherNumbers, CourierGenikiTaxydromiki.MediaFormat format, CourierGenikiTaxydromiki.ExtraInfoFormat extraInfoFormat)
         {
-            return base.Channel.GetVouchersPdfAsync(request);
+            return base.Channel.GetVouchersPdfAsync(authKey, voucherNumbers, format, extraInfoFormat);
         }
         
-        public System.Threading.Tasks.Task<VoucherTaxydromiki.AddExtraInfoResponse> AddExtraInfoAsync(VoucherTaxydromiki.AddExtraInfoRequest request)
+        public System.Threading.Tasks.Task<int> AddExtraInfoAsync(string authKey, long jobId, string extraInfo, CourierGenikiTaxydromiki.ExtraInfoFormat extraInfoFormat)
         {
-            return base.Channel.AddExtraInfoAsync(request);
+            return base.Channel.AddExtraInfoAsync(authKey, jobId, extraInfo, extraInfoFormat);
         }
         
-        public System.Threading.Tasks.Task<VoucherTaxydromiki.GetShopsListResponse> GetShopsListAsync(VoucherTaxydromiki.GetShopsListRequest request)
+        public System.Threading.Tasks.Task<CourierGenikiTaxydromiki.GetShopsResult> GetShopsListAsync(string authKey)
         {
-            return base.Channel.GetShopsListAsync(request);
+            return base.Channel.GetShopsListAsync(authKey);
         }
         
-        public System.Threading.Tasks.Task<VoucherTaxydromiki.CalculateCostResponse> CalculateCostAsync(VoucherTaxydromiki.CalculateCostRequest request)
+        public System.Threading.Tasks.Task<CourierGenikiTaxydromiki.CalculateCostResult> CalculateCostAsync(string authKey, int routeId, decimal weight, string[] services)
         {
-            return base.Channel.CalculateCostAsync(request);
+            return base.Channel.CalculateCostAsync(authKey, routeId, weight, services);
         }
         
-        public System.Threading.Tasks.Task<VoucherTaxydromiki.CalculateDayResponse> CalculateDayAsync(VoucherTaxydromiki.CalculateDayRequest request)
+        public System.Threading.Tasks.Task<CourierGenikiTaxydromiki.CalculateDayResult> CalculateDayAsync(string authKey, int regionFromId, int regionToId, System.DateTime receivedOn, CourierGenikiTaxydromiki.ShipmentType shipmentType, bool deliverOnSaturday)
         {
-            return base.Channel.CalculateDayAsync(request);
+            return base.Channel.CalculateDayAsync(authKey, regionFromId, regionToId, receivedOn, shipmentType, deliverOnSaturday);
         }
         
-        public System.Threading.Tasks.Task<VoucherTaxydromiki.HelperResponse> HelperAsync(VoucherTaxydromiki.HelperRequest request)
+        public System.Threading.Tasks.Task<object> HelperAsync(string paramName, object[] parameters)
         {
-            return base.Channel.HelperAsync(request);
+            return base.Channel.HelperAsync(paramName, parameters);
         }
         
-        public System.Threading.Tasks.Task<VoucherTaxydromiki.EchoResponse> EchoAsync(VoucherTaxydromiki.EchoRequest request)
+        public System.Threading.Tasks.Task<int> EchoAsync(int value)
         {
-            return base.Channel.EchoAsync(request);
+            return base.Channel.EchoAsync(value);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()

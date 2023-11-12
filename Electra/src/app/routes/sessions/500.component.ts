@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
     <error-code
       code="500"
       title="Server went wrong!"
-      message="Just kidding, looks like we have an internal issue, please try refreshing."
+      message="Please call your system administrator in order to resolve it"
     >
     </error-code>
   `,

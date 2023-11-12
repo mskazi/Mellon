@@ -21,11 +21,11 @@ public partial class Carrier
 
     public int? OrFlag { get; set; }
 
-    public virtual ICollection<CarriersPostcodeRestriction> CarriersPostcodeRestrictions { get; } = new List<CarriersPostcodeRestriction>();
+    public virtual ICollection<CarriersPostcodeRestriction> CarriersPostcodeRestrictions { get; set; } = new List<CarriersPostcodeRestriction>();
 
-    public virtual ICollection<CarriersProjectRestriction> CarriersProjectRestrictions { get; } = new List<CarriersProjectRestriction>();
+    public virtual ICollection<CarriersProjectRestriction> CarriersProjectRestrictions { get; set; } = new List<CarriersProjectRestriction>();
 
-    public virtual ICollection<Datum> Data { get; } = new List<Datum>();
+    public virtual ICollection<Datum> Data { get; set; } = new List<Datum>();
 
-    public virtual ICollection<DataUpload> DataUploads { get; } = new List<DataUpload>();
+    public virtual ICollection<DataUpload> DataUploads { get; set; } = new List<DataUpload>();
 }

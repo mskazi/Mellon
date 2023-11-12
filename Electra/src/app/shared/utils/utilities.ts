@@ -149,6 +149,16 @@ export class Utilities {
     link.remove();
   }
 
+  static downloadFileOnNewTab(file: Blob, fileName: string) {
+    var url = window.URL.createObjectURL(file);
+    var anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.target = '_blank';
+    anchor.click();
+    window.URL.revokeObjectURL(url);
+    anchor.remove();
+  }
+
   static alphabeticalOrderTextByProperty(companies: any[], property: string): string {
     let textArray = [''];
     const delimiter = ' / ';

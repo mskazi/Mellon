@@ -12,6 +12,8 @@ namespace Mellon.Services.Application.Vouchers.CommandHander
         IRequestHandler<GetVoucherSearchCommand, PaginatedListResult<VoucherSearchItem>>,
         IRequestHandler<GetSummaryCommand, VoucherSummary>
 
+
+
     {
         private readonly ILogger logger;
         private readonly ICurrentUserService currentUserService;
@@ -39,5 +41,7 @@ namespace Mellon.Services.Application.Vouchers.CommandHander
         {
             return await repository.Summary(cancellationToken);
         }
+
+
     }
 }

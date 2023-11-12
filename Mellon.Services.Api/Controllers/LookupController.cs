@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Mellon.Common.Services;
 using Mellon.Services.Application.Lookup;
+using Mellon.Services.Application.Lookup.Commands;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -56,6 +57,53 @@ namespace Mellon.Services.Api.Controllers
         public async Task<IActionResult> GetCountries()
         {
             var command = new GeCountryLookupCommand();
+            var result = await mediator.Send(command);
+            return Ok(result);
+        }
+
+
+        [HttpGet]
+        [Route("types/office")]
+        [ProducesResponseType(typeof(ListResult<TypeLookupResourse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetOfficeType()
+        {
+            var command = new GetOfficeTypeLookupCommand();
+            var result = await mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("conditions/office")]
+        [ProducesResponseType(typeof(ListResult<ConditionLookupResourse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetOfficeCondition()
+        {
+            var command = new GetOfficeConditionLookupCommand();
+            var result = await mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("departments/office")]
+        [ProducesResponseType(typeof(ListResult<DepartmentLookupResourse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetOfficeDepartment()
+        {
+            var command = new GetOfficeDepartmentLookupCommand();
+            var result = await mediator.Send(command);
+            return Ok(result);
+        }
+
+
+
+        [HttpGet]
+        [Route("deliveryTimes/office")]
+        [ProducesResponseType(typeof(ListResult<ConditionLookupResourse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetOfficeDeliveryTimes()
+        {
+            var command = new GetOfficeDeliveryTimeLookupCommand();
             var result = await mediator.Send(command);
             return Ok(result);
         }

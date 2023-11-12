@@ -8,3 +8,13 @@
  Delete data form data_ where data Id does not exist
  Changed data --> carrier_jobid from text to nvarchar(50)
  changed members ---> column rename member to membername
+
+
+ data --> carrier_delivered_to allow nulls
+			carrier_delivery_status allow nulls
+			carrier_voucher_no allow nulls
+			navision_linked_document_no allow nulls
+			navision_sales_order_no  allow nulls
+			navision_service_order_date allow nulls
+
+			on primary keys add identity increment

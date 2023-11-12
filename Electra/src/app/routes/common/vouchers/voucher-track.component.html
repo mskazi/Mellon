@@ -2,10 +2,10 @@
 <div class="d-flex flex-wrap  align-content-stretch align-items-stretch align-self-stretch"
      style=" gap: 10px;">
   <mat-expansion-panel class="bg-gray-50 text-gray-900" [expanded]="true">
-    <mat-expansion-panel-header class="bg-gray-500">
+    <mat-expansion-panel-header class="bg-blue-200">
       <mat-panel-title>Voucher</mat-panel-title>
     </mat-expansion-panel-header>
-    <table id="VoucherDetails" class="mat-simple-table m-t-8">
+    <table id="VouchervoucherDetails" class="mat-simple-table m-t-8">
       <thead>
         <tr>
           <td>Field</td>
@@ -15,56 +15,57 @@
       <tbody>
         <tr>
           <td>VoucherNo</td>
-          <td>{{voucher?.details?.carrierVoucherNo}}</td>
+          <td>{{voucher?.voucherDetails?.carrierVoucherNo}}</td>
         </tr>
         <tr>
           <td>Company</td>
-          <td>{{voucher?.details?.systemCompany}}</td>
+          <td>{{voucher?.voucherDetails?.systemCompany}}</td>
         </tr>
         <tr>
           <td>Voucher Name</td>
-          <td>{{voucher?.details?.voucherName}}</td>
+          <td>{{voucher?.voucherDetails?.voucherName}}</td>
         </tr>
         <tr>
           <td>Voucher Contact</td>
-          <td>{{voucher?.details?.voucherContact}}</td>
+          <td>{{voucher?.voucherDetails?.voucherContact}}</td>
         </tr>
         <tr>
           <td>Voucher Address</td>
-          <td>{{voucher?.details?.voucherAddress}} | {{voucher?.details?.voucherCity}} |
-            {{voucher?.details?.voucherPostCode}}</td>
+          <td>{{voucher?.voucherDetails?.voucherAddress}} | {{voucher?.voucherDetails?.voucherCity}}
+            |
+            {{voucher?.voucherDetails?.voucherPostCode}}</td>
         </tr>
         <tr>
           <td>Voucher Phone</td>
-          <td>{{voucher?.details?.voucherPhoneNo}}</td>
+          <td>{{voucher?.voucherDetails?.voucherPhoneNo}}</td>
         </tr>
         <tr>
           <td>Voucher Mobile</td>
-          <td>{{voucher?.details?.voucherMobileNo}}</td>
+          <td>{{voucher?.voucherDetails?.voucherMobileNo}}</td>
         </tr>
         <tr>
           <td>Voucher Notes</td>
-          <td>{{voucher?.details?.voucherDescription}}</td>
+          <td>{{voucher?.voucherDetails?.voucherDescription}}</td>
         </tr>
         <tr>
           <td>Other Conditions</td>
-          <td>{{voucher?.details?.conditionCode}}</td>
+          <td>{{voucher?.voucherDetails?.conditionCode}}</td>
         </tr>
         <tr>
           <td>Saturday Delivery</td>
           <td>
-            <mat-icon *ngIf="voucher?.details?.deliverSaturday" class="text-green-900">check
+            <mat-icon *ngIf="voucher?.voucherDetails?.deliverSaturday" class="text-green-900">check
             </mat-icon>
           </td>
         </tr>
         <tr>
           <td>Delivery Time</td>
-          <td>{{voucher?.details?.deliveryDescription}}</td>
+          <td>{{voucher?.voucherDetails?.deliveryDescription}}</td>
         </tr>
         <tr>
           <td>COD Amount</td>
           <td><span
-                  *ngIf="voucher?.details?.codAmount">{{voucher?.details?.codAmount | number:'1.2-2'}}</span>
+                  *ngIf="voucher?.voucherDetails?.codAmount">{{voucher?.voucherDetails?.codAmount | number:'1.2-2'}}</span>
           </td>
         </tr>
       </tbody>
@@ -72,7 +73,7 @@
   </mat-expansion-panel>
 
   <mat-expansion-panel class="bg-gray-50 text-gray-900" [expanded]="true">
-    <mat-expansion-panel-header class="bg-gray-500">
+    <mat-expansion-panel-header class="bg-blue-200">
       <mat-panel-title>Trace Results</mat-panel-title>
     </mat-expansion-panel-header>
     <table class="mat-simple-table m-t-8">
@@ -84,7 +85,7 @@
           <td>Notes</td>
         </tr>
       </thead>
-      <ng-container *ngFor="let i of voucher?.courierTrackResource?.Details">
+      <ng-container *ngFor="let i of voucher?.courierTrackResource?.details">
         <tbody>
           <tr>
             <td>
@@ -105,7 +106,7 @@
     </table>
   </mat-expansion-panel>
   <mat-expansion-panel class="bg-gray-50 text-gray-900" [expanded]="true">
-    <mat-expansion-panel-header class="bg-gray-500">
+    <mat-expansion-panel-header class="bg-blue-200">
       <mat-panel-title>Voucher Supporting Details</mat-panel-title>
     </mat-expansion-panel-header>
     <table class="mat-simple-table m-t-8">
@@ -114,7 +115,7 @@
           <td>Field</td>
           <td>Value</td>
         </tr>
-        <ng-container *ngFor="let i of voucher?.details?.dataLines;">
+        <ng-container *ngFor="let i of voucher?.voucherDetails?.dataLines;">
           <tr>
             <td>{{i?.name}}
             </td>

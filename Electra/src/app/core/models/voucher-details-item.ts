@@ -33,6 +33,7 @@ export interface Voucher {
   systemDepertment: string;
   carrierCode: string;
   carrierDelivereyStatus: string;
+  carrierActionType: number;
 }
 
 export interface VoucherDataLine {
@@ -54,6 +55,6 @@ export interface VoucherDataInabilities {
 }
 
 export interface VoucherTrack {
-  details: Voucher;
+  voucherDetails: Voucher;
   courierTrackResource: any;
 }

@@ -3,13 +3,19 @@ import { DialogDynamicService } from '@shared/components/dialog/dialog.service';
 import { VoucherDetailsCommonComponent } from 'app/routes/common/vouchers/voucher-details.component';
 import { VoucherTrackCommonComponent } from './voucher-track.component';
 import * as _ from 'lodash';
+import { VoucherCommandService } from '@core/services/voucher-commands.service';
+import { map, tap } from 'rxjs';
+import { Utilities } from '@shared/utils/utilities';
 
 @Component({
   selector: 'app-common-voucher-commands',
   templateUrl: './voucher-commands.component.html',
 })
 export class VoucherCommandsComponent implements OnInit {
-  constructor(protected dialogDynamicService: DialogDynamicService) {}
+  constructor(
+    protected dialogDynamicService: DialogDynamicService,
+    protected voucherCommandService: VoucherCommandService
+  ) {}
   @Input() item: VoucherCommandData;
   @Input() canShowAdminCancelButton = false;
 
@@ -67,6 +73,12 @@ export class VoucherCommandsComponent implements OnInit {
         declineLabelKey: '',
       }
     );
+  }
+
+  printVoucher() {
+    this.voucherCommandService.print(this.item.id).subscribe((file: any) => {
+      Utilities.downloadFileOnNewTab(file, `Voucher_Print.pdf`);
+    });
   }
 }
 

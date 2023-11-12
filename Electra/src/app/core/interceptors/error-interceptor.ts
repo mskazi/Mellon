@@ -11,6 +11,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { NotificationService } from '@core/notification.service';
+import { MatDialog } from '@angular/material/dialog';
 
 export enum STATUS {
   UNAUTHORIZED = 401,
@@ -44,7 +45,8 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   constructor(
     private router: Router,
-    private toast: NotificationService
+    private toast: NotificationService,
+    public dialog: MatDialog
   ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -55,6 +57,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   private handleError(error: HttpErrorResponse) {
     if (this.errorPages.includes(error.status)) {
+      this.dialog.closeAll();
       this.router.navigateByUrl(`/${error.status}`, {
         skipLocationChange: true,
       });

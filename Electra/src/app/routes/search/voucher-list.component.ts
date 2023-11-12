@@ -84,4 +84,29 @@ export class SearchVoucherListComponent
       right: '0px',
     },
   ];
+
+  getExportHeaders() {
+    return [
+      'Id',
+      'System Status',
+      'Voucher Name',
+      'Voucher Contact',
+      'Voucher Address',
+      'Voucher City',
+      'Voucher PostCode',
+      'Voucher Phone No',
+      'Voucher Mobile No',
+      'Voucher Description',
+      'System Company',
+      'Navision Service OrderNo',
+      'Navision Sales OrderNo',
+      'Action Type Description',
+      'Carrier Voucher No',
+      'Ordered By',
+      'Mellon Project',
+      'Carrier Name',
+      'Created By',
+      'Created At',
+    ];
+  }
 }

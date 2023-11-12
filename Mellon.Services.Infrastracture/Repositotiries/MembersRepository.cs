@@ -11,6 +11,10 @@ namespace Mellon.Services.Infrastracture.Repositotiries
         Task<PaginatedListResult<Member>> GetMembers(string term, ListPaging paging, ListOrder order, CancellationToken cancellationToken);
         Task<Member> GetMemberById(int id, CancellationToken cancellationToken);
         void AddMember(Member member);
+
+        Task<IEnumerable<Member>> GetAllMembers(CancellationToken cancellationToken);
+
+        Task<IEnumerable<Member>> GetAllActiveMembersByDepartment(string company, string department, CancellationToken cancellationToken);
     }
 
     public class MembersRepository : IMembersRepository
@@ -38,6 +42,15 @@ namespace Mellon.Services.Infrastracture.Repositotiries
 
         }
 
+        public async Task<IEnumerable<Member>> GetAllMembers(CancellationToken cancellationToken)
+        {
+            return await context.Members.Where(p => p.IsActive == true).OrderBy(p => p.MemberName).ToListAsync(cancellationToken);
+        }
+        public async Task<IEnumerable<Member>> GetAllActiveMembersByDepartment(string company, string department, CancellationToken cancellationToken)
+        {
+            return await context.Members.Where(p => p.IsActive == true && p.Company == company && p.Department == department).OrderBy(p => p.MemberName).ToListAsync(cancellationToken);
+        }
+
         public async Task<PaginatedListResult<Member>> GetMembers(string term, ListPaging paging, ListOrder order, CancellationToken cancellationToken)
         {
             paging ??= new ListPaging();
@@ -53,21 +66,12 @@ namespace Mellon.Services.Infrastracture.Repositotiries
                    s.SysCountry.Contains(term)
                 );
             }
+
             total = await query.CountAsync(cancellationToken);
 
             //apply ordering
             if (order?.Properties?.Any() ?? false)
             {
-                //var listOrder = new ListOrder();
-                //foreach (var prop in order.Properties)
-                //{
-                //    switch (prop.Name)
-                //    {
-                //        case "id": prop.Name = "data.Id"; break;
-                //        case "memberName": prop.Name = "MemberName"; break;
-                //    }
-                //}
-
                 query = query.OrderBy(order?.Properties);
             }
 

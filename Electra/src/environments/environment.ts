@@ -13,6 +13,7 @@ export const environment = {
   serviceLookupUrl: `${apiHost}/lookup`,
   administrationUrl: `${apiHost}/administration`,
   serviceContactsUrl: `${apiHost}/contacts`,
+  serviceCarriersUrl: `${apiHost}/carrier`,
   auth: {
     clientId: '483acf7e-32db-465c-9210-2327682b6eaf',
     authority: 'https://login.microsoftonline.com/fc406171-ed8a-49b5-8e6c-fcc7f7915c54',

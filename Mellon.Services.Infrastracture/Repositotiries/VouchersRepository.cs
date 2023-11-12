@@ -19,6 +19,11 @@ namespace Mellon.Services.Infrastracture.Repositotiries
         Task<VoucherDetails> VoucherDetails(int id, CancellationToken cancellationToken);
 
         Task<VoucherSummary> Summary(CancellationToken cancellationToken);
+
+        void Delete(Datum data);
+
+        void AddVoucher(Datum data);
+
     }
 
     public partial class VouchersRepository : IVouchersRepository
@@ -129,7 +134,8 @@ namespace Mellon.Services.Infrastracture.Repositotiries
                      MellonProject = s.setupsDefaultIfEmpty.MellonProject,
                      CarrierName = s.carriersDefaultIfEmpty.DescrShort,
                      CarrierId = s.data.CarrierId,
-                     ElectraProjectEdit = s.data.ElectraProjectId
+                     ElectraProjectId = s.data.ElectraProjectId,
+                     CarrierActionType = s.data.CarrierActionType
                  }
             );
             var voucherDetails = await result.FirstOrDefaultAsync();

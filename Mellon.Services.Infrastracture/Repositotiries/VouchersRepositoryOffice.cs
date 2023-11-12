@@ -1,5 +1,6 @@
 ﻿using Mellon.Common.Services;
 using Mellon.Services.Common.resources;
+using Mellon.Services.Infrastracture.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mellon.Services.Infrastracture.Repositotiries
@@ -76,6 +77,7 @@ namespace Mellon.Services.Infrastracture.Repositotiries
                         case "id": prop.Name = "data.Id"; break;
                         case "systemStatus": prop.Name = "data.SysStatus"; break;
                         case "voucherName": prop.Name = "data.VoucherName"; break;
+                        case "voucherContact": prop.Name = "data.VoucherContact"; break;
                         case "voucherAddress": prop.Name = "data.VoucherAddress"; break;
                         case "voucherPhoneNo": prop.Name = "data.VoucherPhoneNo"; break;
                         case "voucherMobileNo": prop.Name = "data.VoucherMobileNo"; break;
@@ -133,5 +135,16 @@ namespace Mellon.Services.Infrastracture.Repositotiries
                total,
                dataResults);
         }
+
+        public void AddVoucher(Datum data)
+        {
+            this.context.Data.Add(data);
+        }
+
+        public void Delete(Datum data)
+        {
+            this.context.Data.Remove(data);
+        }
+
     }
 }

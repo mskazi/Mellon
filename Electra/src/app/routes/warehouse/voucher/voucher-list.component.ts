@@ -34,14 +34,14 @@ export class WarehouseVoucherListComponent extends BaseVoucherListComponent<Vouc
       header: 'Delivery Name',
       sortable: true,
       field: 'voucherName',
-      formatter: (data: any) => `${data.voucherName}${data.voucherContact}`,
+      formatter: (data: any) => `${data.voucherName} ${data.voucherContact ?? ''}`,
     },
     {
       header: 'Delivery Address',
       sortable: true,
       field: 'voucherAddress',
       formatter: (data: any) =>
-        `${data.voucherAddress} | ${data.voucherCity} | ${data.voucherPostCode}`,
+        `${data.voucherAddress} | ${data.voucherCity} | ${data.voucherPostCode ?? ''}`,
     },
     { header: 'Delivery PhoneNo', sortable: true, field: 'voucherPhoneNo' },
     { header: 'Delivery MobileNo', sortable: true, field: 'voucherMobileNo' },
@@ -59,4 +59,29 @@ export class WarehouseVoucherListComponent extends BaseVoucherListComponent<Vouc
       right: '0px',
     },
   ];
+
+  getExportHeaders() {
+    return [
+      'Id',
+      'System Status',
+      'Voucher Name',
+      'Voucher Contact',
+      'Voucher Address',
+      'Voucher City',
+      'Voucher PostCode',
+      'Voucher Phone No',
+      'Voucher Mobile No',
+      'Voucher Description',
+      'System Company',
+      'Navision Service OrderNo',
+      'Navision Sales OrderNo',
+      'Action Type Description',
+      'Carrier Voucher No',
+      'Ordered By',
+      'Mellon Project',
+      'Carrier Name',
+      'Created By',
+      'Created At',
+    ];
+  }
 }

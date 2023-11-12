@@ -51,6 +51,7 @@ export abstract class BaseFormEditComponent<T> extends BaseFormComponent {
   }
 
   load(params = {} as any): Observable<T | undefined> {
+    this.activateSpinner();
     return (this.onLoad$ || of(true)).pipe(
       mergeMap(() => {
         return this.service.load(params).pipe(
@@ -58,6 +59,7 @@ export abstract class BaseFormEditComponent<T> extends BaseFormComponent {
             this.initData = _.cloneDeep(Object.freeze(response));
             this.data = _.cloneDeep(response);
             this.loadCompleted(this.data);
+            this.deactivateSpinner();
             return this.data;
           })
         );

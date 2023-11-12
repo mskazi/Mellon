@@ -18,7 +18,7 @@ export class OfficeVoucherListComponent extends BaseVoucherListComponent<Voucher
   ) {
     super(serviceCommandsService.officeCommands, dialogDynamicService);
   }
-  exportName = 'Warehouse_Voucher_List';
+  exportName = 'Office_Voucher_List';
   columns: MtxGridColumn[] = [
     { header: 'Electra_ID', field: 'id', sortable: true },
     { header: 'Company', field: 'systemCompany', sortable: true },
@@ -63,4 +63,31 @@ export class OfficeVoucherListComponent extends BaseVoucherListComponent<Voucher
       right: '0px',
     },
   ];
+
+  getExportHeaders() {
+    return [
+      'Id',
+      'System Status',
+      'Voucher Name',
+      'Voucher Contact',
+      'Voucher Address',
+      'Voucher City',
+      'Voucher PostCode',
+      'Voucher Phone No',
+      'Voucher Mobile No',
+      'Voucher Description',
+      'Serial No',
+      'System Company',
+      'Navision Service OrderNo',
+      'Navision Sales OrderNo',
+      'Action Type Description',
+      'Carrier Voucher No',
+      'Status Description',
+      'Ordered By',
+      'Mellon Project',
+      'Carrier Name',
+      'Created By',
+      'Created At',
+    ];
+  }
 }

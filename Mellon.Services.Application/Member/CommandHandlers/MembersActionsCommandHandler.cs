@@ -28,7 +28,7 @@ namespace Mellon.Services.Application.Member
                 IsActive = request.IsActive,
                 Department = request.Department,
                 MemberName = request.MemberName,
-                SysCountry = this.currentUserService.CurrentUser.Country,
+                SysCountry = "GR",
                 CreatedBy = this.currentUserService.CurrentUser.Email,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,

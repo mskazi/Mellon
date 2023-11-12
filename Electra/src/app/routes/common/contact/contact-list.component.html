@@ -44,8 +44,13 @@
       </ng-template>
       <ng-template #functionTpl let-row let-index="index" let-col="colDef">
         <div class="d-flex">
-          <button mat-icon-button color="primary" class="m-l-4" (click)="editContactDetails(row)">
+          <button mat-mini-fab class="bg-blue-400 m-l-4" matTooltip="Edit"
+                  (click)="editContactDetails(row)">
             <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-mini-fab class="bg-orange-400 m-l-4" (click)="createVoucher(row.id)"
+                  matTooltip="New Voucher">
+            <mat-icon>local_post_office</mat-icon>
           </button>
         </div>
       </ng-template>

@@ -10,7 +10,25 @@ namespace Mellon.Services.Application.Member
 
     public class GetMembersServiceCommand : IRequest<PaginatedListResult<MemberResource>>
     {
-        public GetMembersServiceCommand(string term, ListPaging paging, ListOrder ordering)
+        public GetMembersServiceCommand(string term, ListPaging paging, ListOrder ordering, bool? isActive = false)
+        {
+            Term = term;
+            Paging = paging;
+            Ordering = ordering;
+            IsActive = isActive;
+        }
+        public string? Term { get; set; }
+        public ListPaging Paging { get; }
+        public ListOrder Ordering { get; }
+
+        public bool? IsActive { get; set; }
+
+
+    }
+
+    public class GetAllActiveMembersServiceCommand : IRequest<PaginatedListResult<MemberResource>>
+    {
+        public GetAllActiveMembersServiceCommand(string term, ListPaging paging, ListOrder ordering)
         {
             Term = term;
             Paging = paging;
@@ -19,6 +37,25 @@ namespace Mellon.Services.Application.Member
         public string? Term { get; set; }
         public ListPaging Paging { get; }
         public ListOrder Ordering { get; }
+    }
+
+    public class GetAllActiveMembersByDepartmentCommand : IRequest<ListResult<MemberResource>>
+    {
+        public GetAllActiveMembersByDepartmentCommand(string company, string department)
+        {
+            Company = company;
+            Department = department;
+        }
+        public string Company { get; set; }
+        public string Department { get; set; }
+
+    }
+
+    public class GetAllActiveMembersCommand : IRequest<ListResult<MemberResource>>
+    {
+        public GetAllActiveMembersCommand()
+        {
+        }
     }
 
     public class GetMemberCommand : IRequest<MemberResource>

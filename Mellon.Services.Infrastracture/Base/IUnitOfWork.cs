@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Mellon.Services.Infrastracture.Base
 {
@@ -11,5 +7,10 @@ namespace Mellon.Services.Infrastracture.Base
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
         Task<int> ExecuteSqlAsync(FormattableString sql, CancellationToken cancellationToken = default);
+
+        IDbContextTransaction BeginTransaction();
+
+        void Commit();
+        void Rollback();
     }
 }

@@ -54,7 +54,9 @@ public partial class MellonContext : UnitOfWorkContext<MellonContext>
 
     public virtual DbSet<Returned> Returneds { get; set; }
 
-
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=erptestdbgr.mellongroup.com;Database=MELLON_INTERNAL_APPS; Integrated Security=false; User ID=erpportal;Password=1234ep;Encrypt=True;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -391,9 +393,7 @@ public partial class MellonContext : UnitOfWorkContext<MellonContext>
         {
             entity.ToTable("data");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Barcode)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -412,7 +412,7 @@ public partial class MellonContext : UnitOfWorkContext<MellonContext>
                 .HasColumnName("carrier_delivery_status");
             entity.Property(e => e.CarrierId).HasColumnName("carrier_id");
             entity.Property(e => e.CarrierJobid)
-                .HasColumnType("text")
+                .HasMaxLength(50)
                 .HasColumnName("carrier_jobid");
             entity.Property(e => e.CarrierPackageItems)
                 .HasColumnType("decimal(8, 2)")
@@ -763,9 +763,7 @@ public partial class MellonContext : UnitOfWorkContext<MellonContext>
         {
             entity.ToTable("members");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Company)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -803,9 +801,7 @@ public partial class MellonContext : UnitOfWorkContext<MellonContext>
         {
             entity.ToTable("office_contacts");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Active).HasColumnName("active");
             entity.Property(e => e.BankMerchantId)
                 .HasMaxLength(50)

@@ -36,18 +36,18 @@ namespace Mellon.Services.Application.Vouchers.CommandHander
             {
                 throw new ArgumentNullException(nameof(voucherDetails));
             }
-            var project = await this.lookupRepository.GetElectraProjectSetup(voucherDetails.CarrierId, voucherDetails.ElectraProjectEdit, cancellationToken);
+            var project = await this.lookupRepository.GetElectraProjectSetup(voucherDetails.CarrierId, voucherDetails.ElectraProjectId, cancellationToken);
             if (project == null)
             {
                 throw new ArgumentNullException(nameof(project));
             }
 
-            ICourierService courierService = this.courierServiceFactory.GetCourierService((CourierMode)voucherDetails.CarrierId);
+            ICourierService courierService = this.courierServiceFactory.GetCourierService((CourierMode)voucherDetails.CarrierId, project);
             if (courierService == null)
             {
                 throw new ArgumentNullException(nameof(courierService));
             }
-            var courierTrackResource = await courierService.Track(voucherDetails);
+            var courierTrackResource = await courierService.Track(voucherDetails, cancellationToken);
             return new VoucherTrack(voucherDetails, courierTrackResource);
         }
 

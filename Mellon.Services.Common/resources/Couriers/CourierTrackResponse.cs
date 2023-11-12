@@ -14,4 +14,20 @@
         public string Position { get; set; }
         public string Status { get; set; }
     }
+
+    public class CourierCreateResource
+    {
+        public string VoucherNo { get; set; }
+        public long JobID { get; set; }
+
+        public IEnumerable<CourierCreateSubVoucherResource> SubVouchers { get; set; }
+
+    }
+
+    public class CourierCreateSubVoucherResource
+    {
+        public string VoucherNo { get; set; }
+        public string BelongsTo { get; set; }
+
+    }
 }

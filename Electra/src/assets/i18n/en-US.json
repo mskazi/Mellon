@@ -33,7 +33,9 @@
     "exist": "The {{value}} has exists",
     "inconsistent": "Inconsistent with {{value}}",
     "invalid_email": "Invalid email",
-    "phoneOrMobile": "Phone number or Mobile number is required"
+    "phoneOrMobile": "Phone number or Mobile number is required",
+    "decimalNumber": "Decimal number with max {{precision}} precisions",
+    "integerNumber": "This value should be an integer number"
   },
   "paginator": {
     "items_per_page_label": "Items per page:",

@@ -20,29 +20,14 @@ import { Observable } from 'rxjs';
 export class VoucherCommandService {
   warehouseCommands: VoucherWarehouseCommands;
   searchCommands: VoucherSearchCommands;
+  serviceCommands: VoucherServiceCommands;
   officeCommands: VoucherOfficeCommands;
 
   constructor(private http: HttpClient) {
     this.warehouseCommands = new VoucherWarehouseCommands(http);
     this.searchCommands = new VoucherSearchCommands(http);
     this.officeCommands = new VoucherOfficeCommands(http);
-  }
-
-  getVoucherList(
-    term: string = '',
-    params: any = {}
-  ): Observable<PaginatedListResults<VoucherServiceItem>> {
-    let query = Utilities.paginatedQueryParams(params) + '&';
-    if (params) {
-      query += Utilities.orderQueryParams(params) + '&';
-    }
-    if (term) {
-      query += `term=${term.toString()}`;
-    }
-
-    return this.http.get<PaginatedListResults<any>>(
-      `${environment.serviceRoleUrl}/service?${query}`
-    );
+    this.serviceCommands = new VoucherServiceCommands(http);
   }
 
   getVoucherDetails(id: number): Observable<Voucher> {
@@ -55,6 +40,16 @@ export class VoucherCommandService {
 
   getSummary(): Observable<VoucherSummary> {
     return this.http.get<VoucherSummary>(`${environment.serviceRoleUrl}/summary`);
+  }
+
+  print(id: number): Observable<any> {
+    return this.http.post(
+      `${environment.serviceRoleUrl}/print/${id}`,
+      {},
+      {
+        responseType: 'blob',
+      }
+    );
   }
 }
 
@@ -74,7 +69,7 @@ export class VoucherWarehouseCommands implements ISearchService<VoucherWarehouse
       query += `term=${term.toString()}`;
     }
 
-    return this.http.get<PaginatedListResults<any>>(
+    return this.http.get<PaginatedListResults<VoucherWarehouseItem>>(
       `${environment.serviceRoleUrl}/warehouse?${query}`
     );
   }
@@ -92,7 +87,7 @@ export class VoucherSearchCommands implements ISearchService<VoucherSearchItem> 
       query += `term=${term.toString()}`;
     }
 
-    return this.http.get<PaginatedListResults<any>>(
+    return this.http.get<PaginatedListResults<VoucherSearchItem>>(
       `${environment.serviceRoleUrl}/search?${query}`
     );
   }
@@ -110,8 +105,32 @@ export class VoucherOfficeCommands implements ISearchService<VoucherOfficeItem> 
       query += `term=${term.toString()}`;
     }
 
-    return this.http.get<PaginatedListResults<any>>(
+    return this.http.get<PaginatedListResults<VoucherOfficeItem>>(
       `${environment.serviceRoleUrl}/office?${query}`
+    );
+  }
+  createVoucher(data: any): Observable<any> {
+    return this.http.post<any>(
+      `${environment.serviceRoleUrl}/office/new/${data.contactId}`,
+      data.voucherDetails
+    );
+  }
+}
+
+export class VoucherServiceCommands implements ISearchService<VoucherServiceItem> {
+  constructor(private http: HttpClient) {}
+
+  search(term: string, params: any): Observable<PaginatedListResults<VoucherServiceItem>> {
+    let query = Utilities.paginatedQueryParams(params) + '&';
+    if (params) {
+      query += Utilities.orderQueryParams(params) + '&';
+    }
+    if (term) {
+      query += `term=${term.toString()}`;
+    }
+
+    return this.http.get<PaginatedListResults<VoucherServiceItem>>(
+      `${environment.serviceRoleUrl}/service?${query}`
     );
   }
 }

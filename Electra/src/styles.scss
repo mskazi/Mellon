@@ -5,5 +5,26 @@
 @use 'styles/grid';
 @use 'styles/helpers';
 @use 'styles/plugins';
+
 /* @use 'app/shared/components/dialog/dialog.component';
  */
+
+.mat-mdc-dialog-content {
+  .mdc-text-field--outlined.mdc-text-field--disabled .mdc-text-field__input {
+    color: rgba(0, 0, 0, .90) !important;
+    opacity: 1 !important;
+  }
+
+  .mdc-text-field--outlined.mdc-text-field--disabled .mat-mdc-select-value {
+    color: rgba(0, 0, 0, .90) !important;
+    opacity: 1 !important;
+  }
+
+  .mdc-text-field--outlined.mdc-text-field--disabled .mdc-floating-label {
+    color: rgba(0, 0, 0, .90) !important;
+  }
+
+  .mdc-text-field--disabled {
+    background-color: #e5e5e5 !important;
+  }
+}

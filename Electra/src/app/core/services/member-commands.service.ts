@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PaginatedListResults } from '@core/core-model';
+import { ListResult, PaginatedListResults } from '@core/core-model';
 import { MemberItem } from '@core/models/member';
 import { environment } from '@env/environment';
 import { Utilities } from '@shared/utils/utilities';
@@ -34,5 +34,15 @@ export class MembersCommandService {
       ? this.http.put<MemberItem>(`${environment.servicesMembersUrl}/${data.id}`, data)
       : this.http.post<MemberItem>(`${environment.servicesMembersUrl}`, data);
     return httpRequest;
+  }
+
+  getMembers(company: string, department: string): Observable<ListResult<MemberItem>> {
+    let params = new HttpParams();
+    params = params.append('company', company);
+    params = params.append('department', department);
+
+    return this.http.get<ListResult<MemberItem>>(`${environment.servicesMembersUrl}/all/company`, {
+      params: params,
+    });
   }
 }

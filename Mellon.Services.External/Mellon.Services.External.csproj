@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Mellon.Services.Common\Mellon.Services.Common.csproj" />
+    <ProjectReference Include="..\Mellon.Services.Infrastracture\Mellon.Services.Infrastracture.csproj" />
   </ItemGroup>
 
 </Project>

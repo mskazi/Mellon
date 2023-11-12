@@ -6,7 +6,10 @@ using Microsoft.Extensions.Logging;
 
 namespace Mellon.Services.Application.Member
 {
-    public class GetMembersCommandHandler : IRequestHandler<GetMembersServiceCommand, PaginatedListResult<MemberResource>>
+    public class GetMembersCommandHandler :
+        IRequestHandler<GetMembersServiceCommand, PaginatedListResult<MemberResource>>,
+        IRequestHandler<GetAllActiveMembersByDepartmentCommand, ListResult<MemberResource>>,
+        IRequestHandler<GetAllActiveMembersCommand, ListResult<MemberResource>>
     {
         private readonly ILogger logger;
         private readonly ICurrentUserService currentUserService;
@@ -28,6 +31,21 @@ namespace Mellon.Services.Application.Member
                result.Total,
                result.Data.Select(entity => new MemberResource(entity))
             );
+        }
+
+        public async Task<ListResult<MemberResource>> Handle(GetAllActiveMembersByDepartmentCommand request, CancellationToken cancellationToken)
+        {
+
+            var entities = await repository.GetAllActiveMembersByDepartment(request.Company, request.Department, cancellationToken);
+            var items = entities.Select(entity => new MemberResource(entity));
+            return new ListResult<MemberResource>(items);
+        }
+
+        public async Task<ListResult<MemberResource>> Handle(GetAllActiveMembersCommand request, CancellationToken cancellationToken)
+        {
+            var entities = await repository.GetAllMembers(cancellationToken);
+            var items = entities.Select(entity => new MemberResource(entity));
+            return new ListResult<MemberResource>(items);
         }
     }
 }

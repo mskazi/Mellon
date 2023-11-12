@@ -63,7 +63,8 @@
         public string? CarrierDelivereyStatus { get; set; }
         public int CarrierId { get; set; }
 
-        public int ElectraProjectEdit { get; set; }
+        public int ElectraProjectId { get; set; }
+        public int CarrierActionType { get; set; }
 
     }
 

@@ -1,16 +1,20 @@
 ﻿using Mellon.Services.Common.resources;
 using Mellon.Services.Common.resources.Couriers;
+using Mellon.Services.Infrastracture.Models;
 
 namespace Mellon.Services.External.CourierProviders
 {
     public interface ICourierService
     {
-        CourierMode CourierMode
+        public ElectraProjectSetup ProjectSetup { get; set; }
+        public CourierMode CourierMode
         {
             get;
         }
-        void Print();
-        Task<CourierTrackResource> Track(VoucherDetails voucherDetails);
+        public Task<Stream> Print(IEnumerable<string> vouchers, CancellationToken cancellation);
+        public Task<CourierTrackResource> Track(VoucherDetails voucherDetails, CancellationToken cancellation);
+
+        public Task<CourierCreateResource> Create(Datum voucherData, CancellationToken cancellation);
 
     }
 
@@ -18,4 +22,6 @@ namespace Mellon.Services.External.CourierProviders
     {
         GenikiTaxydromiki = 1
     }
+
+
 }

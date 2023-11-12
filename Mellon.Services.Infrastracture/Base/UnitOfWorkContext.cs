@@ -1,10 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Mellon.Services.Infrastracture.Base
 {
@@ -19,7 +15,22 @@ namespace Mellon.Services.Infrastracture.Base
         {
         }
 
-        public  async Task<int> ExecuteSqlAsync(FormattableString sql, CancellationToken cancellationToken = default)
+        public IDbContextTransaction BeginTransaction()
+        {
+            return base.Database.BeginTransaction();
+        }
+
+        public void Commit()
+        {
+            base.Database.CommitTransaction();
+        }
+
+        public void Rollback()
+        {
+            base.Database.RollbackTransaction();
+        }
+
+        public async Task<int> ExecuteSqlAsync(FormattableString sql, CancellationToken cancellationToken = default)
         {
             try
             {

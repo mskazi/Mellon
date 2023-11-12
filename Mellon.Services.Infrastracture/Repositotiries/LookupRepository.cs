@@ -8,11 +8,21 @@ namespace Mellon.Services.Infrastracture.Repositotiries
     {
         Task<IEnumerable<Dim>> GetDepartments(CancellationToken cancellationToken);
 
-        Task<IEnumerable<Dim>> GetCompanies(string country, CancellationToken cancellationToken);
+        Task<IEnumerable<Dim>> GetCompanies(CancellationToken cancellationToken);
 
         Task<IEnumerable<Country>> GetCountries(CancellationToken cancellationToken);
 
         Task<ElectraProjectSetup> GetElectraProjectSetup(int carriedId, int projectId, CancellationToken cancellationToken);
+
+        Task<IEnumerable<Dim>> GetVoucherTypes(CancellationToken cancellationToken);
+        Task<IEnumerable<Dim>> GetVoucherOfficeDepartments(CancellationToken cancellationToken);
+
+        Task<IEnumerable<Dim>> GetVoucherConditions(CancellationToken cancellationToken);
+
+        Task<IEnumerable<Dim>> GetVoucherOfficeDeliveryTimes(CancellationToken cancellationToken);
+
+        Task<ElectraProjectSetup> GetActiveElectraProjectSetup(int carriedId, string company, string deparment, CancellationToken cancellationToken);
+
     }
 
     public class LookupRepository : ILookupRepository
@@ -24,10 +34,10 @@ namespace Mellon.Services.Infrastracture.Repositotiries
         }
         public IUnitOfWork UnitOfWork => context;
 
-        public async Task<IEnumerable<Dim>> GetCompanies(string country, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Dim>> GetCompanies(CancellationToken cancellationToken)
         {
             return await this.context.Dims
-                 .Where(p => p.Name == "sys_company" && p.SysCountry == country)
+                 .Where(p => p.Name == "sys_company")
                  .OrderBy(o => o.ValueChar).ToListAsync(cancellationToken);
         }
 
@@ -49,5 +59,42 @@ namespace Mellon.Services.Infrastracture.Repositotiries
             return await this.context.ElectraProjectSetups
                 .Where(p => p.CarrierId == carriedId && p.Id == projectId).FirstOrDefaultAsync(cancellationToken);
         }
+        public async Task<ElectraProjectSetup> GetActiveElectraProjectSetup(int carriedId, string companyId, string deparment, CancellationToken cancellationToken)
+        {
+            return await this.context.ElectraProjectSetups
+                .Where(p => p.CarrierId == carriedId && p.SysCompany == companyId && p.SysDepartment == deparment && p.IsActive == true).FirstOrDefaultAsync(cancellationToken);
+        }
+
+
+
+        public async Task<IEnumerable<Dim>> GetVoucherTypes(CancellationToken cancellationToken)
+        {
+            return await this.context.Dims
+                .Where(p => p.Name == "sys_type")
+                .OrderBy(o => o.Description).ToListAsync(cancellationToken);
+        }
+
+        public async Task<IEnumerable<Dim>> GetVoucherConditions(CancellationToken cancellationToken)
+        {
+            return await this.context.Dims
+                .Where(p => p.Name == "sys_condition" && p.ValueChar != "ZZZ")
+                .OrderBy(o => o.Description).ToListAsync(cancellationToken);
+        }
+
+        public async Task<IEnumerable<Dim>> GetVoucherOfficeDepartments(CancellationToken cancellationToken)
+        {
+            return await this.context.Dims
+                .Where(p => p.Name == "sys_department" && p.ValueChar != "service")
+                .OrderBy(o => o.Description).ToListAsync(cancellationToken);
+        }
+
+        public async Task<IEnumerable<Dim>> GetVoucherOfficeDeliveryTimes(CancellationToken cancellationToken)
+        {
+            return await this.context.Dims
+                .Where(p => p.Name == "sys_time_delivery" && p.ValueInt != 0)
+                .OrderBy(o => o.Description).ToListAsync(cancellationToken);
+        }
+
+
     }
 }

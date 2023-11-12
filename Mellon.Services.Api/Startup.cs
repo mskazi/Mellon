@@ -17,6 +17,7 @@
     using Microsoft.Extensions.Hosting;
     using Microsoft.Identity.Web;
     using Microsoft.IdentityModel.Logging;
+    using Newtonsoft.Json.Converters;
     using Serilog;
     using System;
     using System.Reflection;
@@ -60,7 +61,7 @@
                 services.AddScoped(typeof(IVouchersRepository), typeof(VouchersRepository));
                 services.AddScoped(typeof(ILookupRepository), typeof(LookupRepository));
                 services.AddScoped(typeof(IContactsRepository), typeof(ContactsRepository));
-
+                services.AddScoped(typeof(ICarriersRepository), typeof(CarriersRepository));
 
                 services.AddTransient(s => s.GetService<IHttpContextAccessor>().HttpContext?.User ?? new ClaimsPrincipal());
                 services.AddSingleton(Configuration);
@@ -90,7 +91,18 @@
                 services.AddScoped<ICurrentUserService, CurrentUserService>();
                 services.AddScoped<IApprovalProcessorHost, ApprovalProcessorHost>();
 
-                services.AddControllers();
+                services.Configure<IISServerOptions>(options =>
+                {
+                    options.MaxRequestBodySize = 64 * 1024 * 1024;
+                });
+
+                services
+                    .AddControllers()
+                //.AddJsonOptions(options =>
+                //{
+                //    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                //});
+                .AddNewtonsoftJson(opts => opts.SerializerSettings.Converters.Add(new StringEnumConverter()));
                 services.AddSwaggerGen();
                 services.AddHostedService<ApporvalBackgroundServiceHost>();
                 services.AddMellonSwaggerGen(Configuration);

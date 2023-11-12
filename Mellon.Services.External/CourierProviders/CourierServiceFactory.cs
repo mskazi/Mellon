@@ -1,17 +1,21 @@
-﻿namespace Mellon.Services.External.CourierProviders
+﻿using Mellon.Services.Infrastracture.Models;
+
+namespace Mellon.Services.External.CourierProviders
 {
     public class CourierServiceFactory
     {
-        private readonly IEnumerable<ICourierService> courierService;
+        private readonly IEnumerable<ICourierService> courierServices;
         public CourierServiceFactory(IEnumerable<ICourierService> _courierService)
         {
-            courierService = _courierService;
+            courierServices = _courierService;
         }
 
-        public ICourierService GetCourierService(CourierMode courierMode)
+        public ICourierService GetCourierService(CourierMode courierMode, ElectraProjectSetup elactraProjectSetup)
         {
-            return courierService.FirstOrDefault(e => e.CourierMode == courierMode)
-                ?? throw new NotSupportedException();
+            ICourierService courierService = courierServices.FirstOrDefault(e => e.CourierMode == courierMode)
+               ?? throw new NotSupportedException();
+            courierService.ProjectSetup = elactraProjectSetup;
+            return courierService;
         }
 
     }

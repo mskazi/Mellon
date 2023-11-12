@@ -43,12 +43,13 @@ namespace Mellon.Services.Api.Controllers
         [Route("list")]
         [ProducesResponseType(typeof(ElectraUser), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> List([FromQuery] string term, [FromQuery] QueryPaging paging, [FromQuery] QueryOrder order)
+        public async Task<IActionResult> List([FromQuery] string term, [FromQuery] bool isActive, [FromQuery] QueryPaging paging, [FromQuery] QueryOrder order)
         {
             var command = new GetMembersServiceCommand(
                 term,
                 new ListPaging(paging),
-                new ListOrder(order)
+                new ListOrder(order),
+                isActive
                 );
             var result = await mediator.Send(command);
             return Ok(result);
@@ -89,6 +90,32 @@ namespace Mellon.Services.Api.Controllers
         {
             var command = new MemberUpdateCommand(request.Id, request.MemberName, request.Department, request.Company, request.SysCountry, request.IsActive);
             MemberResource result = await mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("all")]
+        [Consumes("application/json")]
+        [ProducesResponseType(typeof(ListResult<MemberResource>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GerAllMembers()
+        {
+            var command = new GetAllActiveMembersCommand();
+            ListResult<MemberResource> result = await mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("all/company")]
+        [Consumes("application/json")]
+        [ProducesResponseType(typeof(ListResult<MemberResource>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GerAllMembers([FromQuery] string company, [FromQuery] string department)
+        {
+            var command = new GetAllActiveMembersByDepartmentCommand(company, department);
+            ListResult<MemberResource> result = await mediator.Send(command);
             return Ok(result);
         }
     }
