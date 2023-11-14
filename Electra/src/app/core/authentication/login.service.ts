@@ -177,7 +177,7 @@ export class LoginService {
             type: 'link',
           },
           {
-            route: 'print-voucher',
+            route: 'print',
             name: 'printVoucherList',
             type: 'link',
           },

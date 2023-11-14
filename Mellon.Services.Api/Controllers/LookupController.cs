@@ -2,6 +2,7 @@
 using Mellon.Common.Services;
 using Mellon.Services.Application.Lookup;
 using Mellon.Services.Application.Lookup.Commands;
+using Mellon.Services.Common.resources;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -42,9 +43,9 @@ namespace Mellon.Services.Api.Controllers
         [Route("companies")]
         [ProducesResponseType(typeof(ListResult<CompanyLookupResourse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetCompanies()
+        public async Task<IActionResult> GetCompanies([FromQuery] VoucherCreateRoleType voucherCreateRoleType)
         {
-            var command = new GeCompanyLookupCommand();
+            var command = new GeCompanyLookupCommand(voucherCreateRoleType);
             var result = await mediator.Send(command);
             return Ok(result);
         }
@@ -63,34 +64,34 @@ namespace Mellon.Services.Api.Controllers
 
 
         [HttpGet]
-        [Route("types/office")]
+        [Route("types")]
         [ProducesResponseType(typeof(ListResult<TypeLookupResourse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetOfficeType()
         {
-            var command = new GetOfficeTypeLookupCommand();
+            var command = new GetVoucherTypeLookupCommand();
             var result = await mediator.Send(command);
             return Ok(result);
         }
 
         [HttpGet]
-        [Route("conditions/office")]
+        [Route("conditions")]
         [ProducesResponseType(typeof(ListResult<ConditionLookupResourse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetOfficeCondition()
         {
-            var command = new GetOfficeConditionLookupCommand();
+            var command = new GetVocuherConditionLookupCommand();
             var result = await mediator.Send(command);
             return Ok(result);
         }
 
         [HttpGet]
-        [Route("departments/office")]
+        [Route("departments/voucher")]
         [ProducesResponseType(typeof(ListResult<DepartmentLookupResourse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetOfficeDepartment()
+        public async Task<IActionResult> GetVoucherDepartment([FromQuery] VoucherCreateRoleType voucherCreateRoleType)
         {
-            var command = new GetOfficeDepartmentLookupCommand();
+            var command = new GetVoucherDepartmentLookupCommand(voucherCreateRoleType);
             var result = await mediator.Send(command);
             return Ok(result);
         }
@@ -98,14 +99,26 @@ namespace Mellon.Services.Api.Controllers
 
 
         [HttpGet]
-        [Route("deliveryTimes/office")]
+        [Route("deliveryTimes")]
         [ProducesResponseType(typeof(ListResult<ConditionLookupResourse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetOfficeDeliveryTimes()
+        public async Task<IActionResult> GetVoucherDeliveryTimes()
         {
-            var command = new GetOfficeDeliveryTimeLookupCommand();
+            var command = new GetVoucherDeliveryTimeLookupCommand();
             var result = await mediator.Send(command);
             return Ok(result);
         }
+
+        [HttpGet]
+        [Route("office/project")]
+        [ProducesResponseType(typeof(ListResult<ConditionLookupResourse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetElectraProjectOffices()
+        {
+            var command = new GetElectraProjectOfficesLookupCommand();
+            var result = await mediator.Send(command);
+            return Ok(result);
+        }
+
     }
 }

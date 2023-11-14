@@ -5,12 +5,7 @@ using Mellon.Services.Infrastracture.Repositotiries;
 
 namespace Mellon.Services.Application.Lookup.CommandHandler
 {
-
-
-    public class GetOfficeLookUpCommandHandler : IRequestHandler<GetOfficeTypeLookupCommand, ListResult<TypeLookupResourse>>,
-                                                 IRequestHandler<GetOfficeConditionLookupCommand, ListResult<ConditionLookupResourse>>,
-                                                 IRequestHandler<GetOfficeDepartmentLookupCommand, ListResult<DepartmentLookupResourse>>,
-                                                 IRequestHandler<GetOfficeDeliveryTimeLookupCommand, ListResult<DeliveryTimeLookupResourse>>
+    public class GetOfficeLookUpCommandHandler : IRequestHandler<GetElectraProjectOfficesLookupCommand, ListResult<string>>
     {
         private readonly ILookupRepository repository;
 
@@ -19,33 +14,10 @@ namespace Mellon.Services.Application.Lookup.CommandHandler
             this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        public async Task<ListResult<TypeLookupResourse>> Handle(GetOfficeTypeLookupCommand request, CancellationToken cancellationToken)
+        public async Task<ListResult<string>> Handle(GetElectraProjectOfficesLookupCommand request, CancellationToken cancellationToken)
         {
-            var entities = await repository.GetVoucherTypes(cancellationToken);
-            var items = entities.Select(entity => new TypeLookupResourse(entity));
-            return new ListResult<TypeLookupResourse>(items);
-        }
-
-        public async Task<ListResult<ConditionLookupResourse>> Handle(GetOfficeConditionLookupCommand request, CancellationToken cancellationToken)
-        {
-            var entities = await repository.GetVoucherConditions(cancellationToken);
-            var items = entities.Select(entity => new ConditionLookupResourse(entity));
-            return new ListResult<ConditionLookupResourse>(items);
-        }
-
-        public async Task<ListResult<DepartmentLookupResourse>> Handle(GetOfficeDepartmentLookupCommand request, CancellationToken cancellationToken)
-        {
-            var entities = await repository.GetVoucherOfficeDepartments(cancellationToken);
-            var items = entities.Select(entity => new DepartmentLookupResourse(entity));
-            return new ListResult<DepartmentLookupResourse>(items);
-        }
-
-
-        public async Task<ListResult<DeliveryTimeLookupResourse>> Handle(GetOfficeDeliveryTimeLookupCommand request, CancellationToken cancellationToken)
-        {
-            var entities = await repository.GetVoucherOfficeDeliveryTimes(cancellationToken);
-            var items = entities.Select(entity => new DeliveryTimeLookupResourse(entity));
-            return new ListResult<DeliveryTimeLookupResourse>(items);
+            var entities = await repository.GetElectraProjectOffices(cancellationToken);
+            return new ListResult<string>(entities);
         }
     }
 }

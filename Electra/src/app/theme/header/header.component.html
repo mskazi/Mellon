@@ -6,13 +6,12 @@
   <div class="m-r-16">
     <form>
       <mat-form-field appearance="outline" style="flex-direction: unset;"
-                      class="p-0 m-0 small-icon">
+                      class="p-0 m-0 small-icon custom-form-field">
         <span matPrefix #popoverTrigger="mtxPopoverTrigger" mtxPopoverTriggerOn="hover"
               [mtxPopoverTriggerFor]="popover">
           <mat-icon>info</mat-icon>
         </span>
-        <input matInput [(ngModel)]="searchTerm" name="q" placeholder="Search"
-               style="font-size: large;">
+        <input matInput [(ngModel)]="searchTerm" name="q" placeholder="Search">
         <button mat-mini-fab (click)="search()" matSuffix type="submit">
           <mat-icon>search</mat-icon>
         </button>

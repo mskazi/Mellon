@@ -36,6 +36,10 @@ export class ContactsCommandService implements ISearchService<ContactSearchItem>
     return this.http.get<ContactEditItem>(`${environment.serviceContactsUrl}/${id}`);
   }
 
+  getContactByOrder(order: string): Observable<ContactEditItem> {
+    return this.http.get<ContactEditItem>(`${environment.serviceContactsUrl}/navision/${order}`);
+  }
+
   saveContact(data: ContactEditItem): Observable<ContactEditItem> {
     const httpRequest = data.id
       ? this.http.put<ContactEditItem>(`${environment.serviceContactsUrl}/${data.id}`, data)

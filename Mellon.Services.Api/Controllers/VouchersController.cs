@@ -135,14 +135,70 @@ namespace Mellon.Services.Api.Controllers
         }
 
         [HttpPost]
-        [Route("office/new/{id}")]
+        [Route("contact/new/{id}")]
         [ProducesResponseType(typeof(Boolean), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetDetails([FromRoute] int id, [FromBody] CreateVoucherRequestData data)
+        public async Task<IActionResult> CreateVoucherFromContact([FromRoute] int id, [FromBody] CreateVoucherRequestData data)
         {
-            var command = new CreateVoucherOfficeCommand(id, data);
+            var command = new CreateVoucherFromContactCommand(id, data);
             var result = await mediator.Send(command);
             return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("service/scan")]
+        [ProducesResponseType(typeof(Boolean), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> CreateVoucherServiceScan([FromBody] CreateVoucherServiceScanData data)
+        {
+            var command = new CreateVoucherFromServiceScanCommand(data);
+            var result = await mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("service/order")]
+        [ProducesResponseType(typeof(Boolean), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> PrepareVoucherServiceOrder([FromQuery] string order)
+        {
+            var command = new GetVoucherServiceOrderInfoCommand(order);
+            var result = await mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("service/order/create")]
+        [ProducesResponseType(typeof(Boolean), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> CreateVoucherServiceOrder([FromQuery] string order)
+        {
+            var command = new CreateVoucherServiceOrderCommand(order);
+            var result = await mediator.Send(command);
+            return Ok(result);
+        }
+
+
+        [HttpGet]
+        [Route("office/vouchers")]
+        [ProducesResponseType(typeof(Boolean), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetVouchersOfficeByCompany([FromQuery] string company)
+        {
+            var command = new GetVouchersOfficeByCompany(company);
+            var result = await mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("office/vouchers/print")]
+        [ProducesResponseType(typeof(Boolean), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> PrintVouchersOffice([FromQuery] IEnumerable<string> vouchers)
+        {
+            var command = new VouchersOfficePrint(vouchers);
+            var result = await mediator.Send(command);
+            return File(result, "application/pdf");
         }
     }
 }

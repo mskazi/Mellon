@@ -67,7 +67,7 @@ export class SelectFieldComponent implements OnInit {
     this.form = <UntypedFormGroup>this.controlContainer.control;
     // on lang change mark for changes
     // on options loaded
-    this.optionSubscription = this.options$.subscribe(options => {
+    this.optionSubscription = this.options$?.subscribe(options => {
       this.options = options;
       this.selectedOptions = options;
     });

@@ -17,9 +17,9 @@ namespace Mellon.Services.Application.Vouchers.Commands
         public ListOrder Ordering { get; }
     }
 
-    public class CreateVoucherOfficeCommand : CreateVoucherRequestData, IRequest<VoucherDetails>
+    public class CreateVoucherFromContactCommand : CreateVoucherRequestData, IRequest<VoucherDetails>
     {
-        public CreateVoucherOfficeCommand(int contactId, CreateVoucherRequestData data)
+        public CreateVoucherFromContactCommand(int contactId, CreateVoucherRequestData data)
         {
             ContactId = contactId;
             VoucherAction = data.VoucherAction;
@@ -47,6 +47,26 @@ namespace Mellon.Services.Application.Vouchers.Commands
             Guards.ValidIdentifier(ContactId);
         }
     }
+
+    public class GetVouchersOfficeByCompany : IRequest<ListResult<VoucherOfficePrintResource>>
+    {
+        public GetVouchersOfficeByCompany(string company)
+        {
+            Company = company;
+        }
+        public string Company { get; set; }
+    }
+
+
+    public class VouchersOfficePrint : IRequest<Stream>
+    {
+        public VouchersOfficePrint(IEnumerable<string> vouchers)
+        {
+            Vouchers = vouchers;
+        }
+        public IEnumerable<string> Vouchers { get; set; }
+    }
+
 
 
 }

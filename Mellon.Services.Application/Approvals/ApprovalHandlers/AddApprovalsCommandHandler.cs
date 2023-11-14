@@ -40,13 +40,13 @@ namespace Mellon.Services.Application.Approvals.ApprovalHandlers
             var endpoint = DataAccessSoapClient.EndpointConfiguration.DataAccessSoap;
             using var client = new DataAccessSoapClient(endpoint, serviceUrl);
             var responseApproverOrder = await client.Document_Approver_OrderAsync(new Document_Approver_OrderRequest());
-            var responseApproverOrderList = JsonConvert.DeserializeObject<Document_Approver_Order_Response[]>(responseApproverOrder.Body.Document_Approver_OrderResult)?.ToList();
+            var responseApproverOrderList = JsonConvert.DeserializeObject<Document_Approver_Order_Response[]>(responseApproverOrder.Document_Approver_OrderResult)?.ToList();
 
             var responseLine = await client.Document_Approver_LineAsync(new Document_Approver_LineRequest());
-            var responseApprovalLineList = JsonConvert.DeserializeObject<Document_Approver_Line_Response[]>(responseLine.Body.Document_Approver_LineResult)?.ToList();
+            var responseApprovalLineList = JsonConvert.DeserializeObject<Document_Approver_Line_Response[]>(responseLine.Document_Approver_LineResult)?.ToList();
 
             var responseApprover = await client.Document_ApproverAsync(new Document_ApproverRequest());
-            var responseApproverList = JsonConvert.DeserializeObject<Document_Approver_Response[]>(responseApprover.Body.Document_ApproverResult).ToList();
+            var responseApproverList = JsonConvert.DeserializeObject<Document_Approver_Response[]>(responseApprover.Document_ApproverResult).ToList();
             var approvalsToSendEmail = new List<ApprovalNotification>();
             var approvalsContractToSendEmail = new List<ApprovalNotification>();
 

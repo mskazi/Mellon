@@ -117,7 +117,7 @@ import { PaginatorI18nService } from '@shared/services/paginator-i18n.service';
     {
       provide: MAT_CARD_CONFIG,
       useValue: {
-        appearance: 'outlined',
+        appearance: 'raised',
       },
     },
   ],

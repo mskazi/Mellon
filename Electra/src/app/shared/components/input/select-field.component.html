@@ -1,5 +1,5 @@
 <mat-form-field showErrorMessages [formGroup]="form"
-                [floatLabel]="form.get(controlName)?.disabled ? 'always' : 'auto'">
+                [floatLabel]="'always'">
   <mat-label>{{label | translate}}</mat-label>
   <mat-select [formControlName]="controlName" (selectionChange)="selectionChange($event)"
               [disableOptionCentering]="true" (openedChange)="openedChange($event)">

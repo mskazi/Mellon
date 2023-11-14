@@ -1,0 +1,89 @@
+            <div class="m-t-16">
+              <div class="row">
+                <div class="col-sm-12">
+                  <app-select-field controlName="voucherAction" [options$]="optionsAction$"
+                                    [allowEmpty]="false"
+                                    displayProperty="description" label="Action">
+                  </app-select-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <app-select-field controlName="voucherCarrier" [options$]="optionsCarrier$"
+                                    [allowEmpty]="false"
+                                    displayProperty="description" label="Carrier">
+                  </app-select-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <app-select-field controlName="voucherCompany" [options$]="optionsCompany$"
+                                    [allowEmpty]="false"
+                                    displayProperty="description" label="Company">
+                  </app-select-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <app-select-field controlName="voucherDepartment" [options$]="optionsDepartment$"
+                                    displayProperty="description" label="Department"
+                                    placeholder="Select">
+                  </app-select-field>
+                </div>
+              </div>
+              <div class="row" *ngIf="showProject">
+                <div class="col-sm-12">
+                  <app-select-field controlName="voucherProject" [options$]="optionsProject$"
+                                    displayProperty="description" label="Department"
+                                    placeholder="Select">
+                  </app-select-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <app-select-field controlName="voucherMember" [options$]="optionsMember$"
+                                    displayProperty="description" label="Requested By"
+                                    placeholder="Select">
+                  </app-select-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <app-select-field controlName="voucherType" [options$]="optionsType$"
+                                    [allowEmpty]="false"
+                                    displayProperty="description" label="Type">
+                  </app-select-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <app-select-field controlName="voucherDeliverTo" [options$]="optionsDeliverTo$"
+                                    [allowEmpty]="false"
+                                    displayProperty="description" label="Deliver To">
+                  </app-select-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <app-input-field controlName="voucherWeight" label="Weight (Kgr)">
+                  </app-input-field>
+                </div>
+                <div class="col-sm-6">
+                  <app-input-field controlName="voucherQuantities" label="Quantity"
+                                   type="number" step="1" min="1">
+                  </app-input-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <app-textarea-field controlName="comments" label="Comments" [rows]="4">
+                  </app-textarea-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <app-input-field controlName="voucherReference" label="Your Reference">
+                  </app-input-field>
+                </div>
+              </div>
+            </div>

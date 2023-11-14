@@ -18,12 +18,15 @@ namespace Mellon.Services.Infrastracture.Repositotiries
 
         Task<VoucherDetails> VoucherDetails(int id, CancellationToken cancellationToken);
 
+        Task<Datum> VoucherDetailsVoucherNo(string voucherNo, CancellationToken cancellationToken);
         Task<VoucherSummary> Summary(CancellationToken cancellationToken);
 
         void Delete(Datum data);
 
         void AddVoucher(Datum data);
 
+
+        Task<IEnumerable<Datum>> OfficeVouchersForPrinting(string company, CancellationToken cancellationToken);
     }
 
     public partial class VouchersRepository : IVouchersRepository
@@ -37,6 +40,12 @@ namespace Mellon.Services.Infrastracture.Repositotiries
             this.currentUserService = currentUserService;
         }
         public IUnitOfWork UnitOfWork => context;
+
+
+        public Task<Datum> VoucherDetailsVoucherNo(string voucherNo, CancellationToken cancellationToken)
+        {
+            return this.context.Data.Where(p => p.CarrierVoucherNo == voucherNo).FirstOrDefaultAsync();
+        }
 
         public async Task<VoucherSummary> Summary(CancellationToken cancellationToken)
         {

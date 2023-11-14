@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ServiceOrderComponent } from './srv-order.component';
 import { ServiceVoucherListComponent } from './voucher-list.component';
-import { VoucherCommandService } from '../../core/services/voucher-commands.service';
+import { Routes, RouterModule } from '@angular/router';
+import { ServiceScanSendComponent } from './scanSend/voucher-scan-send.component';
+import { ServiceOrderComponent } from './srvOrder/voucher-order.component';
 
 const routes: Routes = [
   { path: 'voucher-list', component: ServiceVoucherListComponent },
-  { path: 'scan-send', component: ServiceOrderComponent },
+  { path: 'scan-send', component: ServiceScanSendComponent },
   { path: 'srv-orders', component: ServiceOrderComponent },
 ];
 

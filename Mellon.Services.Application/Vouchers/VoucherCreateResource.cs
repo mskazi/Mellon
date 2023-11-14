@@ -28,4 +28,18 @@ namespace Mellon.Services.Application.Vouchers
             Guards.ValidIdentifier(VoucherMember, nameof(VoucherMember));
         }
     }
+
+    public class CreateVoucherServiceScanData
+    {
+        public string? ScanSerial { get; set; }
+        public int? VoucherSaturdayDelivery { get; set; }
+        public int? VoucherDeliveryTime { get; set; }
+
+        protected virtual void Validate()
+
+        {
+            Guards.StringNotNullOrEmpty(ScanSerial, nameof(ScanSerial));
+        }
+    }
 }
+

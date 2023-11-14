@@ -2,6 +2,7 @@
 using Mellon.Common.Services;
 using Mellon.Services.Application.Carrier;
 using Mellon.Services.Application.Carrier.Commands;
+using Mellon.Services.Common.resources;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -30,10 +31,11 @@ namespace Mellon.Services.Api.Controllers
         [Route("list")]
         [ProducesResponseType(typeof(ListResult<CarrierLookupResourse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetCarriers([FromQuery] string postalcode)
+        public async Task<IActionResult> GetCarriers([FromQuery] string postalcode, [FromQuery] VoucherCreateRoleType voucherCreateRoleType)
         {
             var command = new GetCarriersLookupCommand(
-               postalcode
+               postalcode,
+               voucherCreateRoleType
                 );
             var result = await mediator.Send(command);
             return Ok(result);

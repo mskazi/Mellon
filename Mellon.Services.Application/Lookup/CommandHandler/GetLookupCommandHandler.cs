@@ -36,7 +36,7 @@ namespace Mellon.Services.Application.Lookup
 
         public async Task<ListResult<CompanyLookupResourse>> Handle(GeCompanyLookupCommand request, CancellationToken cancellationToken)
         {
-            var entities = await repository.GetCompanies(cancellationToken);
+            var entities = await repository.GetCompanies(request.VouucherCreateRoleType, cancellationToken);
             var items = entities.Select(entity => new CompanyLookupResourse(entity));
             return new ListResult<CompanyLookupResourse>(items);
         }

@@ -77,5 +77,6 @@ namespace Mellon.Services.Api.Controllers
             ContactResource result = await mediator.Send(command);
             return Ok(result);
         }
+
     }
 }

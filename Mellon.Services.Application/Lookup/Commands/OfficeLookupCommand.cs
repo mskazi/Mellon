@@ -1,34 +1,44 @@
 ﻿using MediatR;
 using Mellon.Common.Services;
+using Mellon.Services.Common.resources;
 
 namespace Mellon.Services.Application.Lookup.Commands
 {
-    public class GetOfficeTypeLookupCommand : IRequest<ListResult<TypeLookupResourse>>
+    public class GetVoucherTypeLookupCommand : IRequest<ListResult<TypeLookupResourse>>
     {
-        public GetOfficeTypeLookupCommand()
+        public GetVoucherTypeLookupCommand()
         {
         }
     }
 
-    public class GetOfficeConditionLookupCommand : IRequest<ListResult<ConditionLookupResourse>>
+    public class GetVocuherConditionLookupCommand : IRequest<ListResult<ConditionLookupResourse>>
     {
-        public GetOfficeConditionLookupCommand()
+        public GetVocuherConditionLookupCommand()
         {
         }
     }
 
-    public class GetOfficeDepartmentLookupCommand : IRequest<ListResult<DepartmentLookupResourse>>
+    public class GetVoucherDepartmentLookupCommand : IRequest<ListResult<DepartmentLookupResourse>>
     {
-        public GetOfficeDepartmentLookupCommand()
+        public GetVoucherDepartmentLookupCommand(VoucherCreateRoleType voucherCreateRoleType)
         {
+            this.VoucherCreateRoleType = voucherCreateRoleType;
         }
+        public VoucherCreateRoleType VoucherCreateRoleType { get; set; }
     }
 
 
 
-    public class GetOfficeDeliveryTimeLookupCommand : IRequest<ListResult<DeliveryTimeLookupResourse>>
+    public class GetVoucherDeliveryTimeLookupCommand : IRequest<ListResult<DeliveryTimeLookupResourse>>
     {
-        public GetOfficeDeliveryTimeLookupCommand()
+        public GetVoucherDeliveryTimeLookupCommand()
+        {
+        }
+    }
+
+    public class GetElectraProjectOfficesLookupCommand : IRequest<ListResult<string>>
+    {
+        public GetElectraProjectOfficesLookupCommand()
         {
         }
     }

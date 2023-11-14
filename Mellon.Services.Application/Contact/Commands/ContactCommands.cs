@@ -66,4 +66,5 @@ namespace Mellon.Services.Application.Contact
             Validate();
         }
     }
+
 }

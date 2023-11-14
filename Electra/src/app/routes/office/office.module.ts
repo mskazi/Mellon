@@ -6,14 +6,14 @@ import { OfficeMemberEditComponent } from './members/member-edit.component';
 import { OfficeMemberListComponent } from './members/member-list.component';
 import { OfficeRoutingModule } from './office-routing.module';
 import { OfficeVoucherListComponent } from './voucher/voucher-list.component';
-import { OfficeVoucherNewComponent } from './voucher/voucher-new.component';
+import { OfficePrintCriteriaComponent } from './print/print-criteria.component';
 
 const COMPONENTS: any[] = [
   OfficeMemberListComponent,
   OfficeMemberEditComponent,
   OfficeContactListComponent,
   OfficeVoucherListComponent,
-  OfficeVoucherNewComponent,
+  OfficePrintCriteriaComponent,
 ];
 const COMPONENTS_DYNAMIC: any[] = [];
 

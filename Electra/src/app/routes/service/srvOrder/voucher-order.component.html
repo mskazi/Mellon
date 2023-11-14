@@ -1,0 +1,43 @@
+        <form [formGroup]="form" class="form-field-full" [id]="formId" unsavedChanges>
+          <div class="row" light>
+            <div class="col-sm-8 ">
+              <mat-card class="m-auto ">
+                <mat-card-content class="m-t-16 ">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <mat-card class="m-auto b-b-0">
+                        <mat-card-header>
+                          <mat-card-title>
+                            Scan SerialNo & Create Voucher
+                          </mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content class="m-t-16">
+                          <div class="m-t-16">
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <app-input-field controlName="voucherReference"
+                                                 label="Your Reference">
+                                </app-input-field>
+                              </div>
+                            </div>
+
+                          </div>
+                        </mat-card-content>
+                      </mat-card>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="m-t-8 d-flex justify-content-end">
+                        <button mat-button class="m-x-8" type="button"
+                                (click)="reset()">reset</button>
+                        <button mat-raised-button color="primary" (click)="save()">Save</button>
+                      </div>
+                    </div>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+
+        </form>

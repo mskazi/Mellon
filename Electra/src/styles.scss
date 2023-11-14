@@ -9,6 +9,10 @@
 /* @use 'app/shared/components/dialog/dialog.component';
  */
 
+.mat-mdc-text-field-wrapper {
+  height: unset !important;
+}
+
 .mat-mdc-dialog-content {
   .mdc-text-field--outlined.mdc-text-field--disabled .mdc-text-field__input {
     color: rgba(0, 0, 0, .90) !important;

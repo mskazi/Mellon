@@ -3,16 +3,9 @@ using MediatR;
 using Mellon.Common.Services;
 using Mellon.Services.Application.Services;
 using Mellon.Services.Infrastracture.ModelExtensions;
-using Mellon.Services.Infrastracture.Models;
 using Mellon.Services.Infrastracture.Repositotiries;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Mellon.Services.Application.Approvals.ApprovalHandlers
 {
@@ -60,7 +53,7 @@ namespace Mellon.Services.Application.Approvals.ApprovalHandlers
 
         public async Task<bool> Handle(ApprovalDecisionCommand request, CancellationToken cancellationToken)
         {
-            
+
             //await processLock.IsWaiting();
             var approval = await repository.GetApproval(request.documentToken, cancellationToken);
             if (approval is null)
@@ -81,16 +74,16 @@ namespace Mellon.Services.Application.Approvals.ApprovalHandlers
             var status = request.decision.ToString();
             var owner = approval.DocumentOwner;
             var approvalResponsible = approval.ApprovalResponsible;
-            action.Body = new Document_Appover_NAS_ActionRequestBody(
-                 approval.ERPCountry,approval.ERPCompany, approval.DocumentType, 
+            action = new Document_Appover_NAS_ActionRequest(
+                 approval.ERPCountry, approval.ERPCompany, approval.DocumentType,
                 approval.DocumentNo,
-                owner, 
+                owner,
                 approvalResponsible, status,
-                request.comment );
+                request.comment);
             var responseApproverOrder = await client.Document_Appover_NAS_ActionAsync(action);
-            if (responseApproverOrder.Body.Document_Appover_NAS_ActionResult.Contains("Error"))
+            if (responseApproverOrder.Document_Appover_NAS_ActionResult.Contains("Error"))
             {
-                throw new ERPDecisionException(responseApproverOrder.Body.Document_Appover_NAS_ActionResult);
+                throw new ERPDecisionException(responseApproverOrder.Document_Appover_NAS_ActionResult);
             }
 
             if (request.decision == ApprovalStatusEnum.Approved)
@@ -104,7 +97,8 @@ namespace Mellon.Services.Application.Approvals.ApprovalHandlers
                         this.emailService.sendApprovalDecision(approval, approvalOrder.NotificationMail, request.decision);
                     }
                 }
-            }else if (request.decision == ApprovalStatusEnum.Rejected)
+            }
+            else if (request.decision == ApprovalStatusEnum.Rejected)
             {
                 this.emailService.sendApprovalDecision(approval, approval.DocumentOwnerEmail, request.decision);
             }

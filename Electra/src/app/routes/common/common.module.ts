@@ -5,6 +5,10 @@ import { ContactListComponent } from './contact/contact-list.component';
 import { ContactEditComponent } from './contact/contact-edit.component';
 import { VoucherCommandsComponent } from './vouchers/voucher-commands.component';
 import { VoucherTrackCommonComponent } from './vouchers/voucher-track.component';
+import { VoucherCreateNewContactComponent } from './vouchers/create/voucher-create-contact.component';
+import { VoucherSendToDetailsComponent } from './vouchers/common/voucher-send-to-details.component';
+import { VoucherDetailsComponent } from './vouchers/common/voucher-details.component';
+import { VoucherSpecialsDetailsComponent } from './vouchers/common/voucher-special-details.component';
 
 const COMPONENTS: any[] = [
   VoucherDetailsCommonComponent,
@@ -12,6 +16,10 @@ const COMPONENTS: any[] = [
   ContactEditComponent,
   VoucherCommandsComponent,
   VoucherTrackCommonComponent,
+  VoucherCreateNewContactComponent,
+  VoucherSendToDetailsComponent,
+  VoucherDetailsComponent,
+  VoucherSpecialsDetailsComponent,
 ];
 const COMPONENTS_DYNAMIC: any[] = [];
 

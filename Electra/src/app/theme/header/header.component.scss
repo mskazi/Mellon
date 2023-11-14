@@ -17,4 +17,16 @@
       --mdc-fab-container-shape: unset;
     }
   }
+
+  .custom-form-field {
+    width: 250px;
+    font-size: 14px;
+    margin-top: 3px;
+    margin-bottom: -1.25em;
+
+    input.mat-input-element {
+      padding-bottom: 2px;
+      font-size: 12px;
+    }
+  }
 }

@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Mellon.Common.Services;
+using Mellon.Services.Common.resources;
 
 namespace Mellon.Services.Application.Lookup
 {
@@ -12,9 +13,11 @@ namespace Mellon.Services.Application.Lookup
 
     public class GeCompanyLookupCommand : IRequest<ListResult<CompanyLookupResourse>>
     {
-        public GeCompanyLookupCommand()
+        public GeCompanyLookupCommand(VoucherCreateRoleType voucherCreateRoleType)
         {
+            this.VouucherCreateRoleType = voucherCreateRoleType;
         }
+        public VoucherCreateRoleType VouucherCreateRoleType { get; }
     }
 
 

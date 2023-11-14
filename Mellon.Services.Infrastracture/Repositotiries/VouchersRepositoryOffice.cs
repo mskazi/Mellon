@@ -145,6 +145,18 @@ namespace Mellon.Services.Infrastracture.Repositotiries
         {
             this.context.Data.Remove(data);
         }
+        public async Task<IEnumerable<Datum>> OfficeVouchersForPrinting(string company, CancellationToken cancellationToken)
+        {
+            return await this.context.Data.Where(p => p.SysDepartment != "service" &&
+                    p.SysSource != "OpenBI_Acct_Upload" &&
+                    p.ElectraProjectId != 72 &&
+                    p.SysCompany == company &&
+                    p.SysStatus == 0 &&
+                    p.CarrierActionType == 0
+            ).OrderBy(p => p.VoucherName).OrderBy(p => p.VoucherContact).ToListAsync();
 
+        }
     }
+
+
 }

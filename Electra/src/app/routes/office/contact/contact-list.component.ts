@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { ContactMode } from '@core/models/contac';
+import { VoucherCreateRoleType } from '@core/models/voucher-create';
 import { DialogDynamicService } from '@shared/components/dialog/dialog.service';
-import { OfficeVoucherNewComponent } from '../voucher/voucher-new.component';
+import { VoucherCreateNewContactComponent } from 'app/routes/common/vouchers/create/voucher-create-contact.component';
+import { VoucherCreateNewContactComponentData } from 'app/routes/service/scanSend/voucher-scan-send.component';
 @Component({
   selector: 'app-office-contact-list',
   templateUrl: './contact-list.component.html',
@@ -12,9 +14,13 @@ export class OfficeContactListComponent {
   constructor(private dialogDynamicService: DialogDynamicService) {}
 
   createNewVoucher(contactId: number) {
-    const dialogRef = this.dialogDynamicService.open<OfficeVoucherNewComponent, number, any>(
-      OfficeVoucherNewComponent,
-      contactId,
+    this.dialogDynamicService.open<
+      VoucherCreateNewContactComponent,
+      VoucherCreateNewContactComponentData,
+      any
+    >(
+      VoucherCreateNewContactComponent,
+      { contactId: contactId, roleType: VoucherCreateRoleType.OFFICE },
       {
         titleKey: 'Create Voucher',
         acceptLabelKey: 'Ok',

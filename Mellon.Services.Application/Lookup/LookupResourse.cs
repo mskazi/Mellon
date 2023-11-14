@@ -86,6 +86,19 @@ namespace Mellon.Services.Application.Lookup
     }
 
 
+    public class ProjectLookupResourse
+    {
+        public ProjectLookupResourse(ElectraProjectSetup project)
+        {
+            Id = project.Id;
+            Description = project.MellonProject;
+        }
+
+        public int Id { get; set; }
+
+        public string Description { get; set; }
+    }
+
 
 
 

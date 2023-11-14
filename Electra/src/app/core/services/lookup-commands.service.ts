@@ -1,15 +1,17 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ListResult } from '@core/core-model';
 import {
   Company,
   Country,
   Department,
+  LookUpString,
   VoucherConditionType,
   VoucherDeliveryTimeType,
   VoucherDepartmentType,
   VoucherType,
 } from '@core/models/lookup';
+import { VoucherCreateRoleType } from '@core/models/voucher-create';
 import { environment } from '@env/environment';
 import { Observable, map } from 'rxjs';
 
@@ -40,17 +42,15 @@ export class LookupCommandService {
     return this.cacheDepartments$;
   }
 
-  getCompanies(refresh?: boolean): Observable<ListResult<Company>> {
-    if (refresh || !this.cacheCompanies$) {
-      (this.cacheCompanies$ = this.http.get<ListResult<Company>>(
-        `${environment.serviceLookupUrl}/companies`
-      )).pipe(
-        map((res: ListResult<Company>) => {
-          return res.data;
-        })
-      );
-    }
-    return this.cacheCompanies$;
+  getCompanies(
+    roleType: VoucherCreateRoleType = VoucherCreateRoleType.NONE
+  ): Observable<ListResult<Company>> {
+    let params = new HttpParams();
+    params = params.append('roleType', roleType);
+
+    return this.http.get<ListResult<Company>>(`${environment.serviceLookupUrl}/companies`, {
+      params: params,
+    });
   }
 
   getCountries(refresh?: boolean): Observable<ListResult<Country>> {
@@ -66,10 +66,10 @@ export class LookupCommandService {
     return this.cacheCountries$;
   }
 
-  getTypesOffice(refresh?: boolean): Observable<ListResult<VoucherType>> {
+  getTypes(refresh?: boolean): Observable<ListResult<VoucherType>> {
     if (refresh || !this.cacheVoucherTypes$) {
       (this.cacheVoucherTypes$ = this.http.get<ListResult<VoucherType>>(
-        `${environment.serviceLookupUrl}/types/office`
+        `${environment.serviceLookupUrl}/types`
       )).pipe(
         map((res: ListResult<VoucherType>) => {
           return res.data;
@@ -79,10 +79,10 @@ export class LookupCommandService {
     return this.cacheVoucherTypes$;
   }
 
-  getDeliveryTimeOffice(refresh?: boolean): Observable<ListResult<VoucherDeliveryTimeType>> {
+  getDeliveryTime(refresh?: boolean): Observable<ListResult<VoucherDeliveryTimeType>> {
     if (refresh || !this.cacheVoucherDeliveryTimeType$) {
       (this.cacheVoucherDeliveryTimeType$ = this.http.get<ListResult<VoucherDeliveryTimeType>>(
-        `${environment.serviceLookupUrl}/deliveryTimes/office`
+        `${environment.serviceLookupUrl}/deliveryTimes`
       )).pipe(
         map((res: ListResult<VoucherDeliveryTimeType>) => {
           return res.data;
@@ -92,10 +92,10 @@ export class LookupCommandService {
     return this.cacheVoucherDeliveryTimeType$;
   }
 
-  getVoucherConditionTypeOffice(refresh?: boolean): Observable<ListResult<VoucherConditionType>> {
+  getVoucherConditionType(refresh?: boolean): Observable<ListResult<VoucherConditionType>> {
     if (refresh || !this.cacheVoucherConditionType$) {
       (this.cacheVoucherConditionType$ = this.http.get<ListResult<VoucherConditionType>>(
-        `${environment.serviceLookupUrl}/conditions/office`
+        `${environment.serviceLookupUrl}/conditions`
       )).pipe(
         map((res: ListResult<VoucherConditionType>) => {
           return res.data;
@@ -105,16 +105,19 @@ export class LookupCommandService {
     return this.cacheVoucherConditionType$;
   }
 
-  getVoucherDepartmentsOffice(refresh?: boolean): Observable<ListResult<VoucherDepartmentType>> {
-    if (refresh || !this.cacheVoucherDepartmentType$) {
-      (this.cacheVoucherDepartmentType$ = this.http.get<ListResult<VoucherDepartmentType>>(
-        `${environment.serviceLookupUrl}/departments/office`
-      )).pipe(
-        map((res: ListResult<VoucherDepartmentType>) => {
-          return res.data;
-        })
-      );
-    }
-    return this.cacheVoucherDepartmentType$;
+  getVoucherDepartments(
+    roleType: VoucherCreateRoleType
+  ): Observable<ListResult<VoucherDepartmentType>> {
+    let params = new HttpParams();
+    params = params.append('roleType', roleType);
+
+    return this.http.get<ListResult<VoucherDepartmentType>>(
+      `${environment.serviceLookupUrl}/departments`,
+      { params: params }
+    );
+  }
+
+  getOfficeCompanies(): Observable<ListResult<string>> {
+    return this.http.get<ListResult<string>>(`${environment.serviceLookupUrl}/office/project`);
   }
 }

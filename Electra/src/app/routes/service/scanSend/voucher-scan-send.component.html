@@ -1,0 +1,106 @@
+    <form [formGroup]="form" class="form-field-full" [id]="formId" unsavedChanges>
+      <div class="row" light>
+        <div class="col-sm-8 ">
+          <mat-card class="m-auto ">
+            <mat-card-content class="m-t-16 ">
+              <div class="row">
+                <div class="col-sm-6">
+                  <mat-card class="m-auto b-b-0">
+                    <mat-card-header>
+                      <mat-card-title>
+                        Simple Delivery
+                      </mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content class="m-t-16">
+                      <div class="m-t-16">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <app-select-field controlName="voucherCondition" [allowEmpty]="false"
+                                              [options$]="optionConditionType$"
+                                              displayProperty="description" label="Simple Delivery">
+                            </app-select-field>
+                          </div>
+                        </div>
+                        <div class="row" *ngIf="showCODAmountPanel">
+                          <div class="col-sm-12">
+                            <app-input-field controlName="voucherCodAmount" label="COD Amount">
+                            </app-input-field>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <app-select-field controlName="voucherSaturdayDelivery"
+                                              [allowEmpty]="false"
+                                              [options$]="optionsYesNo$"
+                                              displayProperty="description"
+                                              label="Deliver Saturday">
+                            </app-select-field>
+                          </div>
+                        </div>
+                        <div class="row" *ngIf="showDeliveryTimePanel">
+                          <div class="col-sm-12">
+                            <app-select-field controlName="voucherDeliveryTime" [allowEmpty]="false"
+                                              [options$]="optionsDeliveryTimeType$"
+                                              displayProperty="description" label="Delivery Time">
+                            </app-select-field>
+                          </div>
+                        </div>
+                      </div>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+                <div class="col-sm-6">
+                  <mat-card class="m-auto">
+                    <mat-card-header>
+                      <mat-card-title>
+                        Scan SerialNo & Create Voucher
+                      </mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content class="m-t-16">
+                      <div class="m-t-16">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <app-input-field controlName="scanSerial" label="Serial No">
+                            </app-input-field>
+                          </div>
+                        </div>
+                      </div>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="m-t-8 d-flex justify-content-end">
+                    <button mat-button class="m-x-8" type="button" (click)="reset()">reset</button>
+                    <button mat-raised-button color="primary" (click)="save()">Save</button>
+                  </div>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div class="col-sm-4">
+          <mat-card class="m-auto">
+            <mat-card-header>
+              <mat-card-title>
+                Note <small>(2020-11-11)</small>
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="m-t-16">
+              "Voucher Conditions" has been <strong>deactivated</strong>.<br>
+              If the scanned serial Service Order meets :
+              <ul>
+                <li>Service Item Group: POS or SIGN PADS</li>
+                <li>Service Order Type: REPLACE</li>
+              </ul>
+              then, the system will automatically assign a condition of <strong>DRP</strong> else
+              it
+              will assign a
+              condition of <strong>Simple Delivery</strong>.
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+
+    </form>

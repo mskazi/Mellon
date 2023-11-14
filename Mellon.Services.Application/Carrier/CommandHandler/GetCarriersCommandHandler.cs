@@ -19,7 +19,7 @@ namespace Mellon.Services.Application.Carrier.CommandHandler
 
         public async Task<ListResult<CarrierLookupResourse>> Handle(GetCarriersLookupCommand request, CancellationToken cancellationToken)
         {
-            var entities = await repository.GetVoucherCarriers(request.PostalCode, cancellationToken);
+            var entities = await repository.GetVoucherCarriers(request.PostalCode, request.VoucherCreateRoleType, cancellationToken);
             var items = entities.Select(entity => new CarrierLookupResourse(entity));
             return new ListResult<CarrierLookupResourse>(items);
         }

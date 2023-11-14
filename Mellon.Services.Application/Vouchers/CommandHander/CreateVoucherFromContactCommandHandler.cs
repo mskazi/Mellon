@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Mellon.Services.Application.Vouchers.CommandHander
 {
-    public class CreateVoucherOfficeCommandHandler : IRequestHandler<CreateVoucherOfficeCommand, VoucherDetails>
+    public class CreateVoucherFromContactCommandHandler : IRequestHandler<CreateVoucherFromContactCommand, VoucherDetails>
     {
         private readonly ILogger logger;
         private readonly ICurrentUserService currentUserService;
@@ -20,7 +20,7 @@ namespace Mellon.Services.Application.Vouchers.CommandHander
 
 
 
-        public CreateVoucherOfficeCommandHandler(ICurrentUserService currentUserService, ILogger<GetVoucherServiceCommandHandler> logger, CourierServiceFactory courierServiceFactory, IVouchersRepository repository, ILookupRepository lookupRepository, IContactsRepository contactRepository)
+        public CreateVoucherFromContactCommandHandler(ICurrentUserService currentUserService, ILogger<GetVoucherServiceCommandHandler> logger, CourierServiceFactory courierServiceFactory, IVouchersRepository repository, ILookupRepository lookupRepository, IContactsRepository contactRepository)
         {
             this.currentUserService = currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
             this.logger = logger;
@@ -31,7 +31,7 @@ namespace Mellon.Services.Application.Vouchers.CommandHander
         }
 
 
-        public async Task<VoucherDetails> Handle(CreateVoucherOfficeCommand request, CancellationToken cancellationToken)
+        public async Task<VoucherDetails> Handle(CreateVoucherFromContactCommand request, CancellationToken cancellationToken)
         {
             var contact = await this.contactRepository.GetContact(request.ContactId, cancellationToken);
             if (contact == null)

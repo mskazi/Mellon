@@ -1,0 +1,32 @@
+ <div class="m-t-16">
+   <div class="row">
+     <div class="col-sm-12">
+       <app-select-field controlName="voucherCondition" [allowEmpty]="false"
+                         [options$]="optionConditionType$"
+                         displayProperty="description" label="Voucher Conditions">
+       </app-select-field>
+     </div>
+   </div>
+   <div class="row" *ngIf="showCODAmountPanel">
+     <div class="col-sm-12">
+       <app-input-field controlName="voucherCodAmount" label="COD Amount">
+       </app-input-field>
+     </div>
+   </div>
+   <div class="row">
+     <div class="col-sm-12">
+       <app-select-field controlName="voucherSaturdayDelivery" [allowEmpty]="false"
+                         [options$]="optionsYesNo$"
+                         displayProperty="description" label="Deliver Saturday">
+       </app-select-field>
+     </div>
+   </div>
+   <div class="row" *ngIf="showDeliveryTimePanel">
+     <div class="col-sm-12">
+       <app-select-field controlName="voucherDeliveryTime" [allowEmpty]="false"
+                         [options$]="optionsDeliveryTimeType$"
+                         displayProperty="description" label="Delivery Time">
+       </app-select-field>
+     </div>
+   </div>
+ </div>

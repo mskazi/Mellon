@@ -1,14 +1,21 @@
 import { Injectable } from '@angular/core';
 import { IPersistObjectService } from '@core/forms/base-form.component';
+import { VoucherCreateRoleType } from '@core/models/voucher-create';
 import { VoucherCommandService } from '@core/services/voucher-commands.service';
 import { Observable, of } from 'rxjs';
 
 @Injectable()
-export class OfficeVoucherNewService implements IPersistObjectService<any> {
+export class VoucherCreateContactService implements IPersistObjectService<any> {
   constructor(private voucherCommandService: VoucherCommandService) {}
 
+  private roleType: VoucherCreateRoleType;
+
+  setMode(roleType: VoucherCreateRoleType) {
+    this.roleType = roleType;
+  }
+
   save(data: any): Observable<any> {
-    return this.voucherCommandService.officeCommands.createVoucher(data);
+    return this.voucherCommandService.createNewVoucherContact(data, this.roleType);
   }
 
   load(params: any): Observable<any> {

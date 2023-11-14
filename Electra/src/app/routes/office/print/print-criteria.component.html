@@ -1,0 +1,76 @@
+        <form [formGroup]="form" class="form-field-full" [id]="formId" unsavedChanges>
+          <div class="row" light>
+            <div class="col-sm-12 ">
+              <mat-card class="m-auto ">
+                <mat-card-content class="m-t-16 ">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <mat-card class="m-auto b-b-0">
+                        <mat-card-header>
+                          <mat-card-title>
+                            Select Vouchers to Print
+                          </mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content class="m-t-16">
+                          <div class="m-t-16">
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <app-select-field controlName="company"
+                                                  [options$]="optionsCompany$"
+                                                  displayProperty="description" label="Company">
+                                </app-select-field>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <mat-form-field class="example-chip-list">
+                                  <mat-label>Vouchers</mat-label>
+                                  <mat-chip-grid #chipGrid>
+                                    <mat-chip-row *ngFor="let voucher of vouchers"
+                                                  (removed)="remove(voucher)">
+                                      {{voucher.voucherName }}
+                                      {{voucher.voucherContact }} {{voucher.voucherCity }}
+                                      {{voucher.voucherNo}}
+                                      <button matChipRemove>
+                                        <mat-icon>cancel</mat-icon>
+                                      </button>
+                                    </mat-chip-row>
+                                  </mat-chip-grid>
+                                  <input placeholder="Search for Voucher" #voucherInput
+                                         [formControl]="voucherCtrl"
+                                         [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
+                                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                         (matChipInputTokenEnd)="add($event)" />
+                                  <mat-autocomplete #auto="matAutocomplete"
+                                                    (optionSelected)="selected($event)">
+                                    <mat-option *ngFor="let voucher of filteredVouchers | async"
+                                                [value]="voucher" [disabled]="voucher.selected">
+                                      {{voucher.voucherName }}
+                                      {{voucher.voucherContact }} {{voucher.voucherCity }}
+                                      {{voucher.voucherNo}}
+                                    </mat-option>
+                                  </mat-autocomplete>
+                                </mat-form-field>
+                              </div>
+                            </div>
+                          </div>
+                        </mat-card-content>
+                      </mat-card>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="m-t-8 d-flex justify-content-end">
+                        <button mat-button class="m-x-8" type="button"
+                                (click)="reset()">reset</button>
+                        <button mat-raised-button color="primary" (click)="print()"
+                                [disabled]="working">Print</button>
+                      </div>
+                    </div>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+
+        </form>
