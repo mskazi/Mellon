@@ -34,7 +34,7 @@ namespace Mellon.Services.External.CourierProviders
                 TrackAndTraceResult response = await authenticateResult.Client.TrackAndTraceAsync(authenticateResult.Key, voucherDetails.CarrierVoucherNo, "el");
                 if (response.Result != 0)
                 {
-                    throw new BadRequestException("Did not receive a valid response from GenTax WS. Result code: " + response.Result + " .Result message: " + this.getResultError(response.Result));
+                    throw new BadRequestException("Did not receive a valid response from GenTax WS. Result code: " + response.Result + " .Geniki Error Description:: " + this.getResultError(response.Result));
                 }
                 var courierTrackResource = new CourierTrackResource()
                 {
@@ -88,6 +88,37 @@ namespace Mellon.Services.External.CourierProviders
             {
                 this.Disponse(authenticateResult.Client);
 
+            }
+        }
+
+        public async Task<Boolean> Cancel(VoucherDetails voucherDetails, CancellationToken cancellation)
+        {
+            var authenticateResult = await this.Authenticate();
+            try
+            {
+                long jobId = Convert.ToInt32(voucherDetails.CarrierJobId);
+                int response = await authenticateResult.Client.CancelJobAsync(authenticateResult.Key, jobId, true);
+                if (response != 0)
+                {
+                    throw new BadRequestException("Did not receive a valid Carrier Job Id for cancelling.VoucherNo: " + voucherDetails.CarrierVoucherNo + " was NOT cancelled. ERROR!: " + response + " .Result message from Geniki: " + this.getResultError(response));
+                }
+
+                var jobResult = await authenticateResult.Client.GetVoucherJobAsync(authenticateResult.Key, jobId);
+                if (jobResult.Result != 13)
+                {
+                    throw new BadRequestException("VoucherNo: " + voucherDetails.CarrierVoucherNo + " was NOT cancelled. ERROR! " + response + " .Result message from Geniki: " + this.getResultError(response));
+                }
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            finally
+            {
+                this.Disponse(authenticateResult.Client);
             }
         }
 
@@ -176,7 +207,7 @@ namespace Mellon.Services.External.CourierProviders
 
                 if (createJobResult.Result != 0)
                 {
-                    throw new BadRequestException("001. Error Creating Voucher. Result code: " + createJobResult.Result + " .Result message: " + this.getResultError(createJobResult.Result));
+                    throw new BadRequestException("001. Error Creating Voucher. Result code: " + createJobResult.Result + " .Result message from Geniki:: " + this.getResultError(createJobResult.Result));
                 }
 
                 var courierTrackResource = new CourierCreateResource()

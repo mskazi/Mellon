@@ -135,6 +135,17 @@ namespace Mellon.Services.Api.Controllers
         }
 
         [HttpPost]
+        [Route("cancel/{id}")]
+        [ProducesResponseType(typeof(VoucherDetails), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Cancel(int id)
+        {
+            var command = new GetVoucherCancelCommand(id);
+            var result = await mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpPost]
         [Route("contact/new/{id}")]
         [ProducesResponseType(typeof(Boolean), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

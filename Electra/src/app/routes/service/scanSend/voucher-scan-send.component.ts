@@ -104,11 +104,14 @@ export class ServiceScanSendComponent extends BaseFormEditComponent<any> impleme
       )
       .subscribe();
   }
+  scan() {
+    super.save().subscribe();
+  }
 
   override loadCompleted(data: any) {}
 
   override patchObject() {
-    return { contactId: this.form.value };
+    return this.form.getRawValue();
   }
 
   private startWatchFormChanges() {

@@ -16,6 +16,9 @@ namespace Mellon.Services.External.CourierProviders
 
         public Task<CourierCreateResource> Create(Datum voucherData, CancellationToken cancellation);
 
+        public Task<Boolean> Cancel(VoucherDetails voucherDetails, CancellationToken cancellation);
+
+
     }
 
     public enum CourierMode

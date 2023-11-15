@@ -66,6 +66,9 @@
         public int ElectraProjectId { get; set; }
         public int CarrierActionType { get; set; }
 
+        public string? CarrierJobId { get; set; }
+
+
     }
 
     public partial class VoucherDataInability

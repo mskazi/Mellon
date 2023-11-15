@@ -9,7 +9,7 @@ export const environment = {
   baseURL: '',
   useHash: true,
   servicesMembersUrl: `${apiHost}/members`,
-  serviceRoleUrl: `${apiHost}/vouchers`,
+  vouchersUrl: `${apiHost}/vouchers`,
   serviceLookupUrl: `${apiHost}/lookup`,
   administrationUrl: `${apiHost}/administration`,
   serviceContactsUrl: `${apiHost}/contacts`,

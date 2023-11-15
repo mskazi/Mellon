@@ -50,5 +50,14 @@ namespace Mellon.Services.Application.Vouchers.Commands
         public int Id { get; set; }
     }
 
+    public class GetVoucherCancelCommand : IRequest<Boolean>
+    {
+        public GetVoucherCancelCommand(int id)
+        {
+            Id = id;
+        }
+        public int Id { get; set; }
+    }
+
 
 }

@@ -1,5 +1,6 @@
 ﻿using External.ERP.Service;
 using MediatR;
+using Mellon.Common.Services;
 using Mellon.Services.Application.Vouchers.Commands;
 using Mellon.Services.Common.interfaces;
 using Mellon.Services.Common.resources;
@@ -38,11 +39,30 @@ namespace Mellon.Services.Application.Vouchers.CommandHander
         {
             var endpoint = DataAccessSoapClient.EndpointConfiguration.DataAccessSoap;
             using var client = new DataAccessSoapClient(endpoint, this.erpUrl);
-            var responseApproverOrder = await client.Electra_Get_ServiceOrderAsync(new Electra_Get_ServiceOrderRequest()
+            Electra_Get_ServiceOrderResponse responseApproverOrder = null;
+            responseApproverOrder = await client.Electra_Get_ServiceOrderAsync(new Electra_Get_ServiceOrderRequest()
             {
+                ERPCompany = "MT",
+                ERPCountry = "GRNAV2017",
                 ServiceHeaderNo = request.ScanSerial
             });
 
+            if (responseApproverOrder.Electra_Get_ServiceOrderResult.Length == 0)
+            {
+                var test = await client.Electra_Get_SalesOrderArchievedAsync(new Electra_Get_SalesOrderArchievedRequest()
+                {
+
+                    SerialNo = request.ScanSerial
+                    // ServiceHeaderNo = request.ScanSerial
+                });
+            }
+            if (responseApproverOrder.Electra_Get_ServiceOrderResult.Length == 0)
+            {
+                throw new BadRequestException("No ERP SalesOrder found. Either there does not exist a Sales Order, OR, the Sales Order found is failing validations. Check your ERP for more details");
+            }
+
+
+            throw new BadRequestException("Done");
 
             try
             {

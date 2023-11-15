@@ -19,6 +19,8 @@ namespace Mellon.Services.Infrastracture.Repositotiries
         Task<VoucherDetails> VoucherDetails(int id, CancellationToken cancellationToken);
 
         Task<Datum> VoucherDetailsVoucherNo(string voucherNo, CancellationToken cancellationToken);
+
+        void DataToCancel(string voucherNo, string jobId, CancellationToken cancellationToken);
         Task<VoucherSummary> Summary(CancellationToken cancellationToken);
 
         void Delete(Datum data);
@@ -144,7 +146,8 @@ namespace Mellon.Services.Infrastracture.Repositotiries
                      CarrierName = s.carriersDefaultIfEmpty.DescrShort,
                      CarrierId = s.data.CarrierId,
                      ElectraProjectId = s.data.ElectraProjectId,
-                     CarrierActionType = s.data.CarrierActionType
+                     CarrierActionType = s.data.CarrierActionType,
+                     CarrierJobId = s.data.CarrierJobid
                  }
             );
             var voucherDetails = await result.FirstOrDefaultAsync();
@@ -175,11 +178,18 @@ namespace Mellon.Services.Infrastracture.Repositotiries
 
         }
 
-
-
-
-
-
+        public async void DataToCancel(string voucherNo, string jobId, CancellationToken cancellationToken)
+        {
+            var data = await this.context.Data.Where(p => p.CarrierVoucherNo == voucherNo && p.CarrierJobid == jobId).ToListAsync(cancellationToken);
+            if (data.Count > 0)
+            {
+                foreach (var item in data)
+                {
+                    item.SysStatus = 21;
+                }
+                await this.context.SaveChangesAsync(cancellationToken);
+            }
+        }
 
 
     }

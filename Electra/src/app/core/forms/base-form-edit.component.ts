@@ -72,12 +72,12 @@ export abstract class BaseFormEditComponent<T> extends BaseFormComponent {
       return of();
     }
 
-    this.activateSpinner();
     if (!this.form.valid) {
       this.markTouchedFields(this.form);
       this.form.updateValueAndValidity();
       return of();
     }
+    this.activateSpinner();
     return (this.onSave$ || of(true)).pipe(
       mergeMap(() => {
         const data = this.patchObject();
