@@ -55,7 +55,6 @@ namespace Mellon.Services.Infrastracture.Repositotiries
                       (s.data.VoucherPostCode ?? "").Contains(term) ||
                       (s.data.VoucherMobileNo ?? "").Contains(term) ||
                       (s.data.VoucherDescription ?? "").Contains(term) ||
-                      (s.dataLinesDefaultIfEmpty.Value ?? "").Contains(term) ||
                       (s.data.SysCompany ?? "").Contains(term) ||
                       (s.data.NavisionServiceOrderNo ?? "").Contains(term) ||
                       (s.data.NavisionSalesOrderNo ?? "").Contains(term) ||
@@ -64,7 +63,9 @@ namespace Mellon.Services.Infrastracture.Repositotiries
                       (s.jointDimStatusDefaultIfEmpty.Description ?? "").Contains(term) ||
                       (s.membersDefaultIfEmpty.MemberName ?? "").Contains(term) ||
                       (s.setupsDefaultIfEmpty.MellonProject ?? "").Contains(term) ||
-                      (s.carriersDefaultIfEmpty.DescrShort ?? "").Contains(term)
+                      (s.carriersDefaultIfEmpty.DescrShort ?? "").Contains(term) ||
+                      (s.dataLinesDefaultIfEmpty.Value ?? "").Contains(term)
+
                     );
             }
 

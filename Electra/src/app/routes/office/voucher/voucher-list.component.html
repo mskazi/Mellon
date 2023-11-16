@@ -40,7 +40,8 @@
         </div>
       </ng-template>
       <ng-template #functionTpl let-row let-index="index" let-col="colDef">
-        <app-common-voucher-commands [item]="row" [canShowAdminCancelButton]="false">
+        <app-common-voucher-commands [item]="row" [canShowAdminCancelButton]="false"
+                                     (cancelled)="cancelled($event)">
         </app-common-voucher-commands>
       </ng-template>
       <mtx-grid [data]="data"

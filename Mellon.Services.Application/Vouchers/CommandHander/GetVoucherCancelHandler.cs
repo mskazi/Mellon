@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Mellon.Services.Application.Vouchers.CommandHander
 {
-    public class GetVoucherCancelHandler : IRequestHandler<GetVoucherCancelCommand, Boolean>
+    public class GetVoucherCancelHandler : IRequestHandler<GetVoucherCancelCommand, string>
     {
         private readonly ILogger logger;
         private readonly ICurrentUserService currentUserService;
@@ -27,7 +27,7 @@ namespace Mellon.Services.Application.Vouchers.CommandHander
 
         }
 
-        public async Task<Boolean> Handle(GetVoucherCancelCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(GetVoucherCancelCommand request, CancellationToken cancellationToken)
         {
 
             var voucherDetails = await this.repository.VoucherDetails(request.Id, cancellationToken);
@@ -49,7 +49,7 @@ namespace Mellon.Services.Application.Vouchers.CommandHander
 
             var result = await courierService.Cancel(voucherDetails, cancellationToken);
             this.repository.DataToCancel(voucherDetails.CarrierVoucherNo, voucherDetails.CarrierJobId, cancellationToken);
-            return result;
+            return voucherDetails.CarrierVoucherNo;
         }
 
 

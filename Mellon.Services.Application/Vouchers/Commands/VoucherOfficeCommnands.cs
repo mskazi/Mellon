@@ -19,8 +19,9 @@ namespace Mellon.Services.Application.Vouchers.Commands
 
     public class CreateVoucherFromContactCommand : CreateVoucherRequestData, IRequest<VoucherDetails>
     {
-        public CreateVoucherFromContactCommand(int contactId, CreateVoucherRequestData data)
+        public CreateVoucherFromContactCommand(int contactId, VoucherCreateRoleType roleType, CreateVoucherRequestData data)
         {
+            RoleType = roleType;
             ContactId = contactId;
             VoucherAction = data.VoucherAction;
             VoucherCarrier = data.VoucherCarrier;
@@ -40,6 +41,8 @@ namespace Mellon.Services.Application.Vouchers.Commands
             Validate();
         }
         public int ContactId { get; set; }
+
+        public VoucherCreateRoleType RoleType { get; set; }
 
         protected override void Validate()
         {

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DialogDynamicService } from '@shared/components/dialog/dialog.service';
 import { VoucherDetailsCommonComponent } from 'app/routes/common/vouchers/voucher-details.component';
 import { VoucherTrackCommonComponent } from './voucher-track.component';
@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 import { VoucherCommandService } from '@core/services/voucher-commands.service';
 import { map, tap } from 'rxjs';
 import { Utilities } from '@shared/utils/utilities';
+import { NotificationService } from '@core/notification.service';
 
 @Component({
   selector: 'app-common-voucher-commands',
@@ -14,10 +15,12 @@ import { Utilities } from '@shared/utils/utilities';
 export class VoucherCommandsComponent implements OnInit {
   constructor(
     protected dialogDynamicService: DialogDynamicService,
-    protected voucherCommandService: VoucherCommandService
+    protected voucherCommandService: VoucherCommandService,
+    protected notification: NotificationService
   ) {}
   @Input() item: VoucherCommandData;
   @Input() canShowAdminCancelButton = false;
+  @Output() cancelled = new EventEmitter<void>();
 
   private cancelStatus = [0];
   private traceStatus = [0, 90, 21, 22, 1];
@@ -78,6 +81,15 @@ export class VoucherCommandsComponent implements OnInit {
   printVoucher() {
     this.voucherCommandService.print(this.item.id).subscribe((file: any) => {
       Utilities.downloadFileOnNewTab(file, `Voucher_Print.pdf`);
+    });
+  }
+
+  cancelVoucher() {
+    this.voucherCommandService.cancel(this.item.id).subscribe((result: any) => {
+      if (result) {
+        this.notification.success(`Voucher ${result} Cancelled. Info is verified with Carrier.`);
+        this.cancelled.emit();
+      }
     });
   }
 }

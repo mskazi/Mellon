@@ -54,6 +54,10 @@ export class VoucherCommandService {
     );
   }
 
+  cancel(id: number): Observable<any> {
+    return this.http.post(`${environment.vouchersUrl}/cancel/${id}`, {});
+  }
+
   createNewVoucherContact(data: any, roleType: VoucherCreateRoleType): Observable<any> {
     let params = new HttpParams();
     params = params.append('roleType', roleType);

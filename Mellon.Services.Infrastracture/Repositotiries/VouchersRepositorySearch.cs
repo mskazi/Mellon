@@ -41,7 +41,7 @@ namespace Mellon.Services.Infrastracture.Repositotiries
                          where (
                              !ids.Contains(data.SysStatus)
                          )
-                         select new { data, setupsDefaultIfEmpty, carriersDefaultIfEmpty, dimsDefaultIfEmpty, dataLinesDefaultIfEmpty, membersDefaultIfEmpty }
+                         select new { data, setupsDefaultIfEmpty, carriersDefaultIfEmpty, dimsDefaultIfEmpty, dataLinesDefaultIfEmpty.Value, membersDefaultIfEmpty }
             ).AsQueryable();
             DateTime date;
             if (DateTime.TryParse(term, out date))
@@ -53,13 +53,13 @@ namespace Mellon.Services.Infrastracture.Repositotiries
             else if (!string.IsNullOrWhiteSpace(term))
             {
                 query = query.Where(s =>
-                    s.data.VoucherName.Contains(term) ||
-                    (s.data.VoucherContact ?? "").Contains(term) ||
-                    s.data.CarrierVoucherNo.Contains(term) ||
-                    s.data.NavisionServiceOrderNo.Contains(term) ||
-                    s.data.NavisionSalesOrderNo.Contains(term) ||
-                    (s.data.NavisionSellToCustomerNo != null && s.data.NavisionSellToCustomerNo.Contains(term)) ||
-                                                                                                                  (s.dataLinesDefaultIfEmpty.Value != null && s.dataLinesDefaultIfEmpty.Value.Contains(term))
+                   s.Value.Contains(term)
+                   || s.data.VoucherName.Contains(term)
+                   || s.data.VoucherContact.Contains(term)
+                   || s.data.CarrierVoucherNo.Contains(term)
+                   || s.data.NavisionServiceOrderNo.Contains(term)
+                   || s.data.NavisionSalesOrderNo.Contains(term)
+                   || s.data.NavisionSellToCustomerNo.Contains(term)
                    );
             }
 
@@ -92,12 +92,9 @@ namespace Mellon.Services.Infrastracture.Repositotiries
                 }
                 query = query.OrderBy(order?.Properties);
             }
-
             var qureyResults = query.Skip(paging.Start)
                 .Take(paging.Length).AsQueryable();
-
-            var results = await qureyResults.ToListAsync(cancellationToken);
-
+            var results = await qureyResults.AsNoTracking().ToListAsync(cancellationToken);
             var dataResults = results.Select(s =>
                  new VoucherSearchItem()
                  {

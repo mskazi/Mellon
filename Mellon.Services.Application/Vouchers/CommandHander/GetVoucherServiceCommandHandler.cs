@@ -54,8 +54,6 @@ namespace Mellon.Services.Application.Vouchers.CommandHander
             }
 
 
-
-
             throw new NotImplementedException();
         }
     }

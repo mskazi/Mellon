@@ -136,7 +136,7 @@ namespace Mellon.Services.Api.Controllers
 
         [HttpPost]
         [Route("cancel/{id}")]
-        [ProducesResponseType(typeof(VoucherDetails), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Cancel(int id)
         {
@@ -149,9 +149,9 @@ namespace Mellon.Services.Api.Controllers
         [Route("contact/new/{id}")]
         [ProducesResponseType(typeof(Boolean), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> CreateVoucherFromContact([FromRoute] int id, [FromBody] CreateVoucherRequestData data)
+        public async Task<IActionResult> CreateVoucherFromContact([FromRoute] int id, [FromQuery] VoucherCreateRoleType roleType, [FromBody] CreateVoucherRequestData data)
         {
-            var command = new CreateVoucherFromContactCommand(id, data);
+            var command = new CreateVoucherFromContactCommand(id, roleType, data);
             var result = await mediator.Send(command);
             return Ok(result);
         }

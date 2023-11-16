@@ -12,6 +12,10 @@ export abstract class BaseVoucherListComponent<T> extends BaseSearchFormComponen
     super(service, forceLoad);
   }
 
+  cancelled(data: any) {
+    this.reset();
+  }
+
   showVoucherDetails(item: number) {
     this.dialogDynamicService.open<VoucherDetailsCommonComponent, number, any>(
       VoucherDetailsCommonComponent,
